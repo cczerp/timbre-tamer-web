@@ -1145,7 +1145,11 @@ export const CAT_TEACH = {
   meditate: { t: 'Meditation', one: 'Concentration turned inward', p: [
     'Meditation is concentration turned inward and kept up until the mind settles. The forms differ (breath, a color, a sound, stillness, a feeling like love) but the move is the same: rest your attention on one thing, notice when it leaves, and come back.',
     'Regular practice is linked in research to calmer stress responses and steadier attention, and it builds gradually. The goal is not an empty mind. A short sit every day does more than a long one now and then.',
-    'Routine meditation is your daily sit. The meditation practices are the structured ones.' ], more: ['states', 'hemisync'] },
+    'Routine meditation is your daily sit. The meditation practices are the structured ones.' ],
+    sections: [{ h: 'Brainwaves and the earth\'s rhythm', p: [
+      'A paper on qi and the body\'s electromagnetic fields reports that the earth and the sky around it resonate at about 7 to 10 Hz on average, close to the range of brainwave frequencies. It says that at night this falls toward 1 to 7 Hz, matching the delta and theta stages of sleep, and proposes that outside fields can influence brainwaves during brief free-running moments. These are the authors\' proposals, not settled science.',
+      'The same paper cites Becker\'s account of a second, direct-current system alongside the nerves, whose oscillations are the brainwaves and which connects to the pineal gland and thalamus. That is one reason the pineal gets so much attention in the psychic-center meditations. The full summary is under Energy healing.' ] }],
+    more: ['states', 'hemisync', 'fields'] },
   emotion: { t: 'Emotional control', one: 'Notice, name, choose', p: [
     'Emotional control does not mean pushing feelings down. It means noticing a feeling early, naming it, and choosing your response instead of being run by it. Research finds that simply putting a name to a feeling tends to soften it.',
     'The practices here are small, repeatable ways to build that gap: slowing down, patience under a fiddly task, following a small whim, appreciating what is in view, climbing the emotional scale one rung at a time, and the Funk Reset when you are stuck.',
