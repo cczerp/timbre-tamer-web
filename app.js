@@ -396,7 +396,7 @@ function Tour() {
   <p class="dim">What you will find on each page.</p>
   ${sec('Today', 'Your day at a glance, one bubble per goal. Tap <b>✓ Done</b> when you finish one (it goes into your Log with the time) or <b>Rules</b> to read it first. Finished goals disappear, and finishing them all earns a small celebration. The big <b>I\'m in a funk</b> button gives a short reset and plays your own songs.')}
   ${sec('Training', 'The library of guided practices: sitting practice, mental training exercises, chakra meditations, energy healing, and esoteric meditations. Open one to read how it works, or press <b>Start guided</b> to be walked through one step at a time, with optional timers.')}
-  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, the Funk Reset and Bedtime. <b>General knowledge</b> holds supporting habits (with the do\'s and don\'ts), mental and physical prep, life cycles, the sayings, the Frequency Fast and the two CIA documents. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
+  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, the Funk Reset and Bedtime. <b>General knowledge</b> holds mental preparation, supporting habits (with the do\'s and don\'ts), life cycles, the sayings, the Frequency Fast and the two CIA documents. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
   ${sec('Settings', 'Where you set it up your way. Choose which exercises count as goals for each area, how many reminders you want and when, the leave-home reminders, the funk playlist, the mindfulness sayings, and your backup. The small <b>Log</b> button in the top right corner opens your log.')}
   ${sec('Log', '<b>Entries</b> are your notes and recalls. <b>Days</b> is one button per day showing what you finished, what you did not, and your notes. <b>Progress</b> shows your streak and trends.')}
   ${sec('Private by design', 'Your notes, logs and goals stay on your phone. There is no account. The free Play Store version shows a few ads on the Training and Teachings lists (a one-time purchase removes them and unlocks the advanced teachings); your own entries are never sent to anyone.')}`;
@@ -413,8 +413,8 @@ function Info() {
   ${lesson('funk')}
   ${lesson('bedtime')}
   <h2>General knowledge</h2>
-  ${ids}
   ${lesson('prep')}
+  ${ids}
   ${link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`)}
   ${link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">Why the short reminders, and what they are for</div>')}
   ${link(to('info:fast', '#fast'), `<b>${lk('info:fast')}Frequency Fast</b><div class="dim sm">A short challenge: fast from fear-based input</div>`)}
@@ -486,9 +486,9 @@ function Exercise(id) {
   return `${back('#practice')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>
   <div class="dim sm" style="margin:8px 0">${esc(ex.freq)} ${why}</div>
   ${ex.caution ? card(`<div class="warn sm">${esc(ex.caution)}</div>`, 'warnb') : ''}
+  <h2>Steps</h2>${ex.steps.map((s, i) => `<p style="white-space:pre-line">${i + 1}. ${esc(typeof s === 'string' ? s : s.t)}</p>`).join('')}
   <a class="btn" href="#guide/${id}">Start guided</a>
-  <button class="btn ghost" data-act="done:${id}">✓ Mark completed (${tallyOf(id)} today)</button>
-  <h2>Steps</h2>${ex.steps.map((s, i) => `<p style="white-space:pre-line">${i + 1}. ${esc(typeof s === 'string' ? s : s.t)}</p>`).join('')}`;
+  <button class="btn ghost" data-act="done:${id}">✓ Mark completed (${tallyOf(id)} today)</button>`;
 }
 
 function Chakras() {

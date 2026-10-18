@@ -1285,7 +1285,7 @@ export const CAT_TEACH = {
 };
 
 // Teaching blocks folded into one page: the four mental basics become one block, and Counterbalance lives inside Energy healing.
-CAT_TEACH.prep = { t: 'Mental and physical prep', one: 'Observe, hold, steer your attention, and steady your emotions', p: [],
+CAT_TEACH.prep = { t: 'Mental preparation', one: 'Observe, hold, steer your attention, and steady your emotions', p: [],
   sections: [
     { h: 'Observation', p: CAT_TEACH.observe.p },
     { h: 'Concentration', p: CAT_TEACH.concentrate.p },
@@ -1364,7 +1364,7 @@ CAT_TEACH.telepathy = { t: 'Telepathy', one: 'Sending, receiving, and telling yo
       'The teaching says that as the psychic centers develop you may begin to become aware of other people\'s thoughts. At first you take them for your own and do not realize you are picking up a signal from outside. With repetition you learn to tell which thoughts started with you and which came from another mind.',
       'It also says that a student may one day hear a voice speak their name when alone, and that this is read as a sign of progress. Treat anything of this kind as an experience to observe with a calm head, not as proof or as an instruction.' ] },
     { h: 'It begins with ordinary feelings', p: [
-      'Telepathy here starts with something everyone knows: feelings pass between people. See "Whose feeling is this?" in the Mental and physical prep teaching, and the Stranger\'s Face practice, which is described as the first step toward attuning with someone else.' ] },
+      'Telepathy here starts with something everyone knows: feelings pass between people. See "Whose feeling is this?" in the Mental preparation teaching, and the Stranger\'s Face practice, which is described as the first step toward attuning with someone else.' ] },
   ], more: ['mind', 'thoughts'], src: MYSTIC_SRC };
 const RV_SRC = ['American Institutes for Research. An Evaluation of the Remote Viewing Program: Research and Operational Applications (draft report), 22 September 1995. Prepared for the CIA; declassified copy CIA-RDP96-00791R000200180005-5, which includes the reviews by Jessica Utts and Raymond Hyman.'];
 CAT_TEACH.rv = { t: 'The CIA review of remote viewing', one: 'What a 1995 government evaluation found, the supporting and the sceptical side', origin: 'From a declassified document. This comes from a 1995 draft report that the American Institutes for Research prepared for the CIA on the Star Gate remote viewing program, released through the CIA reading room. It reports what the program\'s researchers, two expert reviewers and intelligence users found, including the parts that go against remote viewing. Read it and judge for yourself.', p: [
