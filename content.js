@@ -69,7 +69,7 @@ export const EXERCISES = [
     id: 'heal-others', cat: 'energy', title: 'Healing Others', mins: 15,
     freq: 'When asked',
     summary: 'Prime yourself, calm the patient, accumulate energy, then use the contact or radiation method.',
-    caution: 'Be in reasonably good health, with purity of motive. Never diagnose out loud. Never touch a patient unless they specifically ask for contact treatment — then light fingertip contact only, no rubbing or massage. Wash hands before and after.',
+    caution: 'This supports medical care and never replaces it. Be in reasonably good health, with purity of motive: your only aim is to help, not to show off. Never diagnose out loud. Never touch a patient unless they specifically ask for contact treatment — then light fingertip contact only, no rubbing or massage. Wash hands before and after.',
     steps: [
       { t: 'Prime yourself: bring first two fingers + thumb of each hand together (each hand separate). Visualize psychic energy pouring into you and accumulating at your heart, held there by will.', breath: { phases: [['Breathe in', 3], ['Hold', 7], ['Release slowly', 5]], reps: 3 } },
       'Calm the patient: have them relax and picture a quiet, unrippled forest pool mirroring white clouds in a blue sky. Narrate what you are doing as you go.',
@@ -77,6 +77,8 @@ export const EXERCISES = [
       'Contact method: touch index + middle finger + thumb together on the left side of the patient\'s spine between the shoulder blades (heart center). Release energy through — an open valve to an unlimited supply. Hold a clear visualization 30–40 sec; if it clouds, remove your hand, wait ~5 min, repeat from the breathing step.',
       'Radiation method: same, but no touch — stand where you can see the patient and visually direct the energy to the spot. Works at a distance too.',
       'Rhythm: 3 treatments per session, sessions every 2–3 hrs → results in ~12 hrs, often a cure in 24. Unknown ailment: direct energy to the heart center (back, left of spine, between shoulder blades).',
+      'The handoff: you use will while gathering energy, but the moment your attention turns to the patient, let the will go quiet and let love take over. Feel a generous, open-hearted love for them. As taught, this also keeps out fear and doubt.',
+      'Check yourself afterward. As taught, you should not end up drained or carrying their symptoms. If you do, take it as a sign that a step went wrong, most often the handoff to love, and go back over what you did.',
     ],
   },
 
@@ -87,6 +89,19 @@ export const EXERCISES = [
     steps: [
       "Tips of the first two right-hand fingers on the patient's left temple; index + middle of the left hand lightly on the right temple.",
       { t: 'Visualize energy flowing in through the right hand and out through the left.', secs: 180 },
+    ],
+  },
+  {
+    id: 'heal-aches', cat: 'energy', title: 'Easing Aches, Cuts and Scrapes', mins: 5,
+    freq: 'When asked, or for yourself',
+    summary: 'Deliver energy straight to the sore or injured spot. As taught, minor aches ease and small cuts and scrapes heal faster when energy is plentiful there.',
+    caution: 'This is for minor aches and small scrapes, and it supports medical care without replacing it. Broken bones, torn ligaments, a decayed or abscessed tooth, deep or bleeding wounds, and pain that is new, severe or lasting need a doctor or dentist. Wash hands before and after, and touch only with consent, lightly. For an injured animal, see a vet.',
+    steps: [
+      'Prime yourself as in Healing Others: first two fingers and thumb of each hand together, energy visualized pouring into you and gathering at your heart.',
+      'Turn your attention to the sore spot, or to the area just behind it on the spine if you are working through the back. Picture the energy flowing straight into it, bright and steady.',
+      'Keep the picture clear. When it clouds, stop and rest about five minutes, then start again from the first step.',
+      { t: 'Hold the flow.', secs: 180 },
+      'As the teaching puts it, you are giving the body extra energy for its own repair work. Let love do the sending, and leave the result to the body.',
     ],
   },
   {
@@ -101,6 +116,7 @@ export const EXERCISES = [
       'Go easy on alcohol, drugs, sugar, and heavily processed food.',
       'Cleanse or rest from food only when your body is clearly asking for it, and safely.',
       'Clean the inputs too: toxic media, fear-driven news, and endless drama. Choose what you let in.',
+      'Stop the leaks. As taught, worry, fear, resentment and hurry use up large amounts of energy, and everything you give your attention to takes some of it. Catch one of them each day and put it down. Appreciating a flower or a sunset gives energy back, and so does caring for someone without wanting anything in return.',
       'DO (from teachings associated with Dolores Cannon, in our own words)\n1. Meditate daily and seek quiet. Go within and listen.\n2. Watch your thoughts and words. Speak what you want as present tense, "I am", not "I want".\n3. Release fear. It is the biggest block.\n4. Eat high-vibration food: vegetables, fruit, pure water.\n5. Follow your passion. It is what you came to do.\n6. Practice love, compassion, and non-judgment, especially toward yourself.\n7. Trust your intuition and your body.\n8. Surround yourself with uplifting people and media, and get out in nature often.\n9. Let go of the past and live now.\n10. Be of service. Help others wake up by being an example.',
       "DON'T (from teachings associated with Dolores Cannon, in our own words)\n1. Don't soak in fear-based news or negativity.\n2. Don't speak lack. Skip \"I want\".\n3. Don't let the critical mind override what you sense.\n4. Don't judge or condemn others. Different paths, same destination.\n5. Don't dwell on drama, grudges, or the past.\n6. Don't poison the body: excess alcohol, drugs, sugar, processed food.\n7. Don't hand your choices to anyone, not gurus, governments, or doctors. Take their advice, then decide for yourself, and keep seeing your doctor.\n8. Don't resist change. Flow with it.\n9. Don't ignore your body or its messages.\n10. Don't take \"I don't belong here\" as the truth. You came here on purpose, and you are exactly where you chose to be.",
     ],
@@ -176,7 +192,7 @@ export const EXERCISES = [
     id: 'conc-stranger', cat: 'concentrate', title: 'The Stranger\'s Face', mins: 2,
     freq: 'As opportunities arise — the advanced one, builds toward attunement',
     summary: 'Passing a stranger, hold their face in your mind\'s eye.',
-    steps: ["Passing a stranger: look closely at their face a moment, look away, hold that face in your mind's eye for 1+ minute, study its expression."],
+    steps: ["Passing a stranger: look closely at their face a moment, look away, hold that face in your mind's eye for 1+ minute, study its expression.", 'Ask what they seem to be feeling. As taught, with practice you may sense the dominant feeling behind the face. Note it lightly and let it go; it is a sense, not a fact about them.'],
   },
 
   // ---------- Meditation ----------
@@ -397,7 +413,7 @@ export const EXERCISES = [
   {
     id: 'med-love', cat: 'meditate', title: 'Meditation of Love', mins: 15,
     freq: 'Repeat for many days before results show',
-    summary: 'Send a pink cloud of good will to a person, group, or entity. Modest effort.',
+    summary: 'Send a pink cloud of good will to a person, group, or entity. Modest effort. Done daily for about fifteen minutes, the teaching says the sender gains too: a closer rapport with the people they send to, a clearer view of their own mistakes and blind spots, and a sense of inner strength.',
     caution: "Don't desire or foresee a specific result — no planning the outcome. Leave the manifestation to the intelligence of the soul force behind the energy.",
     steps: [
       'Create a feeling of love, warmth, and good will in your breast, near your heart. Visualize it as a glowing pink aura emanating from the heart, completely surrounding your body.',
@@ -1137,11 +1153,15 @@ export const CAT_TEACH = {
   observe: { t: 'Observation', one: 'See what is actually there', p: [
     'Observation is noticing what is really in front of you (details, positions, sounds) without adding commentary. Most of the day we run on autopilot and see our expectations instead of the scene.',
     'Everything else rests on accurate input. New-Room Recall, Stair Count and Evening Recall train you to look carefully and then check what you took in against reality. Deliberate noticing tends to improve memory for detail and keeps you in the present moment.',
-    'Short and often works best. Missing details is not failure; it shows you what to notice next time.' ] },
+    'Short and often works best. Missing details is not failure; it shows you what to notice next time.',
+    'The method is old. It is told of the Buddha that he would stop mid-lesson and ask his students where he had been standing when he said a certain word, or what his right hand had been doing when he spoke of beauty. The questions were simple on purpose. They trained students to be present enough to answer them.',
+    'The Rosicrucian teaching treats these exercises as the first step in learning to "take hold of a thought". They take seconds, they are meant to become nearly automatic, and they are easy to underrate. The simplicity is the point.' ] },
   concentrate: { t: 'Concentration', one: 'Hold one thing steady', p: [
     'Concentration is keeping your attention on one thing and bringing it back when it slips. It is the muscle underneath every other practice.',
     'The exercises are deliberately demanding (mental multiplication, memorizing lines, holding a stranger\'s face, the 17-second pure thought, a focus block) so that there is something firm to hold. The Attention lesson explains how concentration differs from attention.',
-    'Every time you notice a wander and return, that is one rep. The returning is the training.' ] },
+    'Every time you notice a wander and return, that is one rep. The returning is the training.',
+    'If you already concentrate well at work, these still apply. The teaching says the difference is that here it is a deliberate act of will, not something a pressing need forces out of you. The aim is to find the handle on your own attention, so that you can pick it up whenever you choose.',
+    'The Stranger\'s Face is a step beyond the others. As taught, after some practice you start to sense the dominant feeling behind the face you are holding, often fear, sometimes compassion, joy or anger. Treat that as something to notice, not as a fact about the person.' ] },
   meditate: { t: 'Meditation', one: 'Concentration turned inward', p: [
     'Meditation is concentration turned inward and kept up until the mind settles. The forms differ (breath, a color, a sound, stillness, a feeling like love) but the move is the same: rest your attention on one thing, notice when it leaves, and come back.',
     'Regular practice is linked in research to calmer stress responses and steadier attention, and it builds gradually. The goal is not an empty mind. A short sit every day does more than a long one now and then.',
@@ -1247,7 +1267,10 @@ export const CAT_TEACH = {
   centers: { t: 'Psychic centers', one: 'The advanced center work', p: [
     'This series works with centers in the heart, head and throat in a set order: Heart first, then Pituitary, Pineal, Throat, and only then the combined attunement.',
     'The order is taught because each stage builds what the next one leans on. As taught, the early stages bring sharper observation and a steadier mind, and the later ones build on that.',
-    'Take it in order and give each stage steady effort before the next.' ] },
+    'Take it in order and give each stage steady effort before the next.',
+    'The head center is described as two halves. The lower half, the pituitary, takes in the energies of the physical and emotional world. The upper half, the pineal, is said to be where your higher self and deeper knowing reach you. As both develop, the teaching says they grow and form a link between them, called the bridge. At first the link is narrow, and you may get occasional intuitive flashes. As the work continues it widens, and intuition and understanding grow with it.',
+    'The teaching is careful to say this bridge is in the psychic sense, not a physical structure, and nothing is cut or changed in the body. It also says to build up gradually. Rushing the later steps does no harm, but it does no good either.',
+    'It describes what students may notice along the way, and says to treat these as signs of progress and not as goals: a sharper memory and quicker thinking from the early work, and later a sense of picking up other people\'s thoughts, which at first feel like your own. See the Telepathy lesson for more.' ] },
   journey: { t: 'Inner journeys', one: 'Go inward and allow what comes', p: [
     'Inner journeys use deep relaxation and a guided scene (a staircase, a library, a meeting place) to open the inner space and receive what comes.',
     'The only rule is to allow it. Do not force the images and do not judge them. Let the scene unfold and ask what you want to know.',
@@ -1268,8 +1291,104 @@ CAT_TEACH.prep = { t: 'Mental and physical prep', one: 'Observe, hold, steer you
     { h: 'Concentration', p: CAT_TEACH.concentrate.p },
     { h: 'Attention', p: [ATTN_LESSON.intro] },
     { h: 'Emotional control', p: [...CAT_TEACH.emotion.p, ...CAT_TEACH.slow.p] },
+    { h: 'Whose feeling is this?', p: [
+      'The teaching says that most of what you feel is not self-generated. Emotion moves between people the way weather moves over water, and we are like fish in that sea. Sometimes it is rough and we get tossed about, and sometimes it is calm. It travels most strongly when people are close together.',
+      'The example given is a man on a train who noticed he felt indignant for no reason. He looked around, saw everyone reading about a riot, and realized the feeling belonged to the carriage. When a friend arrives with a long face and a grievance, you can listen without taking on the mood. You do not need to be cold. You just do not go in with them.',
+      'Once you see a feeling is not yours, you can step out of it, like stepping out of a shower or a cloak. The book adds a fair warning: you have to want to. Some borrowed feelings are exciting or pleasant, and you may not want to let them go. Borrowed calm and love work the same way, and you can benefit from them.',
+      'It also says popular opinion is emotionally charged, and you can step out of that too.' ] },
+    { h: 'Use the mind, not the will', p: [
+      'The teaching says the mind is stronger than the emotions and should be used to cut away unwanted feeling and to examine your own unwelcome emotions. The example is fear. Ask: what is there to fear? I am secure. I have faced this, or something like it, before without disaster. So why fear?',
+      'It stresses that this uses the mind and not the will. Forcing a feeling down with will leads to suppression and sometimes to an unexpected outburst. Redirecting it, as with the craving for dessert that you meet with fruit, does not.',
+      'Every emotion has a higher and a lower side. Love of self and love of others is one pair, and fear and trust is another. The practice is to examine each emotion and, if you find the lower side, move it toward the higher.' ] },
+    { h: 'The quiet ones: pride, self-righteousness, vanity', p: [
+      'The obvious feelings are the easy ones to clear. Pride, self-righteousness and vanity are harder, because they can steer your decisions for years without being noticed. As you clear the more obvious feelings, the teaching says these reveal themselves a little at a time.',
+      'It says they are deeply ingrained, and the way through is the unglamorous one: decide, keep going, and each time you slip, pick yourself up and begin again.' ] },
+    { h: 'Emotional and etheric energy', p: [
+      'The teaching describes several kinds of life energy. Etheric energy is the slowest and closest to physical. It works the body and is used mostly automatically, and with training it can be directed, as in physical healing. Emotional energy is made by the solar plexus, the most open center in most people, which is why most people act on emotional impulse.',
+      'It says that because of this there is a block to using the full power of the mind until the emotions are brought under the mind\'s direction. That is why emotional control comes first in this path.' ] },
   ],
   links: [{ href: '#attn', t: 'Attention: narrow and wide', one: 'The full lesson, then switch the practices on' }] };
-CAT_TEACH.energy.sections = [{ h: CAT_TEACH.balance.t, p: CAT_TEACH.balance.p }];
+CAT_TEACH.energy.sections = [
+  { h: CAT_TEACH.balance.t, p: CAT_TEACH.balance.p },
+  { h: 'Three ways a healing happens', p: [
+    'The Rosicrucian teaching names three routes. The first is treatment by a doctor, in any of its schools. It values them highly, says to consult them whenever there is need, and notes that you place yourself in their hands and are largely passive.',
+    'The second is work with a trained practitioner on the mental and emotional causes of illness, where you take an active part. The third is psychic energy, which it calls the energy that creates and supports life and the best healer when it is present in good supply. It says all three have their place.',
+    'Here the energy practices are treated as a supplement to the first two, never a replacement. If you are unwell, start with a doctor.' ] },
+  { h: 'Where energy work stops', p: [
+    'The teaching is clear about limits. If physical damage has gone too far, energy work will not undo it. A decayed tooth with an abscess is better removed or treated. Broken bones should be set by a competent specialist, and torn ligaments are better repaired by surgery than left to grow back together.',
+    'It says energy treatments can and should go alongside that care, and reports that recovery is often fast. Take that as support for treatment, not an alternative to it.' ] },
+  { h: 'Aches, cuts and scrapes', p: [
+    'As taught, psychic energy is the energy of life. A person with plenty of it resists infection and illness, and small cuts, wounds and scrapes heal faster where it is plentiful. Giving someone extra energy helps them free themselves.',
+    'For an ache or pain, the method is to deliver energy straight to the sore spot. The book also says a pain that keeps returning usually has an emotional cause worth looking for. It tells of a student who treated an injured dog this way. That is one person\'s report, so read it as a story and not as evidence. For a real injury, an animal needs a vet.' ] },
+  { h: 'The healer\'s side', p: [
+    'The teaching gives the healer a short list. Be in good health. Have purity of motive, meaning your only aim is to help the other person and not to show off. You do not have to be perfect, only sincere.',
+    'It adds that will gathers the energy but love must do the giving. If you feel drained afterward, or you pick up the other person\'s symptoms, it says a step went wrong and you should go back over it.',
+    'It also says never to diagnose aloud, and that most places forbid anyone but a licensed doctor to diagnose or prescribe. Treatment here is applied "in a super-physical way, somewhat like prayer", so the energy work does not break those laws, provided you stay out of diagnosis.' ] },
+  { h: 'Do not withhold help over karma', p: [
+    'Students often ask whether healing someone disturbs their karma. The answer given is no. The teaching says karma is more complex than a simple eye-for-an-eye penalty, and asks: who are you to judge, and how would you know when the moment for mercy has come? Learn how to help and give where you can.' ] },
+  { h: 'Quiet healing, anywhere', p: [
+    'The book describes small acts of this kind. On a bumpy flight, someone calmed a frightened baby by sending it a feeling of warmth and security. On a late train, a student sent a feeling of love toward a drunk man who was provoking a stranger, and the man soon calmed down. These are reported experiences, offered as examples of the same idea: you can send calm to someone close by.' ] },
+  { h: 'Do not waste your energy', p: [
+    'After teaching how to build energy, the book says to conserve it. Worry, fear, resentment and hurry are the big drains. Whatever you turn your attention to receives some of your energy. You get some back when you take in beauty or care for someone unselfishly, and you give much of it away through unnecessary looking and reacting. Laughter, beauty and clear thought are called healers too.' ] },
+];
+const MYSTIC_SRC = ['Wisdom of the Mystic Masters (Rosicrucian teaching), the chapters on first steps to the control of your destiny, controlling mental and psychic energy, physical, etheric and emotional energy, healing through the power of psychic energy, achieving psychic development, and the power of prayer.'];
+CAT_TEACH.mind = { t: 'Brain and mind', one: 'Thought as an activity of the mind, and who is in charge', p: [
+  'The Rosicrucian teaching separates the brain from the mind. Thought, it says, is an activity of the mind, and the mind can work apart from the brain. Most of us are trained from birth to notice only what arrives through the senses and is recorded in the brain, so all our reasoning and almost all our remembering goes through brain tissue.',
+  'Even abstractions like love, fear, patriotism and ideas like "dog" or "house" are not physical, the teaching points out. Yet each one calls up a picture on what it calls the inner screen of the brain. We lean on the brain so heavily that we seldom reach for what the mind itself holds.',
+  'The brain is called a wonderful and useful tool. For creative work of the highest order, it says, the brain can act like a straitjacket on the mind. That is why the practices move from observation and concentration, which put the brain to work where you can watch it, on to meditation, where you learn to think consciously without leaning on it.' ],
+  sections: [
+    { h: 'The mind is meant to rule', p: [
+      'The teaching calls the mind the kingly part of a person, meant to guide our lives, yet most of us use it as a servant to our appetites and emotions. It says the mind puts up with this reluctantly and protests, and that we usually miss the protests, which can show up as illness and trouble.',
+      'It describes a person as three parts that are really one: physical, emotional and mental. The aim is not to switch off the body or the feelings. It is to put the mind back in the lead. The simple exercises at the start of the path are described as a gentle way of doing that.' ] },
+    { h: 'Appetite: guide it, do not crush it', p: [
+      'Physical appetites are not to be blocked or denied, the teaching says, because suppression ends in an explosion. They are to be guided and redirected. If you want a rich dessert you know is not good for you, take fruit rather than nothing.',
+      'It also reads the old advice to "kill out desire" as meaning that you should not destroy your emotions, because you would be only half human without them. The way is redirection.' ] },
+  ], src: MYSTIC_SRC };
+CAT_TEACH.thoughts = { t: 'Guiding your thoughts', one: 'Practical rules for thinking clearly, and why clarity matters', p: [
+  'The Rosicrucian teaching says the most important factor in bringing a thought into physical effect is the clarity of the visualization that goes with it. It treats this at length in its chapter on prayer.',
+  'It then passes on a few practical suggestions from an advanced student, for anyone who has practiced the training exercises for a few weeks and has begun to see how to use their mind.' ],
+  sections: [
+    { h: 'Think in an orderly way', p: [
+      'People who think chaotically are like people waving their hands in the dark, unaware of what they hit. We cannot avoid thinking, so it is better to think in order. As soon as you notice a negative thought, push it out. Replace aimless thoughts with precise ones, which the teaching says are actually less tiring. Each person should work out their own path of logical thought.' ] },
+    { h: 'Avoid distorted thinking', p: [
+      'Many pieces of "bad luck" can be traced to untruthful or distorted thinking, including prejudice. The teaching says dark thoughts come back like a boomerang, and asks you to stop sending them out. It admits this is hard, since most people are so shaped by unconscious thoughts and prejudices that they cannot tell whether they are thinking clearly, and so they never see the link when things go wrong.' ] },
+    { h: 'Add a positive attitude', p: [
+      'Beyond correcting and balancing, it advises adding good will. A benediction sent into the world is called the purest and finest form of thought energy, and it says your own projects grow by it.',
+      'It also says that wanting advancement, better standing and approval is normal and hard to get rid of. The better course is to steer those wants toward higher aims, because the same action aimed higher is a step in the right direction. No one is perfect overnight. The promise is that as you handle the tools of thought better, you grow happier, better adjusted and more at peace.' ] },
+  ], more: ['mind'], src: MYSTIC_SRC };
+CAT_TEACH.telepathy = { t: 'Telepathy', one: 'Sending, receiving, and telling your thoughts from other people\'s', p: [
+  'The Rosicrucian teaching says it will matter more and more to know when you are responding to telepathic suggestions, and eventually to use telepathy on purpose. It takes the view that if you are reading this, you already have the ability to send and receive mental messages.',
+  'It describes three broad kinds of telepathy. The first it stresses most: telepathy within the individual, a communication between the higher self and the brain, which the Rosicrucians call Cosmic Contact. The pages that describe the other two are not included in what has been brought into this app yet.' ],
+  sections: [
+    { h: 'Telling your thoughts from theirs', p: [
+      'The teaching says that as the psychic centers develop you may begin to become aware of other people\'s thoughts. At first you take them for your own and do not realize you are picking up a signal from outside. With repetition you learn to tell which thoughts started with you and which came from another mind.',
+      'It also says that a student may one day hear a voice speak their name when alone, and that this is read as a sign of progress. Treat anything of this kind as an experience to observe with a calm head, not as proof or as an instruction.' ] },
+    { h: 'It begins with ordinary feelings', p: [
+      'Telepathy here starts with something everyone knows: feelings pass between people. See "Whose feeling is this?" in the Mental and physical prep teaching, and the Stranger\'s Face practice, which is described as the first step toward attuning with someone else.' ] },
+  ], more: ['mind', 'thoughts'], src: MYSTIC_SRC };
+const RV_SRC = ['American Institutes for Research. An Evaluation of the Remote Viewing Program: Research and Operational Applications (draft report), 22 September 1995. Prepared for the CIA; declassified copy CIA-RDP96-00791R000200180005-5, which includes the reviews by Jessica Utts and Raymond Hyman.'];
+CAT_TEACH.rv = { t: 'The CIA review of remote viewing', one: 'What a 1995 government evaluation found, the supporting and the sceptical side', origin: 'From a declassified document. This comes from a 1995 draft report that the American Institutes for Research prepared for the CIA on the Star Gate remote viewing program, released through the CIA reading room. It reports what the program\'s researchers, two expert reviewers and intelligence users found, including the parts that go against remote viewing. Read it and judge for yourself.', p: [
+  'Remote viewing is the claimed ability to describe a place or object you have not seen. From the 1970s, US intelligence agencies funded research on it, mostly at SRI and then at SAIC, and also tried it on real intelligence questions. The program was known as Star Gate. In 1995 the CIA asked the American Institutes for Research to review it, so a decision could be made about taking it over.',
+  'The review was in two parts. A research panel looked at about 80 laboratory publications. It was led by two experts chosen to stand on opposite sides: Dr. Jessica Utts, a statistician who has written favorably about the evidence, and Dr. Raymond Hyman, a psychologist known as a fair-minded sceptic. The second part asked the intelligence users who had received remote viewings how useful they were.' ],
+  sections: [
+    { h: 'What the laboratory work found', p: [
+      'In a typical experiment a viewer describes a target, often a National Geographic photograph that a sender is looking at in another place. A judge then checks whether the description matches the real target better than the decoys. Across the SRI and SAIC experiments, Utts counted 227 subjects and over a thousand lab viewings. She reports odds far beyond chance and says some explanation other than chance has to be found.',
+      'Both reviewers agreed on the key point. A statistically significant effect was found, and the later experiments fixed the weaknesses of the early ones. Hyman states that the effects are too large and consistent to be dismissed as statistical flukes.',
+      'Utts also lists several patterns. Free description of a target worked much better than forced choices. About one in a hundred volunteers screened were consistently good at it, and a small group of six selected people did far better than the rest, so the ability seems to vary between people like athletic or musical talent. Practice and training did not reliably improve it, and it appeared easier to find good viewers than to train them. Distance did not seem to matter, and electromagnetic shielding did not seem to block it. She also reports compelling results when the target was chosen after the description was given.',
+      'The report notes that some researchers have proposed that everyone has the ability to a greater or lesser degree. The data in this report do not settle that, and what it describes is wide differences between people.' ] },
+    { h: 'The experiment on being watched', p: [
+      'One experiment was unlike the rest. A person sat in a room with a camera on them while their skin conductance (a measure of arousal) was recorded. In a distant room another person tried to influence them at random 30-second periods, during which their image was on a monitor. In control periods it was not.',
+      'There was more skin response during the watched periods, in two separate runs (p = .036 and p = .014, and .005 combined). The effect was stronger for pairs of opposite sexes. The report says this suggests the old idea that people know when they are being watched, and says the result raises more questions than it answers. The cause is unknown. It could be that the watched person sensed when their image was displayed, or that the other person really did influence them.',
+      'Other experiments in the same series did not support a claim. One tried to detect signals in the brain with a magnetometer and the researchers realized too late that they could not have detected them. Another found no change in alpha waves, and the report found no evidence for influencing physical objects.' ] },
+    { h: 'Where the two reviewers differed', p: [
+      'Utts concluded that psychic functioning has been well established by the standards of any other science, and that research should now turn to how it works.',
+      'Hyman, who says he played devil\'s advocate in his review, argued that a significant effect does not prove it is paranormal. The same viewers, the same judge and the same targets were often used, so their effects could not be separated, and the effect has not been replicated independently. He still said the SAIC studies were far better than earlier work, that the results did not come from the obvious flaws, and that it was worth testing whether other laboratories get the same results.',
+      'The report\'s own conclusion was that a laboratory effect has been shown, but not that it comes from a paranormal cause, and that the causes of a hit have not been identified.' ] },
+    { h: 'Did it work for intelligence?', p: [
+      'The intelligence users judged it to be of limited use. The viewings were inconsistent, often wrong about specifics, and needed a lot of interpretation. They were never used as the main evidence for a decision, and no operation was ever guided by them. The report concluded that remote viewing did not produce actionable intelligence and that continuing it was not warranted.',
+      'Still, the users said it had some value for filling in broad background information, for example about people, when that information could not be got another way. The most positive users said to treat it only as a supplement. The review also found that the better ratings tended to come from viewers who already knew a lot about the target, so it is hard to separate what they sensed from what they already knew.' ] },
+    { h: 'How to read it', p: [
+      'This is a draft, written for people deciding whether a program was worth funding, not for people deciding whether the ability is real. It shows two serious scientists agreeing that something statistically unusual happened in the lab, and disagreeing about what it means. That is a reason to stay curious. It is not proof that anyone can do this, and the document does not claim that.' ] },
+  ], src: RV_SRC };
 // Where the "Why this?" link of a practice category should go.
 export const TEACH_BLOCK = { observe: 'prep', concentrate: 'prep', attention: 'prep', emotion: 'prep', balance: 'energy' };

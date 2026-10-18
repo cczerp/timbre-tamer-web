@@ -66,5 +66,7 @@ input[type=text] { font-size: 16px; }
 h3 { font-size: 18px; color: var(--pd); margin: 14px 0 6px; } .bul.dis { opacity: .38; pointer-events: none; }
 .sqbtn { flex: none; width: 48px; height: 48px; display: grid; place-items: center; border: 2px solid var(--accent); border-radius: 12px; color: var(--accent); font-size: 14px; font-weight: 700; text-decoration: none; }
 
-.fold { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-h3.fold { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.fold { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin: 0; padding: 12px 2px; }
+.foldbox { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 2px 12px 2px; margin: 0 0 12px; }
+.foldbox .foldbox { background: transparent; margin: 0 0 8px; }
+.foldbox .card { background: var(--bg); }

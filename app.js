@@ -396,7 +396,7 @@ function Tour() {
   <p class="dim">What you will find on each page.</p>
   ${sec('Today', 'Your day at a glance, one bubble per goal. Tap <b>✓ Done</b> when you finish one (it goes into your Log with the time) or <b>Rules</b> to read it first. Finished goals disappear, and finishing them all earns a small celebration. The big <b>I\'m in a funk</b> button gives a short reset and plays your own songs.')}
   ${sec('Training', 'The library of guided practices: sitting practice, mental training exercises, chakra meditations, energy healing, and esoteric meditations. Open one to read how it works, or press <b>Start guided</b> to be walked through one step at a time, with optional timers.')}
-  ${sec('Teachings', 'Reading, not doing: the teachings behind each practice, supporting habits (with the do\'s and don\'ts), life cycles, the chakra reference, and the credits.')}
+  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, the Funk Reset and Bedtime. <b>General knowledge</b> holds supporting habits (with the do\'s and don\'ts), mental and physical prep, life cycles, the sayings, the Frequency Fast and the two CIA documents. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
   ${sec('Settings', 'Where you set it up your way. Choose which exercises count as goals for each area, how many reminders you want and when, the leave-home reminders, the funk playlist, the mindfulness sayings, and your backup. The small <b>Log</b> button in the top right corner opens your log.')}
   ${sec('Log', '<b>Entries</b> are your notes and recalls. <b>Days</b> is one button per day showing what you finished, what you did not, and your notes. <b>Progress</b> shows your streak and trends.')}
   ${sec('Private by design', 'Your notes, logs and goals stay on your phone. There is no account. The free Play Store version shows a few ads on the Training and Teachings lists (a one-time purchase removes them and unlocks the advanced teachings); your own entries are never sent to anyone.')}`;
@@ -404,18 +404,24 @@ function Tour() {
 function Info() {
   const lk = (key) => (locked(key) ? '🔒 ' : '');
   const to = (key, route) => (locked(key) ? `#unlock/${key}` : route);
+  const lesson = (c) => link(to('cat:' + c, `#learn/${c}`), `<b>${lk('cat:' + c)}${esc(CAT_TEACH[c].t)}</b><div class="dim sm">${esc(CAT_TEACH[c].one)}</div>`);
   const ids = TEACH.map((id) => exById[id]).map((e) => link(to(e.id, `#ex/${e.id}`), `<b>${lk(e.id)}${esc(e.title)}</b><div class="dim sm">${esc(e.summary)}</div>`)).join('');
   return `<h1>Teachings</h1>
   <h2>Info</h2>
   ${link('#tour', '<b>A quick tour</b><div class="dim sm">What is on each page</div>')}
+  ${link('#about', '<b>Credits</b><div class="dim sm">With gratitude</div>')}
+  ${lesson('funk')}
+  ${lesson('bedtime')}
+  <h2>General knowledge</h2>
+  ${ids}
+  ${lesson('prep')}
+  ${link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`)}
   ${link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">Why the short reminders, and what they are for</div>')}
   ${link(to('info:fast', '#fast'), `<b>${lk('info:fast')}Frequency Fast</b><div class="dim sm">A short challenge: fast from fear-based input</div>`)}
-  ${link('#about', '<b>Credits</b><div class="dim sm">With gratitude</div>')}
   ${link(to('cat:assessment', '#learn/assessment'), `<b>${lk('cat:assessment')}The CIA assessment of the Gateway Experience (GWE)</b><div class="dim sm">A 1983 evaluation released by the CIA, and the model behind it</div>`)}
-  <h2>General knowledge that helps with the practices</h2>
-  ${ids}
-  ${LEARN.map((c) => link(to('cat:' + c, `#learn/${c}`), `<b>${lk('cat:' + c)}${esc(CAT_TEACH[c].t)}</b><div class="dim sm">${esc(CAT_TEACH[c].one)}</div>`)).join('')}
-  ${link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`)}`;
+  ${lesson('rv')}
+  <h2>Learn the practices</h2>
+  ${['meditate', 'mind', 'thoughts', 'energy', 'chakra', 'centers', 'journey', 'project', 'telepathy'].map(lesson).join('')}`;
 }
 let priceOf = {}; let unlockKey = '';
 const TEACH = ['energy-habits']; // reading pages kept as entries, shown in Info with no guided run
@@ -443,7 +449,7 @@ function Practice() {
   const row = (e) => link(locked(e.id) ? `#unlock/${e.id}` : `#ex/${e.id}`, `<b>${locked(e.id) ? '🔒 ' : ''}${esc(e.title)}</b><div class="dim sm">${esc(e.freq)}</div>`);
   const ids = (list) => list.map((id) => exById[id]).filter(Boolean).map(row).join('');
   const cats = (cat, skip = []) => EXERCISES.filter((e) => e.cat === cat && !e.hidden && !gated(e.id) && !skip.includes(e.id)).map(row).join('');
-  const fold = (key, label, inner, tag = 'h2') => (inner ? `<${tag} class="fold" data-act="topen:${key}"><span>${label}</span><span class="dim">${trOpen[key] ? '▴' : '▾'}</span></${tag}>${trOpen[key] ? inner : ''}` : '');
+  const fold = (key, label, inner, tag = 'h2') => (inner ? `<div class="foldbox"><${tag} class="fold" data-act="topen:${key}"><span>${label}</span><span class="dim">${trOpen[key] ? '▴' : '▾'}</span></${tag}>${trOpen[key] ? inner : ''}</div>` : '');
   const knowledge = TEACH; // shown on the Teachings page
   const medPractice = ['med-practice', 'med-cloud', 'med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love'];
   const emo = cats('emotion') + link('#scale', '<b>Climbing the Scale</b><div class="dim sm">Tell it what you feel. It walks you up, one rung at a time</div>') + link('#wheel', '<b>Focus Wheel</b><div class="dim sm">Build 12 believable statements toward what you want</div>');
@@ -472,7 +478,7 @@ function Warn(id) {
     <a class="btn ghost" href="#practice">Go back</a>`;
 }
 
-const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'centers', 'journey', 'project'];
+const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'centers', 'journey', 'project', 'mind', 'thoughts', 'telepathy', 'rv'];
 function Exercise(id) {
   const ex = exById[id]; if (!ex) return back() + '<p>Not found.</p>';
   if (TEACH.includes(id)) return `${back('#info')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>${ex.steps.map((t) => card(`<div class="sm" style="white-space:pre-line">${esc(typeof t === 'string' ? t : t.t)}</div>`)).join('')}`;
@@ -500,7 +506,8 @@ function About() {
     <li><b>Barbara Marciniak</b>, <b>Neville Goddard</b>, <b>Bashar</b>, and <b>Esther and Abraham Hicks</b> — the whim, now-point, belief-audit, fast, breath, bedtime-loop, emotional-scale and manifestation practices, and the sayings inspired by them, in our own words</li>
     <li><b>Randall L. Waechter and Lauren Sergio</b>, and the researchers they draw on (Burr, Baule and McFee, Schumann, Oschman, Becker) — the teaching on energy and the body's fields, from their paper in <i>Subtle Energies &amp; Energy Medicine</i></li>
     <li><b>Lt. Col. Wayne M. McDonnell</b> and the <b>US Army Intelligence and Security Command</b>, whose 1983 Analysis and Assessment of Gateway Process (a declassified copy, released through the CIA reading room) is the source of the teachings on meditation, hypnosis and biofeedback, Hemi-Sync, kundalini and resonant sound, color and the energy bar, how a Gateway session runs and the model behind it, and out-of-body movement, and the people it draws on: <b>Itzhak Bentov</b>, <b>Robert Monroe</b> and the Monroe Institute (<b>Melissa Jager</b>, <b>Stuart Twemlow</b>), <b>Lee Sannella</b>, <b>Ronald Stone</b>, <b>Karl Pribram</b> and <b>David Bohm</b></li>
-    <li><b>Wisdom of the Mystic Masters</b> — the mental training, meditation, healing, projection, and cycles teachings</li>
+    <li><b>The American Institutes for Research</b>, <b>Jessica Utts</b> and <b>Raymond Hyman</b> — the 1995 evaluation of the remote viewing program (a declassified copy, released through the CIA reading room), the source of the lesson on what it found</li>
+    <li><b>Wisdom of the Mystic Masters</b> — the mental training, meditation, healing, projection, thought, emotion, telepathy, and cycles teachings</li>
     <li>The yogic, tantric, and Rosicrucian traditions all of the above draw on</li>
     <li>Every teacher, student, and practitioner who passed these on</li>
   </ul>
@@ -524,7 +531,7 @@ function Why() {
 function Learn(c) {
   const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
   return `${back('#info')}<h1>${esc(t.t)}</h1><p class="dim">${esc(t.one)}</p>
-  ${t.origin ? card('<div class="sm"><b>From a declassified document.</b> This comes from a 1983 US Army Intelligence and Security Command assessment of the Gateway Process, written by Lt. Col. Wayne McDonnell and released through the CIA reading room. It reports what the author and his sources describe. Read it and judge for yourself.</div>', 'accent') : ''}
+  ${t.origin ? card(typeof t.origin === 'string' ? `<div class="sm"><b>${esc(t.origin.split('. ')[0])}.</b> ${esc(t.origin.slice(t.origin.indexOf('. ') + 2))}</div>` : '<div class="sm"><b>From a declassified document.</b> This comes from a 1983 US Army Intelligence and Security Command assessment of the Gateway Process, written by Lt. Col. Wayne McDonnell and released through the CIA reading room. It reports what the author and his sources describe. Read it and judge for yourself.</div>', 'accent') : ''}
   ${(t.p || []).map((x) => card(`<div class="sm">${esc(x)}</div>`)).join('')}
   ${(t.sections || []).map((x) => `<h3>${esc(x.h)}</h3>` + x.p.map((y) => card(`<div class="sm">${esc(y)}</div>`)).join('')).join('')}
   ${t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : ''}
