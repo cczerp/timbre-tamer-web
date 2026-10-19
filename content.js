@@ -15,6 +15,7 @@ export const CATS = {
   centers: 'Psychic centers',
   chakra: 'Chakra alignment',
   attention: 'Attention',
+  spatial: 'Spatial awareness',
   project: 'Projection',
 };
 
@@ -55,7 +56,6 @@ export const EXERCISES = [
     id: 'white-light', cat: 'energy', title: 'Light Scan Healing', mins: 5,
     freq: 'As soon as trouble starts, or a few times a day',
     summary: 'Scan the body, then bring light to where it is needed. Several ways in; use the one that works for you.',
-    caution: 'If pain is too severe to visualize clearly, get another healer to treat you instead. Pain that is new, severe, or lasting needs a doctor: listening to your body does not replace medical care.',
     steps: [
       'Sit in a comfortable chair, head erect, spine straight, feet apart, hands unclasped in lap. Or lie down. Breathe slowly.',
       'Scan from head to feet. Where is there tension, ache, heaviness, or ease? What does the body crave, and what does it turn away from? Ask the part that speaks up: "What do you need?"',
@@ -66,38 +66,35 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'heal-others', cat: 'energy', title: 'Healing Others', mins: 15,
+    id: 'heal-others', cat: 'energy', info: true, title: 'Sending Energy to Other Beings', mins: 15,
     freq: 'When asked',
-    summary: 'Prime yourself, calm the patient, accumulate energy, then use the contact or radiation method.',
-    caution: 'This supports medical care and never replaces it. Never diagnose out loud. Never touch a patient unless they specifically ask for contact treatment, and then use light fingertip contact only, no rubbing or massage. Wash hands before and after. The healer\'s side, in the Energy healing teaching, covers the rest.',
+    summary: 'Prime yourself, calm the being you are sending to, accumulate energy, then use the contact or radiation method.',
     steps: [
       { t: 'Prime yourself: bring first two fingers + thumb of each hand together (each hand separate). Visualize psychic energy pouring into you and accumulating at your heart, held there by will.', breath: { phases: [['Breathe in', 3], ['Hold', 7], ['Release slowly', 5]], reps: 3 } },
-      'Calm the patient: have them relax and picture a quiet, unrippled forest pool mirroring white clouds in a blue sky. Narrate what you are doing as you go.',
+      'Calm the being you are sending to: have them relax and picture a quiet, unrippled forest pool mirroring white clouds in a blue sky. Narrate what you are doing as you go.',
       'Accumulate energy again: breath/visualization, energy pooling at your heart.',
-      'Contact method: touch index + middle finger + thumb together on the left side of the patient\'s spine between the shoulder blades (heart center). Release energy through — an open valve to an unlimited supply. Hold a clear visualization 30–40 sec; if it clouds, remove your hand, wait ~5 min, repeat from the breathing step.',
-      'Radiation method: same, but no touch — stand where you can see the patient and visually direct the energy to the spot. Works at a distance too.',
+      'Contact method: touch index + middle finger + thumb together on the left side of the being\'s spine between the shoulder blades (heart center). Release energy through — an open valve to an unlimited supply. Hold a clear visualization 30–40 sec; if it clouds, remove your hand, wait ~5 min, repeat from the breathing step.',
+      'Radiation method: same, but no touch — stand where you can see the being and visually direct the energy to the spot. Works at a distance too.',
       'Rhythm: 3 treatments per session, sessions every 2–3 hrs → results in ~12 hrs, often a cure in 24. Unknown ailment: direct energy to the heart center (back, left of spine, between shoulder blades).',
-      'The handoff: you use will while gathering energy, but the moment your attention turns to the patient, let the will go quiet and let love take over. Feel a generous, open-hearted love for them. As taught, this also keeps out fear and doubt.',
+      'The handoff: you use will while gathering energy, but the moment your attention turns to the being, let the will go quiet and let love take over. Feel a generous, open-hearted love for them. As taught, this also keeps out fear and doubt.',
       'Check yourself afterward. As taught, you should not end up drained or carrying their symptoms. If you do, take it as a sign that a step went wrong, most often the handoff to love, and go back over what you did.',
     ],
   },
 
   {
-    id: 'heal-headache', cat: 'energy', title: 'Quick Headache Relief', mins: 4,
+    id: 'heal-headache', cat: 'energy', info: true, title: 'Quick Headache Relief', mins: 4,
     freq: 'When asked', summary: 'Energy in through the right hand, out through the left.',
-    caution: 'Wash hands before and after. Light fingertip contact only.',
     steps: [
-      "Tips of the first two right-hand fingers on the patient's left temple; index + middle of the left hand lightly on the right temple.",
+      "Tips of the first two right-hand fingers on the being's left temple; index + middle of the left hand lightly on the right temple.",
       { t: 'Visualize energy flowing in through the right hand and out through the left.', secs: 180 },
     ],
   },
   {
-    id: 'heal-aches', cat: 'energy', title: 'Easing Aches, Cuts and Scrapes', mins: 5,
+    id: 'heal-aches', cat: 'energy', info: true, title: 'Easing Aches, Cuts and Scrapes', mins: 5,
     freq: 'When asked, or for yourself',
     summary: 'Deliver energy straight to the sore or injured spot. As taught, minor aches ease and small cuts and scrapes heal faster when energy is plentiful there.',
-    caution: 'This is for minor aches and small scrapes, and it supports medical care without replacing it. Anything serious, new or lasting needs a doctor, dentist or vet: see Where energy work stops in the Energy healing teaching. Wash hands before and after, and touch only with consent, lightly.',
     steps: [
-      'Prime yourself as in Healing Others: first two fingers and thumb of each hand together, energy visualized pouring into you and gathering at your heart.',
+      'Prime yourself as in Sending Energy to Other Beings: first two fingers and thumb of each hand together, energy visualized pouring into you and gathering at your heart.',
       'Turn your attention to the sore spot, or to the area just behind it on the spine if you are working through the back. Picture the energy flowing straight into it, bright and steady.',
       'Keep the picture clear. When it clouds, stop and rest about five minutes, then start again from the first step.',
       { t: 'Hold the flow.', secs: 180 },
@@ -208,7 +205,18 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-zoom', cat: 'attention', gate: 'attn', title: 'Zoom-Lens Training', mins: 3,
+    id: 'attn-obstacle', cat: 'attention', gate: 'attn', title: 'Obstacle Path', mins: 3,
+    freq: 'A few times a week',
+    summary: 'Move through a cluttered space, or walk a trail or through woods, while keeping track of several things at once.',
+    caution: 'Move slowly and keep your footing. Clear anything you could trip on, and take care on uneven ground.',
+    steps: [
+      'Choose a room or yard with several things in it (furniture, plants, people), or better, a trail or a stretch of woods with roots, rocks, branches and changing ground.',
+      { t: 'Walk slowly through it. Keep track of where each thing is, which are close, which move, and what you can hear around you. Stay relaxed, and let your attention stay wide.', secs: 60 },
+      'Stop and close your eyes. Recall where each one was, then open your eyes and check.',
+    ],
+  },
+  {
+    id: 'attn-zoom', cat: 'attention', gate: 'attn', title: 'Zoom Lens 1', mins: 3,
     freq: 'Daily',
     summary: 'Lock onto one object, open out to the whole scene while still knowing it is there, then pull back in.',
     steps: [
@@ -221,7 +229,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-scene', cat: 'attention', gate: 'attn', title: 'Whole Scene, Then Detail', mins: 3,
+    id: 'attn-scene', cat: 'attention', gate: 'attn', title: 'Zoom Lens 2', mins: 3,
     freq: 'Daily, in any room or outdoors',
     summary: 'Take the big picture, zoom into one detail, then widen again while holding both.',
     steps: [
@@ -245,7 +253,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-space', cat: 'attention', gate: 'attn', title: 'Space Sense', mins: 3,
+    id: 'attn-space', cat: 'spatial', hidden: true, title: 'Space Sense', mins: 3,
     freq: 'Daily, short is fine',
     summary: 'Train your sense of where things and your body are in space.',
     steps: [
@@ -255,18 +263,9 @@ export const EXERCISES = [
       { t: 'Optional: stand on one leg and feel your body in the space around you.', secs: 30 },
     ],
   },
-  {
-    id: 'attn-single', cat: 'concentrate', title: 'Single-Task Moment', mins: 2,
-    freq: 'Any ordinary action, once or more a day',
-    summary: 'Do one ordinary thing with your whole attention.',
-    steps: [
-      'Choose a routine action: washing a dish, walking, eating, brushing your teeth.',
-      { t: 'Do only that, with your whole attention on its sensations. When your mind drifts, bring it back.', open: true },
-    ],
-  },
 
   {
-    id: 'attn-route', cat: 'attention', gate: 'attn', title: 'Landmark Route', mins: 5,
+    id: 'attn-route', cat: 'spatial', hidden: true, title: 'Landmark Route', mins: 5,
     freq: 'A few times a week, on any familiar route',
     summary: 'Walk a route you know without GPS, noting landmarks, distances and turns.',
     steps: [
@@ -287,7 +286,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-body', cat: 'attention', gate: 'attn', title: 'Body in Space', mins: 3,
+    id: 'attn-body', cat: 'spatial', hidden: true, title: 'Body in Space', mins: 3,
     freq: 'Daily, short is fine',
     summary: 'Slow balance and movement to feel where your body is in the space around you.',
     steps: [
@@ -308,18 +307,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-obstacle', cat: 'attention', gate: 'attn', title: 'Obstacle Path', mins: 3,
-    freq: 'A few times a week',
-    summary: 'Move through a cluttered space while keeping track of several things at once.',
-    caution: 'Move slowly and keep your path clear of anything you could trip on.',
-    steps: [
-      'Choose a room or yard with several things in it: furniture, plants, people.',
-      { t: 'Walk slowly through it. Keep track of where each thing is, which are close, and which move. Stay relaxed.', secs: 60 },
-      'Stop and close your eyes. Recall where each one was, then open your eyes and check.',
-    ],
-  },
-  {
-    id: 'attn-cue', cat: 'attention', gate: 'attn', title: 'Cue Then Widen', mins: 2,
+    id: 'attn-cue', cat: 'spatial', hidden: true, title: 'Cue Then Widen', mins: 2,
     freq: 'During any ordinary action',
     summary: 'Start on one exact cue while moving, then open to the whole environment, then back.',
     steps: [
@@ -347,26 +335,6 @@ export const EXERCISES = [
       'Choose one task and put your phone in another room. Close everything else.',
       { t: 'Work on only that task. Start with 10 minutes and lengthen toward 25 as it gets easier.', pick: [600, 900, 1500], secs: 600, max: 1500 },
       'Take a short break. Stand, stretch, breathe.',
-    ],
-  },
-  {
-    id: 'conc-endure', cat: 'concentrate', title: 'Endurance Push', mins: 5,
-    freq: 'A few times a week',
-    summary: 'Stay with a task a little past the point where you want to switch.',
-    steps: [
-      'Pick one task you are already doing.',
-      { t: 'When the urge to switch rises, notice it and stay a little longer, one more minute, then another.', pick: [180, 300, 600], secs: 300, max: 600 },
-      'Note when the urge came and when it passed.',
-    ],
-  },
-  {
-    id: 'conc-read', cat: 'concentrate', title: 'Long Read', mins: 10,
-    freq: 'A few times a week',
-    summary: 'Read one thing in one stream, without stopping to check anything.',
-    steps: [
-      'Choose something worth reading in one go: a chapter or a long article. Phone away.',
-      { t: 'Read it without stopping. When you notice your attention drifting, go back to the line you were on.', pick: [600, 900, 1200], secs: 600, max: 1200 },
-      'Say in a sentence or two what you read.',
     ],
   },
   {
@@ -426,33 +394,40 @@ export const EXERCISES = [
   // ---------- Emotional control ----------
   {
     // The id stays 'emo-matches' (it began as the Matchbox Drill) so saved settings and tallies carry over.
-    id: 'emo-matches', cat: 'emotion', title: 'Patience Training', mins: 10,
+    id: 'emo-matches', cat: 'emotion', info: true, title: 'Patience: Put a Small Pile in Order', mins: 10,
     freq: 'Once or more daily until mastered',
-    summary: 'Put a jumble in order, slowly and calmly, one piece at a time. Patience and a steady mind under a fiddly task — and a more orderly space.',
+    summary: 'Put a jumble in order, slowly and calmly, one piece at a time. Patience and a steady mind under a fiddly task.',
     steps: [
-      `Choose your jumble.
-
-SMALL PILES (you can scramble them again and repeat):
+      `Choose your pile:
 • A deck of cards: shuffle, then put it in order by suit and number.
 • Coins: mix a handful, sort into piles, and stack each pile with every head facing the same way.
 • Buttons, screws, or beads: sort by type into small dishes.
 • The original: dump a box of matches, mix them well, and put them all back with every head pointing the same way. Handle matches carefully and away from any flame. Toothpicks or bobby pins work too.
 • Untangle a necklace, earbud cord, or string of lights. Pulling harder only tightens it, so ease it out.
-• Pair up a pile of mismatched socks.
-
-SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in pieces):
+• Pair up a pile of mismatched socks.`,
+      'Dump it out and mix it thoroughly. You can scramble it again and repeat.',
+      'Put it in order slowly. Handle one item at a time, with a calm face. When you feel the urge to hurry, or irritation, or boredom, notice it, take a breath, and carry on gently. That is the exercise. Take as long as you need.',
+      'Finish where you can. Look at what you put in order, and notice how it feels to see it clear.',
+    ],
+  },
+  {
+    id: 'emo-order', cat: 'emotion', info: true, title: 'Patience: Put a Space in Order', mins: 15,
+    freq: 'Once or more daily until mastered',
+    summary: 'Bigger jobs, done in pieces, for a calm mind and a clean, livable home.',
+    steps: [
+      `Choose a space:
 • Pantry or canned goods: group by type, labels facing out.
 • Spice rack: alphabetical, or by how you use them.
 • Bookshelf: by author, subject, or size.
 • Movies, music, or games: alphabetical.
 • A junk drawer, a closet shelf, or a toolbox.`,
-      'Set it up. For a small pile, dump it out and mix it thoroughly. For a space, start with one shelf or one section and take everything out of just that part.',
-      { t: 'Put it in order slowly. Handle one item at a time, with a calm face. When you feel the urge to hurry, or irritation, or boredom, notice it, take a breath, and carry on gently. That is the exercise. Take as long as you need.', open: true },
-      'Finish where you can. A big space can be done in pieces, and you can come back to it later. There is no need to feel bad about leaving it half done. Look at what you put in order, and notice how it feels to see it clear.',
+      'Start with one shelf or one section and take everything out of just that part.',
+      'Put it back in order slowly, one item at a time, with a calm face. When you feel the urge to hurry, or irritation, or boredom, notice it, take a breath, and carry on gently. That is the exercise.',
+      'A big space can be done in pieces, and you can come back to it later. There is no need to feel bad about leaving it half done. Look at what you put in order, and notice how it feels to see it clear.',
     ],
   },
   {
-    id: 'emo-tv', cat: 'emotion', title: 'TV / Radio Attention Training', mins: 10,
+    id: 'emo-tv', cat: 'emotion', title: 'Choose What You Attend To', mins: 10,
     freq: 'Once or more daily until mastered', summary: 'Train what you attend to.',
     steps: [
       'Sit with the TV on at normal volume and do not look at the picture at all.',
@@ -474,7 +449,7 @@ SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in 
     ],
   },
   {
-    id: 'emo-slow', cat: 'emotion', hidden: true, title: 'Deliberate Slowing-Down', mins: 0,
+    id: 'emo-slow', cat: 'emotion', remindOnly: true, title: 'Deliberate Slowing-Down', mins: 0,
     freq: 'A full month, all day', summary: 'Let others go first — with a genuine smile.',
     steps: ['For a full month: let others go first — walking, driving (yield right of way, drive under the limit), entering/leaving rooms, planes, trains. Do it all with a genuine smile and a cheerful attitude.'],
   },
@@ -484,7 +459,6 @@ SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in 
     id: 'c-heart', cat: 'centers', title: '1. Heart Center', mins: 15,
     freq: 'Once a week, never more than twice a week at first',
     summary: 'The first and most important exercise. Start here and give it sustained effort.',
-    caution: 'Not a Hatha Yoga exercise — no compression of breath in the solar plexus or heart area. Breathing stays normal but deep.',
     steps: [
       'Sit erect in a straight-backed chair in a dimly lit room. Shut out sound; prevent interruption.',
       'Close your eyes and turn your attention inward toward your heart.',
@@ -531,7 +505,6 @@ SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in 
     id: 'c-attune', cat: 'centers', title: '5. Combined Attunement', mins: 10, needs: ['heart', 'pituitary', 'pineal', 'throat'],
     freq: 'Only once the individual centers show results',
     summary: 'Heart → Throat → Head. Powerful; build up to it gradually.',
-    caution: 'Do not attempt before at least partial development of the individual centers. No harm in jumping ahead, but no good either.',
     steps: [
       'Part One — Heart, then higher head. Head erect, back straight. Focus on the heart center bathed in a pink cloud.',
       { t: 'Inhale 7 · hold 10 (move attention to the higher head center, taking the pink cloud) · exhale 7 · hold out 10 (cloud expands to embrace your whole body).', breath: { phases: [['Inhale', 7], ['Hold in', 10], ['Exhale', 7], ['Hold out', 10]], reps: 1 } },
@@ -545,10 +518,9 @@ SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in 
 
   // ---------- Projection ----------
   {
-    id: 'p-mental', cat: 'project', title: 'Mental Projection', mins: 15, kind: 'review',
+    id: 'p-mental', cat: 'project', info: true, title: 'Mental Projection', mins: 15, kind: 'review',
     freq: 'Build up gradually',
     summary: 'Your mind travels to a familiar place while awareness stays anchored. Stay a spectator, never drift into dream.',
-    caution: 'Not when exhausted, right after eating, or when blood is drawn from the head. Slipping into memory/dream makes you an actor, not an observer — if it happens, try again with a different place.',
     steps: [
       'Prepare: bathe (shower is better), including mouth and teeth. Light garment. Quiet place. Comfortable chair with head support, or lie flat (armchair is better — lying makes sleep easy).',
       { t: 'Seven deep breaths, rhythmic: in 4, hold 11, out 7. Even and unhurried.', breath: { phases: [['Inhale', 4], ['Hold', 11], ['Exhale', 7]], reps: 7 } },
@@ -559,10 +531,9 @@ SPACES TO PUT IN ORDER (bigger jobs, good for a clean, livable home; do them in 
     ],
   },
   {
-    id: 'p-etheric', cat: 'project', title: 'Etheric Projection', mins: 20, kind: 'review',
+    id: 'p-etheric', cat: 'project', info: true, title: 'Etheric Projection', mins: 20, kind: 'review',
     freq: 'Serious experiment, not a game',
     summary: 'Resonance of OM lifted toward the ceiling while lying down.',
-    caution: 'Good health required — not with any illness, even a head cold. No alcohol for 48 hours. Not exhausted or after eating. Cannot be used to spy or for any unworthy motive; lower emotions (jealousy, suspicion) snap you back. Set a worthwhile, non-selfish objective.',
     steps: [
       'Prepare: calm and serene. Bathe, holding the thought that fears and worries wash away. Clean garment; lie on a bed.',
       'Support habits: live peacefully day to day; meditate daily, raising your vibratory level; sincere silent intention to purify your nature.',
@@ -636,9 +607,8 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'energy-direct', cat: 'energy', title: 'Call the Energy In', mins: 8,
+    id: 'energy-direct', cat: 'energy', info: true, title: 'Call the Energy In', mins: 8,
     freq: 'Whenever the body needs it', summary: 'Focus on a part of the body, call energy to it, and let it flow wherever it is needed. Intention and belief direct it.',
-    caution: 'This supports healing and does not replace medical care. See a doctor for anything that worries you or lasts.',
     steps: [
       'Lie down or sit comfortably and let your body settle. Breathe slowly and deeply.',
       'Bring your attention to the area that needs help. Rest your hands there if you like.',
@@ -648,10 +618,9 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'j-stair', cat: 'journey', title: 'The Staircase Journey', mins: 30,
+    id: 'j-stair', cat: 'journey', info: true, title: 'The Staircase Journey', mins: 30,
     freq: 'When you have quiet time to spare',
     summary: 'Relax deeply, go down a staircase, and let a scene appear. Then ask what you want to know. The only rule is: allow it.',
-    caution: 'Do this lying down somewhere safe and never while driving. If anything upsets you, open your eyes, breathe, and stop. You are always in control.',
     steps: [
       'Lie down, close your eyes, and let your breathing slow. Do not worry about doing it right.',
       { t: 'Relax from the top of your head to your toes. Tell each part to let go: face, jaw, neck, shoulders, arms, chest, belly, hips, legs, feet. Take your time. Pick your length.', pick: [120, 240, 360], secs: 240 },
@@ -663,9 +632,8 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'j-library', cat: 'journey', title: 'The Library — Book of Your Life', mins: 20,
+    id: 'j-library', cat: 'journey', info: true, title: 'The Library — Book of Your Life', mins: 20,
     freq: 'When you want memories, knowledge, or guidance', summary: 'Walk into a vast library, find the book of your life, and read what you are shown.',
-    caution: 'Lie down somewhere safe. If anything upsets you, open your eyes and stop.',
     steps: [
       'Lie down, close your eyes, breathe slowly, and relax your body from head to toe.',
       'Picture a path leading to a door. Walk to it and open it.',
@@ -677,9 +645,8 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'j-guide', cat: 'journey', title: 'Meet Your Guide or Higher Self', mins: 20,
+    id: 'j-guide', cat: 'journey', info: true, title: 'Meet Your Guide or Higher Self', mins: 20,
     freq: 'When you want direct guidance', summary: 'In deep relaxation, meet your guide or Higher Self in a beautiful place and ask questions.',
-    caution: 'Lie down somewhere safe. If anything upsets you, open your eyes and stop.',
     steps: [
       'Lie down, close your eyes, breathe slowly, and relax from head to toe.',
       'Picture a beautiful, peaceful place: a garden, a meadow, a shore. Feel the air, hear the sounds, take your time arriving.',
@@ -696,16 +663,6 @@ EXERCISES.push(
       'Is there a fear running in the background? Name it, and then choose not to stay in it.',
       'Do one thing now that comes from love or kindness: a message, a thank-you, a small favor.',
       'Picture yourself filling with light, then the room, then the whole world. Hold it for a few breaths.',
-    ],
-  },
-  {
-    id: 'live-now', cat: 'emotion', title: 'Letting Go', mins: 3,
-    freq: 'Whenever you are stuck in the past or future', summary: 'Release what is behind you, stop rehearsing what is ahead, and be fully here. This is where your energy works.',
-    steps: [
-      'Take three slow breaths. With each out-breath, let your shoulders fall.',
-      'Name one thing from the past you keep replaying. Say: "That is done. I let it go."',
-      'Name one thing in the future you keep worrying about. Say: "I will deal with it when it is here."',
-      'Notice what you can see, hear, and feel right now. Give this moment your full attention for a minute.',
     ],
   },
 );
@@ -730,7 +687,7 @@ EXERCISES.push(
 // Practices inspired by Barbara Marciniak, Neville Goddard, Bashar and Esther & Abraham Hicks, written in this app's own words.
 EXERCISES.push(
   {
-    id: 'emo-whim', cat: 'emotion', title: 'Follow the Whim', mins: 0,
+    id: 'emo-whim', cat: 'emotion', remindOnly: true, title: 'Follow the Whim', mins: 0,
     freq: 'All day, a few times', summary: 'Act on small, safe impulses the instant they come. The point is obeying the inner signal, not the result.',
     steps: [
       'Morning setup (30 seconds, eyes open): Today your mind will offer small, irrational impulses: take the longer route, talk to the stranger, open the door with your other hand. Agree now that you will act on at least three of them the moment they arise.',
@@ -741,7 +698,7 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'emo-rampage', cat: 'emotion', title: 'Rampage of Appreciation', mins: 4,
+    id: 'emo-rampage', cat: 'emotion', remindOnly: true, title: 'Rampage of Appreciation', mins: 4,
     freq: 'Any time, especially when the mood is low', summary: 'Look around and appreciate everything in view, one thing after another, fast and unedited. The point is momentum.',
     steps: [
       'Look around you. You are going to appreciate whatever your eyes land on, out loud or silently, one item after another, without stopping to edit.',
@@ -750,7 +707,7 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'emo-nice', cat: 'emotion', title: "Wouldn't It Be Nice If...", mins: 5,
+    id: 'emo-nice', cat: 'emotion', remindOnly: true, title: "Wouldn't It Be Nice If...", mins: 5,
     freq: 'Low days, or when affirmations feel false', summary: 'A gentle game that gets past resistance. List "wouldn\'t it be nice if..." statements. It is too soft for your doubt to argue with.',
     steps: [
       'Get something to write on, or just say them out loud. This is for days when "I am abundant" feels like a lie. "Wouldn\'t it be nice" is too gentle to trigger an argument.',
@@ -782,11 +739,11 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'law-hold', cat: 'concentrate', gate: 'laws', title: 'The 17-Second Thought', mins: 0,
-    freq: 'Any time', summary: '17 consistent seconds on one pure thought is where change begins.',
+    id: 'law-hold', cat: 'concentrate', remindOnly: true, timer: true, title: 'The 17-34-68 Hold', mins: 0,
+    freq: 'Any time', summary: 'Hold your attention on one thing: 17 seconds, then 34, then 68. Choose a physical item to stare at, or one pure thought.',
     steps: [
-      'Pick one thought you genuinely like thinking: a person, a place, a feeling of thanks. Pure means no "but".',
-      { t: 'Hold it for 17 consistent seconds. If a contradicting thought shows up, gently come back. 17 steady seconds is where change begins.', secs: 17 },
+      'Choose what to hold. A physical item is the easier choice because there is a tangible target to look at and come back to: a cup, a candle flame, a leaf, a mark on the wall. Or pick one thought you genuinely like thinking, with no "but": a person, a place, a feeling of thanks.',
+      { t: 'Hold it for 17 consistent seconds. When your mind wanders, or a contradicting thought shows up, gently come back. Then go for 34, and then 68.', secs: 17 },
       'Did you hold it the whole time? If not, that is only information. Try again.',
     ],
   },
@@ -859,27 +816,15 @@ const LOGS = {
 };
 EXERCISES.forEach((e) => { if (LOGS[e.id]) e.log = LOGS[e.id]; });
 
-// One short guided meditation per chakra, built from the chakra reference data.
-CHAKRAS.forEach((c) => EXERCISES.push({
-  id: `chk-${c.n}`, cat: 'chakra', title: `${c.n}. ${c.name} — ${c.sk.split(' (')[0]}`, mins: 0,
-  freq: 'Any time', summary: `Attention in the ${c.loc.toLowerCase()}, with its seed sound.`,
-  steps: [
-    BODY,
-    { t: `Bring your attention to your ${c.loc.toLowerCase()}. This is the ${c.name} center (${c.sk}). ${c.note}\n\nSeed sound: ${c.seed}. Intone it softly a few times, then repeat it silently.\n\nHold your attention there until it feels settled. The block to watch for here is ${c.block.toLowerCase()}. Pick your length.`, pick: [180], secs: 180 },
-    'Let it go. Rise, take a deep breath, relax.',
-  ],
-}));
-// The practices that go deeper sit behind two warnings.
-['c-pituitary', 'c-pineal', 'c-throat', 'c-attune', 'p-mental', 'p-etheric'].forEach((id) => { EXERCISES.find((e) => e.id === id).advanced = true; });
 
 // The advanced teachings a store build sells. Each package is one $1 purchase in Google Play; EVERYTHING_ID ($4.99) opens all of them,
 // including any package added later. To add a teaching: put it in a package (or add a package,
 // then create its product in Play Console). Basic teachings are simply left out of every package and stay free.
 export const EVERYTHING_ID = 'advanced_unlock';
 export const PACKAGES = [
-  { pid: 'pkg_chakra', name: 'Chakra treatment', desc: 'The chakra alignment walkthrough and the seven chakra meditations. The chakra reference and its teaching stay free.', cats: ['chakra'], learn: [] },
+  { pid: 'pkg_chakra', name: 'Chakra treatment', desc: 'The chakra alignment walkthrough. The chakra reference and its teaching stay free.', cats: ['chakra'], learn: [] },
   { pid: 'pkg_assessment', name: 'The CIA assessment of the Gateway Experience (GWE)', desc: 'The 1983 US Army assessment of the Gateway Process, released through the CIA: how a session runs, the focus levels and tools, the model of consciousness and energy, and the phased path it recommends. Sold separately and not part of Everything.', learn: ['assessment'], price: '$4.99', extra: true },
-  { pid: 'pkg_attention', name: 'Attention', desc: 'The attention lesson and its ten practices: zoom lens, whole scene, narrow and open switch, space sense, landmark route, mental rotation, body in space, two viewpoints, obstacle path, cue then widen.', cats: ['attention'], info: ['attn'] },
+  { pid: 'pkg_attention', name: 'Attention', desc: 'The attention lesson and its six practices: obstacle path, zoom lens 1 and 2, narrow and open switch, mental rotation, two viewpoints.', cats: ['attention'], info: ['attn'] },
   { pid: 'pkg_centers', name: 'Psychic centers', desc: 'The five center meditations: heart, pituitary, pineal, throat, and the combined attunement.', cats: ['centers'] },
   { pid: 'pkg_journeys', name: 'Inner journeys', desc: 'The staircase, the library of your life, and meeting your guide or higher self.', cats: ['journey'] },
   { pid: 'pkg_projection', name: 'Projection', desc: 'Mental and etheric projection.', cats: ['project'] },
@@ -902,11 +847,11 @@ export const exById = Object.fromEntries(EXERCISES.map((e) => [e.id, e]));
 export const REMIND_GROUPS = [
   // pool = exercises a timed reminder can ask for; leave = optional exercises that only fire when you leave home; ids = everything in the category
   { id: 'obs', cat: 'observe', label: 'Observation', pool: ['obs-room'], leave: ['obs-stairs'], both: ['obs-room'], ids: ['obs-room', 'obs-stairs'] },
-  { id: 'conc', cat: 'concentrate', label: 'Concentration', pool: ['conc-multiply', 'conc-poem', 'law-hold', 'attn-hold', 'attn-single', 'conc-grid', 'conc-block', 'conc-endure', 'conc-read'], leave: ['conc-stranger'], ids: ['conc-multiply', 'conc-poem', 'law-hold', 'conc-stranger', 'attn-hold', 'attn-single', 'conc-grid', 'conc-block', 'conc-endure', 'conc-read'] },
-  { id: 'attn', cat: 'attention', label: 'Attention', gate: 'attn', pool: ['attn-zoom', 'attn-scene', 'attn-switch', 'attn-space', 'attn-route', 'attn-rotate', 'attn-body', 'attn-views', 'attn-obstacle', 'attn-cue'], leave: [], ids: ['attn-zoom', 'attn-scene', 'attn-switch', 'attn-space', 'attn-route', 'attn-rotate', 'attn-body', 'attn-views', 'attn-obstacle', 'attn-cue'] },
+  { id: 'conc', cat: 'concentrate', label: 'Concentration', pool: ['conc-multiply', 'conc-poem', 'attn-hold', 'conc-grid', 'conc-block', 'law-hold'], leave: ['conc-stranger'], ids: ['conc-multiply', 'conc-poem', 'conc-stranger', 'attn-hold', 'conc-grid', 'conc-block', 'law-hold'] },
+  { id: 'attn', cat: 'attention', label: 'Attention', gate: 'attn', pool: ['attn-obstacle', 'attn-zoom', 'attn-scene', 'attn-switch', 'attn-rotate', 'attn-views'], leave: [], ids: ['attn-obstacle', 'attn-zoom', 'attn-scene', 'attn-switch', 'attn-rotate', 'attn-views'] },
   { id: 'med', cat: 'meditate', label: 'Routine meditation', simple: true, pool: ['med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love', 'energy-direct', 'j-stair', 'j-library', 'j-guide'], leave: [], ids: ['med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love', 'energy-direct', 'j-stair', 'j-library', 'j-guide'] },
   { id: 'medp', cat: 'meditate', label: 'Meditation practice', pool: ['med-practice', 'med-cloud'], leave: [], ids: ['med-practice', 'med-color', 'med-sound', 'med-cloud'] },
-  { id: 'emo', cat: 'emotion', label: 'Emotional control', pool: ['emo-matches', 'emo-tv', 'emo-whim', 'emo-rampage', 'emo-nice', 'live-vibe', 'live-now'], leave: [], ids: ['emo-matches', 'emo-tv', 'emo-whim', 'emo-rampage', 'emo-nice', 'live-vibe', 'live-now'] },
+  { id: 'emo', cat: 'emotion', label: 'Emotional control', pool: ['emo-matches', 'emo-order', 'emo-tv', 'live-vibe', 'emo-whim', 'emo-rampage', 'emo-nice', 'emo-slow'], leave: [], ids: ['emo-matches', 'emo-order', 'emo-tv', 'live-vibe', 'emo-whim', 'emo-rampage', 'emo-nice', 'emo-slow'] },
   { id: 'bed', cat: 'bedtime', label: 'Bedtime', pool: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats', 'med-sit', 'med-quiet', 'med-love'], leave: [], ids: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats'] },
 ];
 export const CAT_LABEL = Object.fromEntries(REMIND_GROUPS.flatMap((g) => g.ids.map((id) => [id, g.label])));
@@ -1022,6 +967,11 @@ export const NUDGES = [
   'Are you rushing? There is nothing here to rush for.',
   'Walk or drive a little slower today. Let someone go ahead of you, and smile as you do.',
   'Soften your eyes. Take in the whole view at once.',
+  // concentration and emotional control, moved from Training
+  'Stay with what you are doing a little past the point where you want to switch.',
+  'Do this one thing with your whole attention. Nothing else, just for a moment.',
+  'Read one thing in one stream today, without stopping to check anything else.',
+  'Let go of what is behind you. Stop rehearsing what is ahead. Be fully here.',
 ];
 
 // Sayings that belong to one lesson. They stay out of the reminder pool until the person opens that lesson and presses
@@ -1051,14 +1001,15 @@ export const PING = {
   'med-color': 'Blue, then pink, then white, one minute each.',
   'med-sound': 'Violin, then horn or sax, then piano, one minute each.',
   'med-cloud': 'Wrapped in a pink cloud, held steady.',
-  'emo-matches': 'Patience training: pick a jumble (cards, coins, a shelf) and put it in order slowly and calmly.',
+  'emo-matches': 'Patience: pick a small pile (cards, coins, matches) and put it in order slowly and calmly.',
+  'emo-order': 'Patience: pick one shelf or drawer and put it in order slowly and calmly.',
   'emo-tv': 'Attention training: TV on, picture off. Tune out the picture.',
   'emo-whim': 'Follow a whim: a small, safe impulse. Act within five seconds.',
   'emo-rampage': 'Rampage of appreciation: look around and appreciate everything in view, quickly.',
   'emo-nice': "Wouldn't it be nice if... Finish the sentence a few times.",
   'med-nowpoint': 'Rest as the point of awareness behind your eyes.',
   'med-transform': 'Slow 4-4-8 breath. Hold the intention during the pause.',
-  'law-hold': 'Hold one pure, appreciative thought for 68 seconds with no contradiction.',
+  'law-hold': 'Hold your attention on one item or one pure thought: 17 seconds, then 34, then 68. Tap to open the timer.',
   'obs-recall': 'Evening recall: your first activity this morning, in as much detail as you can, then log it.',
   'med-iam': 'Take off every "I am stressed / broke / shy" and put on the "I AM" of the state you choose.',
   'bed-belief': 'Belief audit: trace one strong reaction from today to the belief under it.',
@@ -1130,7 +1081,7 @@ export const ATTN_LESSON = {
     { h: 'Spatial awareness', t: 'Spatial awareness is your sense of where things are, how far, and how they relate, including your own body. Wide focus supports it: you hold the whole layout and notice what changes around you. Narrow focus sharpens one spot but can shrink the rest into tunnel vision. Reading a gauge is narrow. Scanning a road is wide.' },
     { h: 'Absorption', t: 'Narrowing attention is also the way into absorption: being so locked onto one thing that the rest drops away, like getting lost in a book. It is central to how hypnosis works (see the Hypnosis lesson). A wide, open attention is a different flavor of presence: expansive, grounded in the space around you. Both are present. The skill is moving between them.' },
     { h: 'Narrow first', t: 'The ability to widen cleanly rests on being able to narrow and hold. Without a steady zoom, widening feels scattered. Learn to lock the lens, then open it while keeping the option to snap back.' },
-    { h: 'Optional: spatial hobbies', t: 'Anything that makes you think about positions, shapes and space is extra practice for what Space Sense and Two Viewpoints work on: building with blocks or wood, origami, 3D puzzles, drawing from life, and spatial video games. None are required.' },
+    { h: 'Optional: spatial hobbies', t: 'Anything that makes you think about positions, shapes and space is extra practice for what Two Viewpoints and Mental Rotation work on: building with blocks or wood, origami, 3D puzzles, drawing from life, and spatial video games. None are required.' },
   ],
 };
 
@@ -1144,8 +1095,10 @@ export const CAT_TEACH = {
     'The method is old. It is told of the Buddha that he would stop mid-lesson and ask his students where he had been standing when he said a certain word, or what his right hand had been doing when he spoke of beauty. The questions were simple on purpose. They trained students to be present enough to answer them.' ] },
   concentrate: { t: 'Concentration', one: 'Hold one thing steady', p: [
     'Concentration is keeping your attention on one thing and bringing it back when it slips. It is the muscle underneath every other practice.',
-    'The exercises are deliberately demanding (mental multiplication, memorizing lines, holding a stranger\'s face, the 17-second pure thought, a focus block) so that there is something firm to hold. The Attention lesson explains how concentration differs from attention.',
+    'The exercises are deliberately demanding (mental multiplication, memorizing lines, holding a stranger\'s face, a focus block) so that there is something firm to hold. The Attention lesson explains how concentration differs from attention.',
     'Every time you notice a wander and return, that is one rep. The returning is the training.',
+    'Three concentration practices come to you as mindfulness sayings instead of sit-down exercises, so you meet them in the middle of your day. Endurance Push: stay with a task a little past the point where you want to switch. Single-Task Moment: give one ordinary thing your whole attention. Long Read: read one thing in one stream without stopping to check anything. Each one trains the same staying power as the practices above.',
+    'The 17-34-68 Hold, an optional reminder in the Concentration settings. Choose what to hold: a physical item, such as a cup, a candle flame or a leaf, or one pure thought. An item is the easier choice, because there is a tangible target to look at and come back to, and a thought has nothing to look at. For a thought, pick one you genuinely like thinking, such as a person, a place or a feeling of thanks, and hold it with no "but". Seventeen steady seconds is where change begins, thirty-four multiplies it, and sixty-eight is the target, where the vibration becomes self-sustaining. Appreciation works best. When your mind wanders or a contradicting thought shows up, do not follow it. Come back. The practice is the coming back, and if you did not hold it the whole time, that is only information. The reminder opens a timer that marks each stage.',
     'Concentration is also what lets you meditate. Meditation asks you to rest on one thing, such as the breath, a color, a sound or a feeling, and stay. Each time you slip and return, the hold grows longer and the mind settles instead of wandering. Without it, a sit is a string of drifts.',
     'If you already concentrate well at work, these still apply. The difference is that here it is a deliberate act of will, not something a pressing need forces out of you. The aim is to find the handle on your own attention, so that you can pick it up whenever you choose.',
     'The Stranger\'s Face is a step beyond the others. As taught, after some practice you start to sense the dominant feeling behind the face you are holding, often fear, sometimes compassion, joy or anger. Treat that as something to notice, not as a fact about the person.' ] },
@@ -1159,7 +1112,9 @@ export const CAT_TEACH = {
     more: ['states', 'hemisync', 'fields'] },
   emotion: { t: 'Emotional control', one: 'Notice, name, choose', p: [
     'Emotional control does not mean pushing feelings down. It means noticing a feeling early, naming it, and choosing your response instead of being run by it. Research finds that simply putting a name to a feeling tends to soften it.',
-    'The practices here are small, repeatable ways to build that gap: slowing down, patience under a fiddly task, following a small whim, appreciating what is in view, climbing the emotional scale one rung at a time, and the Funk Reset when you are stuck.' ] },
+    'The practices here are small, repeatable ways to build that gap: patience training with a pile or a shelf to put in order, climbing the emotional scale one rung at a time, choosing what you attend to, and the Funk Reset when you are stuck. Letting go comes to you as a mindfulness saying.',
+    'Patience training is not one exercise. It is the habit of staying calm under a fiddly task, and you can build it on whichever job you pick.',
+    'Four practices work by being hinted at all through the day, so they are not in Training. They are optional reminders in the Emotional control settings: tick the ones you want, and leave the rest off. Each is explained below.' ] },
   bedtime: { t: 'Bedtime', one: 'Close the day on purpose', p: [
     'The last minutes before sleep are a good time to review the day calmly, learn from it, and put it down. Sleep itself is when the brain consolidates memory and resets mood, so how you end the day matters.',
     'Evening Recall is observation turned backward. The Belief Audit, Revision and the Scene That Proves It use that quiet, drifting state to look at what drove your reactions and to rehearse what you want.',
@@ -1258,7 +1213,7 @@ export const CAT_TEACH = {
     'For a full month, let others go first: walking, driving (yield the right of way and drive under the limit), entering and leaving rooms, planes and trains. Do it all with a genuine smile and a cheerful attitude, because rushing is a mood you can step out of. This is not a timed exercise. It is a way of moving through the day, and slowing on purpose shows you how much of the hurry was only habit. The mindfulness sayings will remind you to walk or drive a little slower.' ] },
   chakra: { t: 'Chakra alignment', one: 'The seven centers, the psychic centers, and attention through them', p: [
     'In the yogic tradition the chakras are seven centers along the body, from the base of the spine to the crown. Each has its own element, seed sound and quality.',
-    'The walkthrough puts steady attention in each area in turn, root to crown, until it feels coherent. The seven meditations take one center at a time with its seed sound.',
+    'The walkthrough puts steady attention in each area in turn, root to crown, until it feels coherent.',
     'Focused body attention with a sound or rhythm settles the nervous system and builds concentration.' ],
     sections: [
     { h: 'The seven centers', p: [CHAKRA_INTRO, ...CHAKRAS.map((k) => `${k.n}. ${k.name}, ${k.sk}. Seed sound ${k.seed}. Location: ${k.loc.toLowerCase()}. Blocked by ${k.block.toLowerCase()}. Gland: ${k.gland.toLowerCase()}. ${k.note}`)] },
@@ -1285,7 +1240,12 @@ CAT_TEACH.prep = { t: 'Mental preparation', one: 'Observe, hold, steer your atte
     { h: 'Concentration', p: CAT_TEACH.concentrate.p },
     { h: 'Attention', p: [ATTN_LESSON.intro] },
     { h: 'Emotional control', p: CAT_TEACH.emotion.p },
-    { h: 'Slowing down on purpose', p: CAT_TEACH.slow.p },
+    { h: 'Optional reminders', p: [
+      'These are for building a mental training program that is truly yours. Each one works best as a nudge in the middle of your day, not a session. They are off until you switch them on in Settings, and you can tick only the ones you want. Too many important reminders and they all stop meaning anything.',
+      'Follow the Whim. Your mind will offer small, odd impulses through the day: take the longer route, talk to the stranger, open the door with your other hand. When one comes, act on it within five seconds. It must be safe, small and reversible; if it is not, it is fear or adrenaline, not a whim, and it waits. Do not keep score on whether it paid off. An impulse followed at once strengthens your link to your intuition, and one you reason about for ten minutes is already gone. Notice how your body feels the instant before you obey and the instant after.',
+      'Rampage of Appreciation. Look around and appreciate whatever your eyes land on, out loud or silently, one thing after another, without stopping to edit: this cup, this light, my hands work, this chair holds me. Keep it moving. The objects do not matter. The momentum of appreciation does. It is especially good when your mood is low. Afterward, notice how you feel compared with when you started.',
+      'Wouldn\'t It Be Nice If. A gentle game for low days, or when affirmations feel false. Finish the sentence again and again: wouldn\'t it be nice if I woke up rested, if the call went well, if I felt lighter? Big or small, without judging them. It is too soft for your doubt to argue with. Read back the ones that gave you a lift and notice which way they point.',
+      CAT_TEACH.slow.p[0].replace('The mindfulness sayings will remind you to walk or drive a little slower.', 'The reminder will nudge you to walk or drive a little slower.') ] },
     { h: 'Whose feeling is this?', p: [
       'Most of what you feel is not self-generated. Emotion moves between people the way weather moves over water, and we are like fish in that sea. Sometimes it is rough and we get tossed about, and sometimes it is calm. It travels most strongly when people are close together.',
       'The example given is a man on a train who noticed he felt indignant for no reason. He looked around, saw everyone reading about a riot, and realized the feeling belonged to the carriage. When a friend arrives with a long face and a grievance, you can listen without taking on the mood. You do not need to be cold. You just do not go in with them.',
@@ -1300,8 +1260,11 @@ CAT_TEACH.prep = { t: 'Mental preparation', one: 'Observe, hold, steer your atte
       'They are deeply ingrained, and the way through is the unglamorous one: decide, keep going, and each time you slip, pick yourself up and begin again.' ] },
     { h: 'Emotional and etheric energy', p: [
       'The teaching describes several kinds of life energy. Etheric energy is the slowest and closest to physical. It works the body and is used mostly automatically, and with training it can be directed, as in physical healing. Emotional energy is made by the solar plexus, the most open center in most people, which is why most people act on emotional impulse.',
-      'Because of this, there is a block to using the full power of the mind until the emotions are brought under the mind\'s direction. That is why emotional control comes first in this path.' ] },
+      'Because of this, there is a block to using the full power of the mind until the emotions are brought under the mind\'s direction. That is why emotional control comes first in this path.',
+      'Two modern sources describe something close to etheric energy. A paper on qi suggests that qi may correspond to the body\'s bioelectromagnetic energy: the heart\'s magnetic field has been measured up to about fifteen feet from the body, and in a small preliminary experiment three experienced qi practitioners projecting from their hands produced significant changes in the field picked up by nearby coils (p < 0.05), though with no consistent pattern across the three men. The authors call the study exploratory.',
+      'The 1983 Army assessment of the Gateway Process approaches it from the other side. It treats the body and brain as systems of oscillating energy, and describes color breathing, the energy bar and the living body map as ways to direct that energy with the mind alone. These are comparisons, not proof that etheric energy is what any of them measure.' ] },
   ],
+  more: ['fields', 'gwenergy'],
   links: [{ href: '#attn', t: 'Attention: narrow and wide', one: 'The full lesson, then switch the practices on' }] };
 CAT_TEACH.energy.sections = [
   { h: CAT_TEACH.balance.t, p: CAT_TEACH.balance.p },

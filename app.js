@@ -30,7 +30,7 @@ const mergeRem = (r = {}) => {
     if (g.simple) { c.ex = g.pool.slice(); c.goal = c.n; c.timing = 'even'; c.choose = true; } // routine meditation: you only choose how many reminders, then pick a meditation when one rings
     if (c.random === undefined) c.random = (parseInt(o.goal, 10) || 1) === 1 && c.ex.length > 1; // older saves: goal 1 with several ticked meant "one of them"
     c.random = !!c.random;
-    if (c.random && !g.simple) { if (!c.exPrev) c.exPrev = c.ex.slice(); c.ex = [...g.pool, ...g.leave]; } // "1 at random" draws from all of them
+    if (c.random && !g.simple) { if (!c.exPrev) c.exPrev = c.ex.slice(); c.ex = [...g.pool, ...g.leave].filter((id) => !exById[id].remindOnly); } // "1 at random" draws from all of them
     c.goal = goalFor(g, c);
     c.times = c.times.slice(0, c.n); c.choose = c.choose !== false; delete c.h; delete c.m;
     cat[g.id] = c;
@@ -137,7 +137,7 @@ function occurrences(date) {
         out.push({ ...base, title: `${g.label}: pick one`, body: schedEx(g.id).map((x) => exById[x].title).join(' · '), route: `#cat/${g.id}` });
       } else {
         const id = planned(g.id, date, k); const ex = exById[id];
-        out.push({ ...base, title: `${g.label}: ${ex.title}`, body: PING[id] || ex.summary, route: `#ex/${id}`, exId: id });
+        out.push({ ...base, title: `${g.label}: ${ex.title}`, body: PING[id] || ex.summary, route: ex.timer ? '#hold' : `#ex/${id}`, exId: id });
       }
     });
   }
@@ -274,7 +274,7 @@ function Scale() {
   if (!sc) return `${back('#practice')}<h1>Climbing the Scale</h1>
     <p class="dim">You can only climb one to three rungs at a time. Trying to jump to joy from the bottom just proves you are failing. Any upward step is success. Your emotion is guidance, not a verdict: it reads out the gap between you and what you want.</p>
     <p class="dim">Where are you right now, 1 to 22?</p>
-    ${SCALE.map((r) => `<div class="bul scrung" data-act="scstart:${r.n}"><b class="pd">${r.n}</b><span>${esc(r.name)}</span></div>`).join('')}
+    ${SCALE.map((r) => `<div class="bul scrung${r.n === 11 ? ' cut' : ''}" data-act="scstart:${r.n}"><b class="pd">${r.n}</b><span>${esc(r.name)}</span></div>`).join('')}
     ${hist ? `<h2>Recent climbs</h2>${card(hist)}` : ''}
     ${setCard('scale')}`;
   const r = SCALE[sc.rung - 1]; const up = sc.rung > 1 ? SCALE[sc.rung - 2] : null;
@@ -328,10 +328,12 @@ function Wheel() {
 }
 
 let openCat = null;
-const TAGS = { 'obs-recall': 'Observation', 'med-sit': 'Meditation', 'med-quiet': 'Meditation', 'med-love': 'Meditation' }; // purely a label
+const TAGS = { 'emo-whim': 'optional', 'emo-rampage': 'optional', 'emo-nice': 'optional', 'emo-slow': 'optional', 'law-hold': 'optional', 'obs-recall': 'Observation', 'med-sit': 'Meditation', 'med-quiet': 'Meditation', 'med-love': 'Meditation' }; // purely a label
 const tag = (id) => (TAGS[id] ? ` <span class="tag">${TAGS[id]}</span>` : '');
-const miniBtns = (id) => `<a class="btn ghost mini" href="#ex/${id}">Rules</a><button class="btn mini" data-act="done:${id}">✓ Done</button>`;
-const exRow = (id) => `<div class="exrow"><a href="#ex/${id}" class="exname">${esc(exById[id].title)}${tag(id)}</a><div class="minis">${miniBtns(id)}</div></div>`;
+const miniBtns = (id) => (exById[id].timer ? '<button class="btn ghost mini" data-act="hold">Timer</button>' : exById[id].remindOnly ? '' : `<a class="btn ghost mini" href="#ex/${id}">Rules</a>`) + `<button class="btn mini" data-act="done:${id}">✓ Done</button>`;
+const exRow = (id) => (exById[id].remindOnly
+  ? `<div class="exrow"><div class="exname">${esc(exById[id].title)}<div class="dim sm">${esc(PING[id] || exById[id].summary)}</div></div><div class="minis">${miniBtns(id)}</div></div>`
+  : `<div class="exrow"><a href="#ex/${id}" class="exname">${esc(exById[id].title)}${tag(id)}</a><div class="minis">${miniBtns(id)}</div></div>`);
 function Today() {
   snapPlan();
   const now = new Date();
@@ -346,7 +348,7 @@ function Today() {
     const homeNote = native.isNative && !S.rem.home && [...g.leave, ...(g.both || [])].some((id) => c.ex.includes(id)) ? ' · <a href="#settings" style="color:var(--accent)">set your home in Settings</a>' : '';
     let side = '', body = '';
     if (g.simple) body = '<a class="btn" href="#cat/' + g.id + '" style="margin-top:10px">Choose a meditation</a>';
-    else if (c.random) side = `<div class="minis">${miniBtns(todayPick(g.id))}</div>`;
+    else if (c.random) { const pk = todayPick(g.id); if (exById[pk].remindOnly) body = exRow(pk); else side = `<div class="minis">${miniBtns(pk)}</div>`; }
     else body = c.ex.filter((id) => !tallyOf(id)).map(exRow).join('');
     return card(`<div class="hd"><div><div class="title">${g.label}</div><div class="meta">${meta}${homeNote}</div></div>${side}</div>${body}`);
   }).join('');
@@ -454,24 +456,24 @@ function Unlock(key) {
   <button class="btn ghost" data-act="restoreunlock">Restore purchases</button>
   <div id="msg" class="warn sm"></div>`;
 }
+const CENTER_WARN = 'Do not do these when you are ill, exhausted, or have just eaten, and not after alcohol. Stop at once if you feel dizzy, uncomfortable, or unwell. This is a practice, not medical care.';
 const CAN_MASTER = ['obs', 'conc', 'attn', 'medp']; // training reminders you can finish with. Emotional control, bedtime, routine meditation and the sayings stay in practice for good
 function Mastered() {
   const done = S.rem.mastered || {}; const list = REMIND_GROUPS.filter((g) => ready(g) && done[g.id]);
   return `${back('#settings')}<h1>Mastered</h1><p class="dim">Techniques you have made your own. They are out of Settings and Today so those screens stay clear. Turn one back on whenever you want it again.</p>`
     + (list.length ? list.map((g) => card(`<div style="display:flex;align-items:center;gap:10px"><b style="flex:1">${g.id === 'medp' ? 'Sitting practice' : g.label}</b><button class="btn ghost" style="width:auto" data-act="unmaster:${g.id}">Turn back on</button></div>`)).join('') : '<p class="dim">Nothing here yet. Use the Mastered button on a reminder group in Settings when you no longer need the prompts.</p>');
 }
-const advOk = new Set(); let warnStep = 1;
 function Practice() {
   const row = (e) => link(locked(e.id) ? `#unlock/${e.id}` : `#ex/${e.id}`, `<b>${locked(e.id) ? '🔒 ' : ''}${esc(e.title)}</b><div class="dim sm">${esc(e.freq)}</div>`);
   const ids = (list) => list.map((id) => exById[id]).filter(Boolean).map(row).join('');
-  const cats = (cat, skip = []) => EXERCISES.filter((e) => e.cat === cat && !e.hidden && !gated(e.id) && !skip.includes(e.id)).map(row).join('');
+  const cats = (cat, skip = []) => EXERCISES.filter((e) => e.cat === cat && !e.hidden && !e.remindOnly && !gated(e.id) && !skip.includes(e.id)).map(row).join('');
   const fold = (key, label, inner, tag = 'h2') => (inner ? `<div class="foldbox"><${tag} class="fold" data-act="topen:${key}"><span>${label}</span><span class="dim">${trOpen[key] ? '▴' : '▾'}</span></${tag}>${trOpen[key] ? inner : ''}</div>` : '');
   const knowledge = TEACH; // shown on the Teachings page
   const medPractice = ['med-practice', 'med-cloud', 'med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love'];
-  const emo = link('#wheel', '<b>Focus Wheel</b><div class="dim sm">Build 12 believable statements toward what you want</div>') + cats('emotion') + link('#scale', '<b>Climbing the Scale</b><div class="dim sm">Tell it what you feel. It walks you up, one rung at a time</div>');
+  const emo = '<h3>Patience training</h3>' + link('#scale', '<b>Climbing the Scale</b><div class="dim sm">Tell it what you feel. It walks you up, one rung at a time</div>') + ids(['emo-matches', 'emo-order']) + '<h3>Other practices</h3>' + link('#wheel', '<b>Focus Wheel</b><div class="dim sm">Build 12 believable statements toward what you want</div>') + cats('emotion', ['emo-matches', 'emo-order']);
   const mental = fold('sit', 'Sitting practice', ids(medPractice), 'h3') + fold('observe', CATS.observe, cats('observe'), 'h3') + fold('concentrate', CATS.concentrate, cats('concentrate'), 'h3') + fold('attention', CATS.attention, cats('attention'), 'h3')
     + fold('emotion', CATS.emotion, emo, 'h3') + fold('bedtime', CATS.bedtime, cats('bedtime'), 'h3') + fold('living', CATS.living, cats('living', knowledge), 'h3');
-  const chakra = cats('chakra') + (cats('centers') ? `<h3>Psychic centers</h3>${cats('centers')}` : '');
+  const chakra = cats('chakra') + cats('centers') + `<div class="dim sm" style="font-style:italic;margin:10px 0">${esc(CENTER_WARN)}</div>`;
   const heal = cats('energy', knowledge) + (cats('balance') ? `<h3>${CATS.balance}</h3>${cats('balance')}` : '');
   return `<h1>Training</h1>
   ${fold('mental', 'Mental training', mental)}
@@ -480,18 +482,6 @@ function Practice() {
   ${fold('eso', 'Esoteric meditations', ids(['j-library', 'j-stair', 'j-guide', 'p-mental', 'p-etheric']))}`;
 }
 
-// Two warnings, back to back, before the advanced practices open.
-function Warn(id) {
-  const ex = exById[id];
-  if (warnStep === 1) return `${back('#practice')}<h1>${esc(ex.title)}</h1>
-    ${card('<div class="title" style="font-size:20px">Advanced practice</div><div class="step" style="font-size:17px;margin-top:6px">This works directly with your energy centers. The guide builds up to it: Heart first, then Pituitary, then Pineal, then Throat, and only then the rest. Jumping ahead does no harm, but it does no good either.</div>', 'warnb')}
-    <button class="btn" data-act="warn1">I understand. Continue</button>
-    <a class="btn ghost" href="#practice">Go back</a>`;
-  return `${back('#practice')}<h1>${esc(ex.title)}</h1>
-    ${card('<div class="title" style="font-size:20px">One more warning</div><div class="step" style="font-size:17px;margin-top:6px">Do not do this when you are ill, exhausted, or have just eaten, and not after alcohol. Stop at once if you feel dizzy, uncomfortable, or unwell. This is a practice, not medical care.</div>', 'warnb')}
-    <button class="btn" data-act="warn2:${id}">Yes, open it</button>
-    <a class="btn ghost" href="#practice">Go back</a>`;
-}
 
 const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule', 'bodysense'];
 function Exercise(id) {
@@ -501,8 +491,9 @@ function Exercise(id) {
   return `${back('#practice')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>
   <div class="dim sm" style="margin:8px 0">${esc(ex.freq)} ${why}</div>
   ${ex.caution ? card(`<div class="warn sm">${esc(ex.caution)}</div>`, 'warnb') : ''}
-  <a class="btn" href="#guide/${id}">Start guided</a>
-  <button class="btn ghost" data-act="done:${id}">✓ Mark completed (${tallyOf(id)} today)</button>`;
+  ${ex.info ? ex.steps.map((t, i) => card(`<div class="sm" style="white-space:pre-line"><b>${i + 1}.</b> ${esc(typeof t === 'string' ? t : t.t)}</div>`)).join('') : '<a class="btn" href="#guide/${id}">Start guided</a>'}
+  <button class="btn ghost" data-act="done:${id}">✓ Mark completed (${tallyOf(id)} today)</button>
+  ${ex.cat === 'chakra' || ex.cat === 'centers' ? `<div class="dim sm" style="font-style:italic;margin-top:12px">${esc(CENTER_WARN)}</div>` : ''}`;
 }
 
 function About() {
@@ -545,7 +536,7 @@ function Attn() {
   const on = !!(S.learned || {}).attn;
   return `${back('#info')}<h1>Attention: narrow and wide</h1><p class="dim">${esc(ATTN_LESSON.intro)}</p>
   ${ATTN_LESSON.parts.map((p) => card(`<b>${esc(p.h)}</b><div class="sm" style="margin-top:4px">${esc(p.t)}</div>`)).join('')}
-  ${card(`${check(on, '<b class="ttl">I have learned this. Turn on the reminders</b>', 'learnattn', on ? 'On. An Attention block with reminders is now in Settings.' : 'The ten attention practices are already in Training, under Mental training. Switch this on to get reminders for them in Settings.')}
+  ${card(`${check(on, '<b class="ttl">I have learned this. Turn on the reminders</b>', 'learnattn', on ? 'On. An Attention block with reminders is now in Settings.' : 'The attention practices are already in Training, under Mental training. Switch this on to get reminders for them in Settings.')}
 `, 'accent')}
   ${EXERCISES.filter((e) => e.cat === 'attention').map((e) => link(`#ex/${e.id}`, `<b>${esc(e.title)}</b><div class="dim sm">${esc(e.freq)}</div>`)).join('')}${taught()}`;
 }
@@ -770,16 +761,16 @@ const $ = (s) => document.querySelector(s);
 function paint() {
   const [r, a] = location.hash.slice(1).split('/');
   const route = r || 'today';
+  if (route === 'hold') { location.hash = '#today'; openHold(); return; } // a tapped 17-34-68 reminder pops the timer over Today
   if (route !== 'guide') stopGuide();
   if (route !== 'scale') sc = null;
-  if (route !== 'ex') warnStep = 1;
   let h;
   switch (route) {
     case 'today': h = Today(); break;
     case 'practice': h = Practice(); break;
     case 'info': h = Info(); break;
     case 'tour': S.tourSeen = true; save(); h = Tour(); break;
-    case 'ex': h = locked(a) ? Unlock(a) : gated(a) ? Attn() : exById[a] && exById[a].advanced && !advOk.has(a) ? Warn(a) : Exercise(a); break;
+    case 'ex': h = locked(a) ? Unlock(a) : gated(a) ? Attn() : Exercise(a); break;
     case 'unlock': h = Unlock(decodeURIComponent(a)); break;
     case 'guide': if (locked(a)) { h = Unlock(a); break; } if (gated(a)) { h = Attn(); break; } if (!G || G.ex.id !== a) { if (exById[a]) startGuide(a); } h = Guide(); break;
     case 'log': h = Log(); break;
@@ -851,9 +842,10 @@ document.addEventListener('click', async (e) => {
     case 'saverecall': bump('obs-recall'); S.recalls.unshift({ id: uid(), ts: Date.now(), details: form.details, accuracy: form.accuracy || null, note: form.note.trim() }); save(); location.hash = '#log'; break;
     case 'master': if (!CAN_MASTER.includes(a)) break; S.rem.mastered = { ...(S.rem.mastered || {}), [a]: true }; S.rem.cat[a].on = false; save(); location.hash = '#mastered'; break;
     case 'unmaster': { const m = { ...(S.rem.mastered || {}) }; delete m[a]; S.rem.mastered = m; S.rem.cat[a].on = true; save(); repaintKeep(); break; }
+    case 'hold': openHold(); break;
     case 'con': S.rem.cat[a].on = !S.rem.cat[a].on; save(); repaintKeep(); break;
     case 'crand': { const c = S.rem.cat[a], g = group(a); c.random = !c.random;
-      if (c.random) { c.exPrev = c.ex.slice(); c.ex = [...g.pool, ...g.leave]; } else { c.ex = (c.exPrev && c.exPrev.length ? c.exPrev : c.ex).slice(); delete c.exPrev; }
+      if (c.random) { c.exPrev = c.ex.slice(); c.ex = [...g.pool, ...g.leave].filter((id) => !exById[id].remindOnly); } else { c.ex = (c.exPrev && c.exPrev.length ? c.exPrev : c.ex).slice(); delete c.exPrev; }
       c.goal = goalFor(g, c); REMIND_GROUPS.forEach((x) => x.leave.forEach((id) => { S.rem.leaveItems[id] = S.rem.cat[x.id].ex.includes(id); })); save(); repaintKeep(); break; }
     case 'cex': { if (S.rem.cat[a].random) break; const l = S.rem.cat[a].ex; const i = l.indexOf(b); if (i >= 0 && l.length > 1) l.splice(i, 1); else if (i < 0) l.push(b); S.rem.cat[a].goal = goalFor(group(a), S.rem.cat[a]); REMIND_GROUPS.forEach((g) => g.leave.forEach((id) => { S.rem.leaveItems[id] = S.rem.cat[g.id].ex.includes(id); })); save(); repaintKeep(); break; }
     case 'ctime': S.rem.cat[a].timing = b; save(); repaintKeep(); break;
@@ -911,8 +903,6 @@ document.addEventListener('click', async (e) => {
     case 'watchad': try { await native.rewardedAd(ADMOB); const t = S.adPass && S.adPass.day === dayKey() ? S.adPass : { day: dayKey(), ids: [] }; if (!t.ids.includes(a)) t.ids.push(a); S.adPass = t; save(); location.hash = `#ex/${a}`; } catch (err) { msg('The ad could not play right now. Check your connection and try again, or watch it to the end.'); } break;
     case 'buy': try { await native.buy(a); if (!S.owned.includes(a)) S.owned.push(a); save(); if (!adsOn()) native.hideBanner(); msg('Unlocked. Thank you!'); location.hash = homeOf(unlockKey); repaintKeep(); } catch (err) { const m = String((err && err.message) || err || '').toLowerCase(); msg(m.includes('pending') ? 'The purchase is still pending. It unlocks when Google Play confirms it.' : m.includes('cancel') ? 'Purchase cancelled.' : 'Google Play could not complete the purchase. Check your connection and try again.'); } break;
     case 'restoreunlock': try { const o = await native.restore(); S.owned = o.filter((id) => id === EVERYTHING_ID || PACKAGES.some((k) => k.pid === id)); save(); native.hideBanner(); location.hash = '#practice'; repaintKeep(); } catch (err) { msg('No purchase found on this Google account.'); } break;
-    case 'warn1': warnStep = 2; paint(); break;
-    case 'warn2': advOk.add(a); warnStep = 1; paint(); break;
     case 'saveplaylist': { const v = ($('#playlist')?.value || '').trim(); S.rem.playlist = v; save(); toast(v ? 'Playlist saved' : 'Playlist cleared'); repaintKeep(); break; }
     case 'trun': toggleRun(); break;
     case 'xt': clearInterval(G.xi); G.xt = { left: +a }; G.xi = setInterval(() => { G.xt.left--; const e = $('#xtm'); if (e) e.textContent = pad(Math.max(0, G.xt.left)); if (G.xt.left <= 0) { clearInterval(G.xi); vib([0, 300, 150, 300]); paint(); } }, 1000); paint(); break;
@@ -972,6 +962,48 @@ async function restore(e) {
   } catch (err) { msg('That does not look like a backup.'); }
 }
 
+/* ---------------- 17-34-68 pop-out timer ---------------- */
+let hold = null; let holdLock = null;
+function closeHold() { if (hold) clearInterval(hold.t); hold = null; try { holdLock?.release(); } catch (e) {} holdLock = null; document.getElementById('hold-pop')?.remove(); }
+function openHold() {
+  closeHold();
+  const el = document.createElement('div'); el.id = 'hold-pop'; el.className = 'holdpop';
+  el.innerHTML = `<div class="holdcard" role="dialog" aria-label="17-34-68 hold timer">
+    <button class="holdx" id="hold-x" aria-label="Close">✕</button>
+    <div class="title" style="font-size:20px">The 17-34-68 Hold</div>
+    <div class="chips" style="margin-top:10px"><button class="chip on" id="hold-item">An item</button><button class="chip" id="hold-thought">A thought</button></div>
+    <div class="dim sm" id="hold-d" style="margin-top:6px"></div>
+    <div class="holdnum" id="hold-n">0</div>
+    <div class="holdbar"><i id="hold-f"></i><b style="left:25%">17</b><b style="left:50%">34</b><b style="left:100%">68</b></div>
+    <div class="dim sm" id="hold-m" style="min-height:44px;margin-top:22px">Press Start when you are looking at your item.</div>
+    <button class="btn" id="hold-go">Start</button>
+    <button class="btn ghost" id="hold-done" style="display:none">✓ Mark completed</button>
+  </div>`;
+  document.body.appendChild(el);
+  const $ = (id) => document.getElementById(id);
+  const modes = { item: 'Stare at one item, like a cup, a candle flame or a leaf, and keep your attention on it. A physical target is easier to keep track of. When your mind wanders, bring it back to the item.', thought: 'Pick one thought you genuinely like, with no "but". If a contradicting thought shows up, do not follow it. Come back to the pure one.' };
+  let mode = 'item';
+  const pick = (k) => { mode = k; $('hold-d').textContent = modes[k]; $('hold-item').classList.toggle('on', k === 'item'); $('hold-thought').classList.toggle('on', k === 'thought'); if (!hold || !hold.on) msg(`Press Start when you are ${k === 'item' ? 'looking at your item' : 'holding your thought'}.`); };
+  const msg = (t) => { $('hold-m').textContent = t; };
+  const stop = () => { if (hold) clearInterval(hold.t); };
+  const show = (s) => { $('hold-n').textContent = s; $('hold-f').style.width = `${Math.min(100, (s / 68) * 100)}%`; if (s >= 17) $('hold-done').style.display = ''; };
+  $('hold-item').onclick = () => pick('item'); $('hold-thought').onclick = () => pick('thought'); pick('item');
+  $('hold-x').onclick = closeHold;
+  el.addEventListener('click', (e) => { if (e.target === el) closeHold(); });
+  $('hold-done').onclick = () => { quickDone('law-hold'); toast(`✓ ${exById['law-hold'].title}: ${tallyOf('law-hold')} today`); closeHold(); repaintKeep(); };
+  $('hold-go').onclick = () => {
+    if (hold && hold.on) { stop(); hold.on = false; $('hold-go').textContent = 'Start again'; msg(`Stopped at ${hold.s} seconds. Any stretch you held counts.`); return; }
+    const t0 = Date.now(); hold = { s: 0, on: true, m: {} }; show(0); $('hold-go').textContent = 'Stop'; $('hold-done').style.display = 'none'; msg(mode === 'item' ? 'Stay with the item.' : 'Hold your thought.');
+    try { navigator.wakeLock?.request('screen').then((l) => { holdLock = l; }).catch(() => {}); } catch (e) {}
+    hold.t = setInterval(() => {
+      const s = Math.floor((Date.now() - t0) / 1000); if (s === hold.s) return; hold.s = s; show(s);
+      if (s >= 17 && !hold.m[17]) { hold.m[17] = 1; vib(200); msg(mode === 'item' ? '17 seconds. Keep going, or stop here.' : '17 seconds. This is where change begins. Keep going, or stop here.'); }
+      if (s >= 34 && !hold.m[34]) { hold.m[34] = 1; vib([150, 100, 150]); msg(mode === 'item' ? '34 seconds. Keep going.' : '34 seconds. It multiplies. Keep going.'); }
+      if (s >= 68) { stop(); hold.on = false; vib([400, 150, 400]); $('hold-go').textContent = 'Start again'; msg(mode === 'item' ? '68 seconds. Well held.' : '68 seconds. The vibration becomes self-sustaining. Well held.'); }
+    }, 250);
+  };
+}
+
 /* ---------------- boot ---------------- */
 if (!native.isNative && 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(() => {});
 native.onTap((route, action, exId) => {
@@ -983,6 +1015,7 @@ if (native.isNative) native.permState().then((p) => { permState = p; try { local
 // The phone's Back button does what the on-screen "‹ Back" does: one step back, then to Today, then it puts the app away.
 native.onBack(() => {
   const no = document.getElementById('la-n'); if (no) { no.click(); return; } // the location disclosure
+  if (document.getElementById('hold-pop')) { closeHold(); return; }
   const route = (location.hash.slice(1) || 'today').split('/')[0];
   if (G && route === 'guide') {
     if (G.done) return; // finish by saving or skipping, so a stray Back does not lose the entry
