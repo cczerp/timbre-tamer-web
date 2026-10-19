@@ -1,4 +1,4 @@
-const V = 'mindcue-v32';
+const V = 'mindcue-v41';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'content.js', 'native.js', 'build.js', 'capacitor.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', (e) => {

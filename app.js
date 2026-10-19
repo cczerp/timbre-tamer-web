@@ -1,4 +1,4 @@
-import { PACKAGES, EVERYTHING_ID, pkgFor, CATS, EXERCISES, MILESTONES, exById, CHAKRAS, CHAKRA_INTRO, CYCLES, REMIND_GROUPS, CAT_LABEL, REMIND_DEFAULTS, NUDGES, SAYING_SETS, PING, SCALE, SCALE_UP, ATTN_LESSON, WHY, CAT_TEACH, TEACH_BLOCK } from './content.js';
+import { PACKAGES, EVERYTHING_ID, pkgFor, CATS, EXERCISES, MILESTONES, exById, CYCLES, REMIND_GROUPS, CAT_LABEL, REMIND_DEFAULTS, NUDGES, SAYING_SETS, PING, SCALE, SCALE_UP, ATTN_LESSON, CAT_TEACH, TEACH_BLOCK } from './content.js';
 import * as native from './native.js';
 import { BUILD } from './build.js';
 import { PAYWALL, ADS, ADMOB } from './config.js';
@@ -328,7 +328,7 @@ function Wheel() {
 }
 
 let openCat = null;
-const TAGS = { 'obs-recall': 'Observation' }; // purely a label
+const TAGS = { 'obs-recall': 'Observation', 'med-sit': 'Meditation', 'med-quiet': 'Meditation', 'med-love': 'Meditation' }; // purely a label
 const tag = (id) => (TAGS[id] ? ` <span class="tag">${TAGS[id]}</span>` : '');
 const miniBtns = (id) => `<a class="btn ghost mini" href="#ex/${id}">Rules</a><button class="btn mini" data-act="done:${id}">✓ Done</button>`;
 const exRow = (id) => `<div class="exrow"><a href="#ex/${id}" class="exname">${esc(exById[id].title)}${tag(id)}</a><div class="minis">${miniBtns(id)}</div></div>`;
@@ -403,7 +403,7 @@ function Tour() {
   return `${back('#info')}<h1>A quick tour</h1>
   <p class="dim">What you will find on each page.</p>
   ${sec('Today', 'Your day at a glance, one bubble per goal. Tap <b>✓ Done</b> when you finish one (it goes into your Log with the time) or <b>Rules</b> to read it first. Finished goals disappear, and finishing them all earns a small celebration. The big <b>I\'m in a funk</b> button gives a short reset and plays your own songs.')}
-  ${sec('Training', 'The library of guided practices: sitting practice, mental training exercises, chakra meditations, energy healing, and esoteric meditations. Open one to read how it works, or press <b>Start guided</b> to be walked through one step at a time, with optional timers.')}
+  ${sec('Training', 'The library of guided practices: sitting practice, mental training exercises, chakra meditations, energy healing, and esoteric meditations. Open one to see what it is for, then press <b>Start guided</b> to be walked through one step at a time, with optional timers.')}
   ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, the Funk Reset and Bedtime. <b>General knowledge</b> holds mental preparation, supporting habits (with the do\'s and don\'ts), life cycles, the sayings, the Frequency Fast and the two CIA documents. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
   ${sec('Settings', 'Where you set it up your way. Choose which exercises count as goals for each area, how many reminders you want and when, the leave-home reminders, the funk playlist, the mindfulness sayings, and your backup. The small <b>Log</b> button in the top right corner opens your log.')}
   ${sec('Log', '<b>Entries</b> are your notes and recalls. <b>Days</b> is one button per day showing what you finished, what you did not, and your notes. <b>Progress</b> shows your streak and trends.')}
@@ -428,8 +428,10 @@ function Info() {
   ${link(to('info:fast', '#fast'), `<b>${lk('info:fast')}Frequency Fast</b><div class="dim sm">A short challenge: fast from fear-based input</div>`)}
   ${link(to('cat:assessment', '#learn/assessment'), `<b>${lk('cat:assessment')}The CIA assessment of the Gateway Experience (GWE)</b><div class="dim sm">A 1983 evaluation released by the CIA, and the model behind it</div>`)}
   ${lesson('rv')}
+  <h2>Changing your state</h2>
+  ${['states', 'hypnosis', 'hemisync'].map(lesson).join('')}
   <h2>Learn the practices</h2>
-  ${['meditate', 'mind', 'thoughts', 'energy', 'chakra', 'centers', 'journey', 'project', 'telepathy'].map(lesson).join('')}`;
+  ${['meditate', 'door', 'mind', 'thoughts', 'rule', 'bodysense', 'energy', 'chakra', 'project', 'telepathy'].map(lesson).join('')}`;
 }
 let priceOf = {}; let unlockKey = '';
 const TEACH = ['energy-habits']; // reading pages kept as entries, shown in Info with no guided run
@@ -452,6 +454,12 @@ function Unlock(key) {
   <button class="btn ghost" data-act="restoreunlock">Restore purchases</button>
   <div id="msg" class="warn sm"></div>`;
 }
+const CAN_MASTER = ['obs', 'conc', 'attn', 'medp']; // training reminders you can finish with. Emotional control, bedtime, routine meditation and the sayings stay in practice for good
+function Mastered() {
+  const done = S.rem.mastered || {}; const list = REMIND_GROUPS.filter((g) => ready(g) && done[g.id]);
+  return `${back('#settings')}<h1>Mastered</h1><p class="dim">Techniques you have made your own. They are out of Settings and Today so those screens stay clear. Turn one back on whenever you want it again.</p>`
+    + (list.length ? list.map((g) => card(`<div style="display:flex;align-items:center;gap:10px"><b style="flex:1">${g.id === 'medp' ? 'Sitting practice' : g.label}</b><button class="btn ghost" style="width:auto" data-act="unmaster:${g.id}">Turn back on</button></div>`)).join('') : '<p class="dim">Nothing here yet. Use the Mastered button on a reminder group in Settings when you no longer need the prompts.</p>');
+}
 const advOk = new Set(); let warnStep = 1;
 function Practice() {
   const row = (e) => link(locked(e.id) ? `#unlock/${e.id}` : `#ex/${e.id}`, `<b>${locked(e.id) ? '🔒 ' : ''}${esc(e.title)}</b><div class="dim sm">${esc(e.freq)}</div>`);
@@ -461,12 +469,11 @@ function Practice() {
   const knowledge = TEACH; // shown on the Teachings page
   const medPractice = ['med-practice', 'med-cloud', 'med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love'];
   const emo = link('#wheel', '<b>Focus Wheel</b><div class="dim sm">Build 12 believable statements toward what you want</div>') + cats('emotion') + link('#scale', '<b>Climbing the Scale</b><div class="dim sm">Tell it what you feel. It walks you up, one rung at a time</div>');
-  const mental = fold('observe', CATS.observe, cats('observe'), 'h3') + fold('concentrate', CATS.concentrate, cats('concentrate'), 'h3') + fold('attention', CATS.attention, cats('attention'), 'h3')
+  const mental = fold('sit', 'Sitting practice', ids(medPractice), 'h3') + fold('observe', CATS.observe, cats('observe'), 'h3') + fold('concentrate', CATS.concentrate, cats('concentrate'), 'h3') + fold('attention', CATS.attention, cats('attention'), 'h3')
     + fold('emotion', CATS.emotion, emo, 'h3') + fold('bedtime', CATS.bedtime, cats('bedtime'), 'h3') + fold('living', CATS.living, cats('living', knowledge), 'h3');
   const chakra = cats('chakra') + (cats('centers') ? `<h3>Psychic centers</h3>${cats('centers')}` : '');
   const heal = cats('energy', knowledge) + (cats('balance') ? `<h3>${CATS.balance}</h3>${cats('balance')}` : '');
   return `<h1>Training</h1>
-  ${fold('sit', 'Sitting practice', ids(medPractice))}
   ${fold('mental', 'Mental training', mental)}
   ${fold('chakra', 'Chakra meditations', chakra)}
   ${fold('heal', 'Energy healing', heal)}
@@ -486,7 +493,7 @@ function Warn(id) {
     <a class="btn ghost" href="#practice">Go back</a>`;
 }
 
-const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'centers', 'journey', 'project', 'mind', 'thoughts', 'telepathy', 'rv'];
+const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule', 'bodysense'];
 function Exercise(id) {
   const ex = exById[id]; if (!ex) return back() + '<p>Not found.</p>';
   if (TEACH.includes(id)) return `${back('#info')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>${ex.steps.map((t) => card(`<div class="sm" style="white-space:pre-line">${esc(typeof t === 'string' ? t : t.t)}</div>`)).join('')}`;
@@ -494,22 +501,16 @@ function Exercise(id) {
   return `${back('#practice')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>
   <div class="dim sm" style="margin:8px 0">${esc(ex.freq)} ${why}</div>
   ${ex.caution ? card(`<div class="warn sm">${esc(ex.caution)}</div>`, 'warnb') : ''}
-  <h2>Steps</h2>${ex.steps.map((s, i) => `<p style="white-space:pre-line">${i + 1}. ${esc(typeof s === 'string' ? s : s.t)}</p>`).join('')}
   <a class="btn" href="#guide/${id}">Start guided</a>
   <button class="btn ghost" data-act="done:${id}">✓ Mark completed (${tallyOf(id)} today)</button>`;
 }
 
-function Chakras() {
-  return `${back('#info')}<h1>Chakras</h1><p class="dim">${esc(CHAKRA_INTRO)}</p>` + CHAKRAS.map((c) => card(`<b>${c.n}. ${c.name} — ${esc(c.sk)}</b>
-  <div class="sm">Seed sound: ${esc(c.seed)}</div><div class="sm">Location: ${esc(c.loc)}</div><div class="sm">Blocked by: ${esc(c.block)}</div><div class="sm">Gland: ${esc(c.gland)}</div><div class="dim sm" style="margin-top:4px">${esc(c.note)}</div>`)).join('');
-}
 function About() {
   return `${back('#info')}<h1>Credits</h1>
   <p>No one person created what is in this app. These practices are shared human knowledge, taught and agreed upon across many teachers, texts, and traditions over a very long time. This app is only a way to remember to use them.</p>
   <p>With gratitude to:</p>
   <ul>
     <li><b>Joe Dispenza</b> — chakra attention and coherence work</li>
-    <li><b>Guru Pathik</b>, in <i>Avatar: The Last Airbender</i> — the chakra lesson</li>
     <li><b>Dolores Cannon</b> — the quiet-listening, inner-journey, energy, and everyday-living practices, written here in our own words from teachings associated with her work</li>
     <li><b>Barbara Marciniak</b>, <b>Neville Goddard</b>, <b>Bashar</b>, and <b>Esther and Abraham Hicks</b> — the whim, now-point, belief-audit, fast, breath, bedtime-loop, emotional-scale and manifestation practices, and the sayings inspired by them, in our own words</li>
     <li><b>Randall L. Waechter and Lauren Sergio</b>, and the researchers they draw on (Burr, Baule and McFee, Schumann, Oschman, Becker) — the teaching on energy and the body's fields, from their paper in <i>Subtle Energies &amp; Energy Medicine</i></li>
@@ -530,12 +531,6 @@ function Laws() {
   ${setCard('laws')}`;
 }
 const taught = () => '<div class="dim sm" style="margin-top:14px">Taught from the teachers and traditions named in <a href="#about">Credits</a>.</div>';
-function Why() {
-  return `${back('#info')}<h1>Why these five</h1><p class="dim">${esc(WHY.intro)}</p>
-  ${WHY.parts.map((p) => card(`<b>${esc(p.h)}</b><div class="sm" style="margin-top:4px">${esc(p.t)}</div>`)).join('')}
-  ${card(`<div class="sm">${esc(WHY.close)}</div>`, 'accent')}
-  <a class="btn" href="#practice">Go to Practice</a>${taught()}`;
-}
 function Learn(c) {
   const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
   return `${back('#info')}<h1>${esc(t.t)}</h1><p class="dim">${esc(t.one)}</p>
@@ -544,7 +539,7 @@ function Learn(c) {
   ${(t.sections || []).map((x) => `<h3>${esc(x.h)}</h3>` + x.p.map((y) => card(`<div class="sm">${esc(y)}</div>`)).join('')).join('')}
   ${t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : ''}
   ${t.src ? `<h3>Sources</h3>${t.src.map((x) => `<div class="dim sm" style="margin-bottom:6px">${esc(x)}</div>`).join('')}` : ''}
-  <a class="btn" href="#practice">Go to Practice</a>${taught()}`;
+  ${t.noPractice ? '' : '<a class="btn" href="#practice">Go to Practice</a>'}${taught()}`;
 }
 function Attn() {
   const on = !!(S.learned || {}).attn;
@@ -626,14 +621,17 @@ function Sayings() {
 function Settings() {
   const R = S.rem;
   const fmtMin = (v) => fmtTime(Math.floor(v / 60), v % 60);
-  const SKILL = { obs: 'noticing fine details', conc: 'holding one thing in mind', emo: 'turn negative thoughts positive at will' };
   const LABEL = { medp: 'Sitting practice' };
+  const SKILL = { obs: 'noticing fine details', conc: 'holding one thing in mind', emo: 'turn negative thoughts positive at will' };
   const lab = (g) => LABEL[g.id] || g.label;
   const block = {};
+  const done = R.mastered || {};
+  const masterBtn = (id) => (CAN_MASTER.includes(id) ? `<div style="text-align:right;margin-top:10px"><button class="chip" data-act="master:${id}">Mastered ✓</button></div>` : '');
   REMIND_GROUPS.filter(ready).forEach((g) => {
+    if (done[g.id]) return;
     const c = R.cat[g.id];
     const nightly = '';
-    if (g.simple) { block[g.id] = card(`${head(c.on, `<b>${lab(g)}</b>`, 'Each reminder opens a list of meditations to choose from.', `con:${g.id}`, g.id)}${setOpen[g.id] ? `<div class="dim sm" style="margin-top:6px">Reminders per day</div>${stepper(`cn:${g.id}`, c.n)}` : ''}`); return; }
+    if (g.simple) { block[g.id] = card(`${head(c.on, `<b>${lab(g)}</b>`, 'Each reminder opens a list of meditations to choose from.', `con:${g.id}`, g.id)}${setOpen[g.id] ? `<div class="dim sm" style="margin-top:6px">Reminders per day</div>${stepper(`cn:${g.id}`, c.n)}${masterBtn(g.id)}` : ''}`); return; }
     const bullets = [...g.pool, ...g.leave].filter((x) => !off(x)).map((x) => `<div class="bul ${c.random ? 'dis' : ''}" data-act="cex:${g.id}:${x}"><span class="bx ${c.ex.includes(x) ? 'on' : ''}">${c.ex.includes(x) ? '✓' : ''}</span><span>${esc(exById[x].title)}${tag(x)}${g.leave.includes(x) ? ' <span class="dim">(when you leave home)</span>' : (g.both || []).includes(x) ? ' <span class="dim">(also when you leave home)</span>' : ''}</span></div>`).join('');
     block[g.id] = card(`${head(c.on, `<b class="ttl">${lab(g)}</b>`, SKILL[g.id] || (c.on ? `Goal: ${c.goal} a day · ${c.n} reminder${c.n === 1 ? '' : 's'} a day` : 'Off'), `con:${g.id}`, g.id)}
       ${setOpen[g.id] ? `${SKILL[g.id] ? `<div class="dim sm" style="margin-top:6px">${c.on ? `Goal: ${c.goal} a day · ${c.n} reminder${c.n === 1 ? '' : 's'} a day` : 'Off'}</div>` : ''}`+ `<div class="dim sm" style="margin-top:6px">Tick the exercises. Each ticked one is a daily goal. Or pick the random option below.</div>${bullets}
@@ -646,8 +644,10 @@ function Settings() {
         <button class="chip ${c.timing === 'random' ? 'on' : ''}" data-act="ctime:${g.id}:random">At random times</button></div>
       <div class="dim sm">${c.timing === 'set' ? 'You pick each time.' : c.timing === 'even' ? `Evenly across ${fmtTime(R.day.s)}–${fmtTime(R.day.e)}.` : `Random times between ${fmtTime(R.day.s)} and ${fmtTime(R.day.e)}.`}</div>
       ${c.timing === 'set' ? c.times.map((t, k) => `<div class="dim sm" style="margin-top:6px">Reminder ${k + 1}</div>${stepper(`ct:${g.id}:${k}`, t, fmtMin)}`).join('') : ''}
-      ${nightly ? `<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:6px">${nightly}</div>` : ''}` : ''}`);
+      ${nightly ? `<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:6px">${nightly}</div>` : ''}${masterBtn(g.id)}` : ''}`);
   });
+  const nMastered = REMIND_GROUPS.filter((g) => ready(g) && done[g.id]).length;
+  const archive = `<div style="margin:14px 0"><a class="chip" href="#mastered">Mastered${nMastered ? ` (${nMastered})` : ''}</a></div>`;
   const anyLeave = REMIND_GROUPS.some((g) => R.cat[g.id].on && [...g.leave, ...(g.both || [])].some((id) => R.cat[g.id].ex.includes(id)));
   const home = anyLeave ? card(`<b>Leaving home</b>
     <div class="dim sm">${!native.isNative ? 'Works in the Android app only. Until then these stay quiet.' : R.home ? `Home is set. Reminders fire when you move ${R.home.r} m away.` : 'Set your home first — until then these stay quiet.'}</div>
@@ -667,6 +667,7 @@ function Settings() {
   ${['medp', 'obs', 'conc', 'attn', 'emo'].map((id) => block[id] || '').join('')}
   ${sayingsCard}
   ${['bed', 'med'].map((id) => block[id] || '').join('')}
+  ${archive}
   ${home}
   <h2>Funk playlist</h2>
   <div class="dim sm">Paste a Spotify (or any music) link and press Save. The funk button and "Play my songs" will open it. Downloaded playlists play without internet.</div>
@@ -784,14 +785,13 @@ function paint() {
     case 'log': h = Log(); break;
     case 'note': h = NoteForm(a); break;
     case 'recall': h = RecallForm(); break;
-    case 'chakras': h = locked('info:chakras') ? Unlock('info:chakras') : Chakras(); break;
     case 'cycles': h = locked('info:cycles') ? Unlock('info:cycles') : Cycles(); break;
     case 'about': h = About(); break;
     case 'cat': h = Choose(a); break;
     case 'scale': h = Scale(); break;
     case 'sayings': h = Sayings(); break;
-    case 'why': h = Why(); break;
     case 'learn': h = locked('cat:' + a) ? Unlock('cat:' + a) : Learn(a); break;
+    case 'mastered': h = Mastered(); break;
     case 'attn': h = locked('info:attn') ? Unlock('info:attn') : Attn(); break;
     case 'fast': h = locked('info:fast') ? Unlock('info:fast') : FastLesson(); break;
     case 'laws': h = Info(); break; // Universal laws is switched off for now
@@ -802,7 +802,7 @@ function paint() {
   }
   if (!['note', 'recall'].includes(route)) form = {};
   $('#view').innerHTML = h;
-  const tab = ['today', 'practice', 'info', 'settings'].includes(route) ? route : route === 'cat' ? 'today' : route === 'tour' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#info') || route === 'laws' || route === 'sayings' || route === 'fast' || route === 'chakras' || route === 'cycles' || route === 'about' || route === 'learn' || route === 'why' || route === 'attn' || (route === 'ex' && TEACH.includes(a)) ? 'info' : route === 'ex' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#practice') || route === 'scale' || route === 'wheel' || route === 'guide' ? 'practice' : 'settings'; // Log, notes and day pages are reached from Settings
+  const tab = ['today', 'practice', 'info', 'settings'].includes(route) ? route : route === 'cat' ? 'today' : route === 'tour' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#info') || route === 'laws' || route === 'sayings' || route === 'fast' || route === 'cycles' || route === 'about' || route === 'learn' || route === 'attn' || (route === 'ex' && TEACH.includes(a)) ? 'info' : route === 'ex' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#practice') || route === 'scale' || route === 'wheel' || route === 'guide' ? 'practice' : 'settings'; // Log, notes and day pages are reached from Settings
   document.querySelectorAll('#tabs a').forEach((el) => el.classList.toggle('on', el.dataset.tab === tab));
   const rs = $('#restore'); if (rs) rs.onchange = restore;
   if (adsOn() && ['practice', 'info'].includes(route)) { $('#view').insertAdjacentHTML('beforeend', '<div style="height:70px"></div>'); native.showBanner(ADMOB, 56); } else native.hideBanner(); // a banner only on the Training and Teachings lists, never during practice
@@ -849,6 +849,8 @@ document.addEventListener('click', async (e) => {
     case 'inc': case 'dec': { const d = act === 'inc' ? 1 : -1; stepTo(a, b, d, c3); break; }
     case 'savenote': S.sessions.unshift({ id: uid(), ts: Date.now(), ex: form.ex, focus: form.focus || null, note: form.note.trim() }); save(); location.hash = '#log'; break;
     case 'saverecall': bump('obs-recall'); S.recalls.unshift({ id: uid(), ts: Date.now(), details: form.details, accuracy: form.accuracy || null, note: form.note.trim() }); save(); location.hash = '#log'; break;
+    case 'master': if (!CAN_MASTER.includes(a)) break; S.rem.mastered = { ...(S.rem.mastered || {}), [a]: true }; S.rem.cat[a].on = false; save(); location.hash = '#mastered'; break;
+    case 'unmaster': { const m = { ...(S.rem.mastered || {}) }; delete m[a]; S.rem.mastered = m; S.rem.cat[a].on = true; save(); repaintKeep(); break; }
     case 'con': S.rem.cat[a].on = !S.rem.cat[a].on; save(); repaintKeep(); break;
     case 'crand': { const c = S.rem.cat[a], g = group(a); c.random = !c.random;
       if (c.random) { c.exPrev = c.ex.slice(); c.ex = [...g.pool, ...g.leave]; } else { c.ex = (c.exPrev && c.exPrev.length ? c.exPrev : c.ex).slice(); delete c.exPrev; }
