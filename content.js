@@ -3,7 +3,7 @@
 // or { t, breath: { phases:[[label,secs]...], reps } }.
 
 export const CATS = {
-  energy: 'Energy healing',
+  energy: 'Basic meditations',
   balance: 'Counterbalance',
   observe: 'Observation',
   concentrate: 'Concentration',
@@ -438,14 +438,15 @@ export const EXERCISES = [
   {
     id: 'funk-reset', cat: 'emotion', hidden: true, title: 'Funk Reset', mins: 1,
     freq: 'Any time you are stuck in a negative loop',
-    summary: 'A quick sequence of tools to step out of a funk. Pick what works and drop the rest.',
+    summary: 'A short sequence to step out of a funk: breath, attention, thinking, then music. Do all of it before you judge it.',
     steps: [
-      { t: 'Slow your body first with a square breath: in 4, hold 6, out 4, hold 6. The exact counts do not matter. What matters is that the four sides stay even.', breath: { phases: [['Breathe in', 4], ['Hold', 6], ['Out slowly', 4], ['Hold', 6]], reps: 4 } },
+      { t: 'Slow your body first with a square breath: in 4, hold 4, out 4, hold 4, all four sides the same length. Start at 3 if 4 is a stretch. It may feel like nothing at first. Do all four rounds anyway.', breath: { phases: [['Breathe in', 4], ['Hold', 4], ['Out slowly', 4], ['Hold', 4]], reps: 4 } },
       'Look around. Name 5 things you can see, 4 you can hear, 3 you can feel. Go slowly.',
       'Is this feeling yours, or picked up from someone or something nearby? If it is borrowed, step out of it like stepping out of a room.',
       'Redirect, do not fight it. Choose one small thing to do right now: stand up, drink water, step outside, walk into another room.',
       'Fear check: What is there to fear? I am secure. I have faced this before. Use your mind, not your will.',
       { t: 'Put on one of your songs and let it do its work.', music: true },
+      'If it still feels flat, that is normal. Try another tool from the Change your state button, or come back to this one later.',
     ],
   },
   {
@@ -982,7 +983,7 @@ export const SAYING_SETS = [
     "Think from the wish fulfilled, not of it. Thinking of it keeps it far away. Thinking from it closes the gap.",
     "Still assuming? Remain in the end.",
   ] },
-  { id: 'scale', name: 'Climbing the Scale', route: '#scale', sayings: [
+  { id: 'scale', name: 'The emotional scale', route: '#learn/scale', sayings: [
     "Where are you on the scale right now? Aim one rung up, no more.",
     "Any upward step counts. Anger is progress from rage.",
   ] },
@@ -1066,6 +1067,117 @@ export const SCALE_UP = {
   4: 'What would you do first, if it were already arriving?',
   3: 'This is what being alive feels like.',
   2: 'Look at what you climbed through to get here. Appreciate the one who climbed.',
+};
+
+// Words people use for how they feel, each with the rung it sits nearest. The Scale exercise uses them to find where you are.
+export const FEELINGS = [
+  ['joyful', 1], ['loved', 1], ['grateful', 1], ['free', 1], ['appreciative', 1], ['empowered', 1],
+  ['passionate', 2], ['fired up', 2], ['excited', 3], ['happy', 3], ['eager', 3], ['enthusiastic', 3],
+  ['confident', 4], ['sure it will work', 4], ['optimistic', 5], ['hopeful', 6], ['looking forward', 6],
+  ['okay', 7], ['fine', 7], ['calm', 7], ['content', 7], ['peaceful', 7],
+  ['bored', 8], ['flat', 8], ['meh', 8], ['restless', 8],
+  ['pessimistic', 9], ['cynical', 9], ['it will not work', 9],
+  ['annoyed', 10], ['irritated', 10], ['impatient', 10], ['frustrated', 10],
+  ['overwhelmed', 11], ['swamped', 11], ['stressed', 11], ['too much', 11],
+  ['disappointed', 12], ['doubtful', 12], ['let down', 12], ['unsure', 12],
+  ['worried', 13], ['anxious', 13], ['nervous', 13], ['uneasy', 13],
+  ['blaming someone', 14], ['resentful', 14], ['their fault', 14],
+  ['discouraged', 15], ['defeated', 15], ['sad', 15], ['exhausted', 15], ['stuck', 15], ['what is the point', 15],
+  ['angry', 16], ['mad', 16], ['furious', 16],
+  ['vengeful', 17], ['spiteful', 17], ['want them to pay', 17],
+  ['hateful', 18], ['enraged', 18], ['full of rage', 18],
+  ['jealous', 19], ['envious', 19],
+  ['insecure', 20], ['unworthy', 20], ['inadequate', 20], ['lonely', 20], ['not good enough', 20],
+  ['guilty', 21], ['ashamed', 21], ['regretful', 21],
+  ['afraid', 22], ['scared', 22], ['terrified', 22], ['grieving', 22], ['heartbroken', 22], ['depressed', 22], ['powerless', 22], ['trapped', 22], ['numb', 22], ['panicked', 22],
+];
+
+// How the step up from a rung can sound in three different parts of life. key = the rung you are on; each moves you to the rung above it.
+export const SCALE_STEPS = {
+  22: [
+    { h: 'At work', t: 'You were let go and everything feels pointless. A step up sounds like: "I should have asked more questions when things changed." That is guilt, and it hurts, but it means some of this was in your hands.' },
+    { h: 'With someone', t: 'A friend stopped speaking to you and you feel crushed. A step up: "I should have called back when they reached out." It stings, but it puts a small piece of this back in your control.' },
+    { h: 'About yourself', t: 'You feel flat and stuck, with no energy for anything. A step up: "I have not been looking after myself, and I feel bad about that." Guilt sits above helplessness because it admits you could act.' } ],
+  21: [
+    { h: 'At work', t: 'Guilt says, "I let the team down." A step up: "Other people at my level seem to handle this better than me." Comparing is not pleasant, but it shows you want to do well.' },
+    { h: 'With someone', t: '"I was unkind to her" becomes "I am not as good at being close to people as my sister is." You have stopped punishing yourself and started noticing what you want: ease with people.' },
+    { h: 'About yourself', t: '"I wasted my savings" becomes "People who save well seem to have it figured out and I do not." That is a more painful-sounding thought, but it points at what you want instead of at what you did wrong.' } ],
+  20: [
+    { h: 'At work', t: '"I am not good enough for this job" becomes "That colleague gets the recognition I want." It is a sharper feeling, and the sharpness is energy. You have found something you want.' },
+    { h: 'With someone', t: '"Nobody would choose me" becomes "Everyone else seems to have someone." The ache is still there, but now it has a direction: you want closeness.' },
+    { h: 'About yourself', t: '"I will never look or feel the way I want to" becomes "Other people have the body and the ease I want." Jealousy is a clue to what you want, and that clue is what you needed.' } ],
+  19: [
+    { h: 'At work', t: 'Envy of a rival becomes "They should not have been picked over me. It was unfair." Anger is a stronger feeling than envy, and it feels like relief because it stops comparing and starts pushing back.' },
+    { h: 'With someone', t: '"She has what I want" becomes "She does not deserve it." That is harsher, but it gets you out of feeling small. Only step here if it brings relief, and do not act on it.' },
+    { h: 'About yourself', t: 'Jealousy of how easy life looks for others becomes "This whole situation is unfair and I am sick of it." Rage is a stronger feeling than helpless hurt. Let it be a feeling, not a plan.' } ],
+  18: [
+    { h: 'At work', t: '"I hate this place" becomes "I will make sure they regret how they treated me." Revenge is more organized than rage. Notice you have gone from a flood to a direction.' },
+    { h: 'With someone', t: '"I cannot stand them" becomes "I am going to make them see what they did." You have a target now, and that steadies you. Say it only in your head.' },
+    { h: 'About yourself', t: '"I hate how I handled that" becomes "I will prove them all wrong." Pointing the force outward gives you something to stand on. Keep it as a feeling and decide about action later.' } ],
+  17: [
+    { h: 'At work', t: '"They will pay for this" becomes "I am angry that this happened to me." Anger is lighter than revenge because you no longer need to arrange anything. You only have to feel it.' },
+    { h: 'With someone', t: 'Planning how to get back at them becomes "I am furious that they did that." Drop the plan and keep the feeling. The plan was costing you more than the anger.' },
+    { h: 'About yourself', t: '"I will show everyone" becomes "I am angry that nobody backed me." Stop scheming and name what you are angry about. That is a step down in pressure and a step up the scale.' } ],
+  16: [
+    { h: 'At work', t: '"This is outrageous" becomes "I am tired of fighting about this." Notice how heavy the anger is to carry. Tiredness is not weakness. It means the force is spent.' },
+    { h: 'With someone', t: 'Anger at someone becomes "I am worn out by going over it again and again." Put the target down for a moment. You do not have to win right now.' },
+    { h: 'About yourself', t: '"I am furious that I am still here" becomes "I am so tired of being angry at myself." That sigh is the step. You are no longer pushing, only resting.' } ],
+  15: [
+    { h: 'At work', t: '"Nothing I do here matters" becomes "They should have told me what they wanted." Blame can sound ugly, but it carries more energy than giving up, and it shows you believe things could have gone differently.' },
+    { h: 'With someone', t: '"What is the point of trying with them" becomes "If they had listened, this would not have happened." The wish inside it, to be heard, is your guidance.' },
+    { h: 'About yourself', t: '"I cannot do this" becomes "If I had been given a better start, I would not be here." Blame says things could have gone differently, and that belief is already hope.' } ],
+  14: [
+    { h: 'At work', t: '"It was all their fault" becomes "What if they do it again and I lose this job?" Worry is blame turned toward the future, and it means you are imagining one.' },
+    { h: 'With someone', t: '"They ruined everything" becomes "What if this never gets better between us?" You have stopped looking backward at who is to blame and started looking ahead, which is where you can act.' },
+    { h: 'About yourself', t: '"I am to blame" becomes "What if I do the same thing next time?" That question is about a future where you can choose differently.' } ],
+  13: [
+    { h: 'At work', t: '"What if it goes badly?" becomes "I expected the presentation to go better than this." Worry is picturing the worst. Disappointment admits you expected better, so you believe better exists.' },
+    { h: 'With someone', t: '"What if they leave?" becomes "I hoped this would be easier by now." The worry is still there, but it is quieter and it points at something you want.' },
+    { h: 'About yourself', t: '"What if I never get ahead?" becomes "I thought I would be further along." Doubt is calmer than worry, and it holds a picture of where you want to be.' } ],
+  12: [
+    { h: 'At work', t: '"It did not go the way I wanted" becomes "There is so much to fix now." Overwhelm sounds worse, but it is a list of everything you care about, which is a lot of wanting.' },
+    { h: 'With someone', t: '"They let me down" becomes "I have so many things to sort out with everyone." You moved from one hurt to a whole pile of things that matter to you. That is more energy, even though it feels heavier.' },
+    { h: 'About yourself', t: '"Why did I think this would work?" becomes "I have a dozen things to turn around." The size of the pile shows how much you want. Pick the smallest piece next.' } ],
+  11: [
+    { h: 'At work', t: '"There is too much to do" becomes "I am annoyed that nobody is helping with this." Irritation is a clearer feeling than overwhelm. You have found something to be annoyed about, which means you are sorting.' },
+    { h: 'With someone', t: '"I cannot handle all of this" becomes "I am fed up with how much falls on me." It is still unpleasant, but it has edges, and a feeling with edges can be worked with.' },
+    { h: 'About yourself', t: '"It is all too much" becomes "I wish I could just get one thing finished." Pick that one thing. Frustration is a rung above overwhelm because it knows what it wants.' } ],
+  10: [
+    { h: 'At work', t: '"This is so frustrating" becomes "It probably will not work out. And yet the last project did." Hold both. The second half is the step up.' },
+    { h: 'With someone', t: '"They never listen" becomes "They probably will not change. And yet we got through that other rough patch." Pessimism with one small exception in it is already easier to carry.' },
+    { h: 'About yourself', t: '"I am sick of being stuck" becomes "Nothing may change. And yet something has changed before, hasn\'t it?" You just need one example from your own life.' } ],
+  9: [
+    { h: 'At work', t: '"It will not get better here" becomes "Nothing is happening at the moment, and that is all right." Boredom is quieter than pessimism. It is a rest between things.' },
+    { h: 'With someone', t: '"We are never going to fix this" becomes "Right now we are just not talking, and nobody is fighting." That is a pause. Let it be a pause.' },
+    { h: 'About yourself', t: '"Nothing I try works" becomes "I do not feel like trying anything right now." That is flat, but flat is calmer than defeat. Rest here and let the doorway of hope open on its own.' } ],
+  8: [
+    { h: 'At work', t: 'The afternoon drags. Ask: "Is anything wrong right now?" No deadline is burning and the chair is comfortable. This moment is okay, and that is contentment.' },
+    { h: 'With someone', t: 'You are sitting with someone and nothing is happening. Ask: "Is anything wrong right now?" No. The silence is fine. You have just stepped from boredom to contentment.' },
+    { h: 'About yourself', t: 'You are lying around with nothing to do. Ask: "Just this breath, this room, isn\'t it okay?" If the answer is yes, even slightly, you are on the next rung.' } ],
+  7: [
+    { h: 'At work', t: 'This hour is fine. Ask: "Couldn\'t the next hour be fine too? Could tomorrow\'s meeting go well?" Stretching okay a little further ahead is hope.' },
+    { h: 'With someone', t: 'Things between you are calm. "If today is okay, couldn\'t the rest of the week be?" You have moved from content to hopeful by carrying the okay forward.' },
+    { h: 'About yourself', t: 'You are settled right now. "If this is all right, maybe the next few months can be too." You do not have to believe it fully. You only have to let it be possible.' } ],
+  6: [
+    { h: 'At work', t: '"Maybe this will work out" becomes "I have come back from worse at work before. I know the way." Remembering past climbs is what turns hope into optimism.' },
+    { h: 'With someone', t: 'Hope about a relationship becomes "We repaired things before. We can do it again." A real memory beats a wish.' },
+    { h: 'About yourself', t: '"Perhaps things will get better" becomes "I have climbed out from the bottom before." Let one memory of getting through something do the work.' } ],
+  5: [
+    { h: 'At work', t: '"This will probably go well" becomes "Something good is coming from this project." Optimism leans forward. Say it as plain fact, the way you would about tomorrow\'s sunrise.' },
+    { h: 'With someone', t: '"I think we will be fine" becomes "Something good is coming for us." You are no longer weighing odds. You are noticing a direction.' },
+    { h: 'About yourself', t: '"Things may improve" becomes "Something good is on its way. It always eventually was." Let that feel true for a breath, no longer.' } ],
+  4: [
+    { h: 'At work', t: '"I think this will go well" becomes "What would I do first if the promotion were already arriving?" Pick the first move and picture doing it.' },
+    { h: 'With someone', t: '"We will be okay" becomes "What would I say first if we had already made up?" Picture the first sentence. It brings enthusiasm closer.' },
+    { h: 'About yourself', t: '"I believe things are improving" becomes "What would I do tomorrow if the change had already come?" Imagine the first small action and feel yourself starting it.' } ],
+  3: [
+    { h: 'At work', t: 'Eagerness about a project becomes "This is what being alive feels like." Notice how your whole body wants to get started. That is passion.' },
+    { h: 'With someone', t: 'Looking forward to seeing someone becomes "This is exactly why I love being alive." Let the wanting be as big as it is.' },
+    { h: 'About yourself', t: 'Happiness about where things are going becomes "I am right where I want to be, and I am on fire about it." Stay with the feeling for a breath.' } ],
+  2: [
+    { h: 'At work', t: 'Passion for the work becomes "Look at what I climbed through to get here. I appreciate the one who climbed." Turn the appreciation on yourself.' },
+    { h: 'With someone', t: 'Passion for someone becomes gratitude for the whole road that led to them, including the hard parts. That is love and appreciation.' },
+    { h: 'About yourself', t: 'Feeling alive and driven becomes "Thank you to every version of me that kept going." Appreciating the climber is the top of the scale.' } ],
 };
 
 // The Attention lesson (Info). Locked with the Attention practices.
@@ -1198,17 +1310,27 @@ export const CAT_TEACH = {
     'These are not sit-down exercises. They are ways of living the five building blocks in ordinary hours: watching your words, listening to your body, being here now, keeping body and mind clean.',
     'They are the point of the rest. A few minutes of practice matters most when it changes how you speak, eat, react and rest for the other twenty-three hours.',
     'Take one at a time and notice what shifts. The Do\'s and Don\'ts is a short reminder list to come back to.' ] },
-  funk: { t: 'The Funk Reset', one: 'A quick way out of a negative loop', p: [
-    'When you are stuck in a funk, the answer is a short sequence of tools, not willpower. Pick what works and drop the rest.',
-    'Slow your body first with a square breath: in for 4, hold for 6, out for 4, hold for 6. The exact counts do not matter. What matters is that the four sides stay even.',
-    'Look around and name 5 things you can see, 4 you can hear and 3 you can feel, slowly. Then ask whether the feeling is yours or picked up from someone or something nearby. If it is borrowed, step out of it like stepping out of a room.',
-    'Redirect instead of fighting it: stand up, drink water, step outside, walk into another room. Ask what there is to fear. You are secure, you have faced this before, and you can use your mind, not your will.',
-    'Finish with one of your songs and let it do its work. The big "I\'m in a funk" button on Today walks you through all of this and plays your music.' ] },
-  iam: { t: 'Say it as true: "I am"', one: 'Your words shape what you attract', p: [
-    'Your words shape what you attract. "I want" announces lack, because you only want what you do not have. Saying it as already true, "I am" or "I have", points you at the state you are choosing.',
-    'For a day, listen to your own speech. Each time you hear yourself say "I want…", pause and say it again in the present tense: "I am healthy" instead of "I want to be healthy".',
-    'Keep it truthful and kind. This is not for denying a real problem you need to deal with. Also notice what you say about yourself in passing, and do not say things you would not want to be true.',
-    'A sitting meditation built on this idea is being prepared.' ] },
+  funk: { t: 'Change your state', one: 'The Funk Reset, the "I AM" meditation and more', p: [
+    'The Change your state button on Today is for the moment you notice you are stuck in a mood and want out. It offers a few tools, because different moods respond to different doors. Pick one, give it a real try, and if it is not landing, try another.' ],
+    sections: [
+    { h: 'The Funk Reset', p: [
+      'It is a short sequence, not willpower. It goes through the body first, then your attention, then your thinking, then music.',
+      'Slow your body with a square breath: in for 4, hold for 4, out for 4, hold for 4, all four sides the same length. If 4 is a stretch, start at 3. Then look around and name 5 things you can see, 4 you can hear and 3 you can feel, slowly, which pulls your attention out of the loop and into the room. Next ask whether the feeling is yours or picked up from someone or something nearby. If it is borrowed, step out of it like stepping out of a room.',
+      'Redirect instead of fighting it: stand up, drink water, step outside, walk into another room. Ask what there is to fear. You are secure, you have faced this before, and you can use your mind, not your will. Finish with one of your songs and let it do its work.' ] },
+    { h: 'Why it starts with the breath', p: [
+      'In biohacking circles, breath is the favorite handle on your state, because you cannot order a mood to change but you can change how you breathe on purpose, and the body follows. In the study below, the drop in breathing rate went along with better mood, though only modestly.',
+      'Square breathing, also called box breathing, is the version popularized by Mark Divine, a former Navy SEAL officer and founder of SEALFIT. He says he learned breath control through martial arts during SEAL training and uses it to stay calm and alert under pressure. It is a technique with a military reputation, not a secret weapon, and the evidence for it is modest.',
+      'In a 2023 randomized trial, 108 adults did one of four 5-minute daily practices for 28 days: mindfulness meditation, cyclic sighing, box breathing, or a fast-breathing technique. Everyone improved. The breathing exercises as a group lifted mood more than mindfulness did, and cyclic sighing (two inhales, then one long slow exhale) did best. Box breathing improved mood and anxiety but was not significantly better than mindfulness. The authors call the study exploratory: it ran remotely and for four weeks only.' ] },
+    { h: 'Keep going when it does not feel like it is working', p: [
+      'In a funk, the first round of anything often feels like nothing. That is normal and it does not mean the tool failed. In the study the gains were measured over weeks of daily five-minute practice, and they grew with how consistently people did it. So treat the first rounds as practice, not a test. Do all four rounds before you judge it, and expect a funk to shift in steps, not in one click.',
+      'If it still feels flat after the full sequence, change tools instead of quitting: try the "I AM" meditation, the Rampage of Appreciation or Climbing the Scale from the same button, or try the Funk Reset again later. Using a tool on an ordinary day is the practice that makes it easier to reach for when you need it.' ] },
+    { h: 'The "I AM" meditation', p: [
+      'Where the Funk Reset moves you out of a mood, this one lets you choose the state you want to be in. Your words shape the state you are in. "I want" announces lack, because you only want what you do not have. Saying it as already true, "I am" or "I have", points you at the state you are choosing.',
+      'The sitting meditation notices every "I am" you carry (I am stressed, I am broke, I am shy) and treats each as a state you are wearing, not the one wearing it. It rests as the plain awareness underneath, then puts on the state you choose: "I am calm." Say it silently with feeling, as if it is simply true, and stay in it for a few minutes. When doubt speaks, do not argue, just stay.',
+      'Outside the sit, listen to your own speech for a day. Each time you hear yourself say "I want…", say it again in the present tense: "I am healthy" instead of "I want to be healthy". Keep it truthful and kind. This is not for denying a real problem you need to deal with, and do not say things about yourself you would not want to be true.' ] },
+    { h: 'Other ways in', p: [
+      'Rampage of Appreciation is a fast, unedited run of appreciating whatever is in view, and is good when your mood is low. Climbing the Scale walks you up the emotional scale one rung at a time, from wherever you are. Both are on the Change your state page.' ] } ],
+    src: ['Yilmaz Balban, M., et al. Brief structured respiration practices enhance mood and reduce physiological arousal. Cell Reports Medicine, January 2023 (open access, PMC9873947).', 'Time magazine feature on box breathing and Mark Divine (time.com/4316151/breathing-technique-navy-seal-calm-focused).'] },
   slow: { t: 'Deliberate slowing down', one: 'Let others go first, and mean the smile', p: [
     'For a full month, let others go first: walking, driving (yield the right of way and drive under the limit), entering and leaving rooms, planes and trains. Do it all with a genuine smile and a cheerful attitude, because rushing is a mood you can step out of. This is not a timed exercise. It is a way of moving through the day, and slowing on purpose shows you how much of the hurry was only habit. The mindfulness sayings will remind you to walk or drive a little slower.' ] },
   chakra: { t: 'Chakra alignment', one: 'The seven centers, the psychic centers, and attention through them', p: [
@@ -1264,8 +1386,21 @@ CAT_TEACH.prep = { t: 'Mental preparation', one: 'Observe, hold, steer your atte
       'Two modern sources describe something close to etheric energy. A paper on qi suggests that qi may correspond to the body\'s bioelectromagnetic energy: the heart\'s magnetic field has been measured up to about fifteen feet from the body, and in a small preliminary experiment three experienced qi practitioners projecting from their hands produced significant changes in the field picked up by nearby coils (p < 0.05), though with no consistent pattern across the three men. The authors call the study exploratory.',
       'The 1983 Army assessment of the Gateway Process approaches it from the other side. It treats the body and brain as systems of oscillating energy, and describes color breathing, the energy bar and the living body map as ways to direct that energy with the mind alone. These are comparisons, not proof that etheric energy is what any of them measure.' ] },
   ],
-  more: ['fields', 'gwenergy'],
+  more: ['scale', 'fields', 'gwenergy'],
   links: [{ href: '#attn', t: 'Attention: narrow and wide', one: 'The full lesson, then switch the practices on' }] };
+
+// The whole emotional scale as a teaching: the map lives here, and the Climbing the Scale exercise in Training is where you practice it.
+CAT_TEACH.scale = { t: 'The emotional scale', one: 'All 22 rungs, and how to climb them', noPractice: true, sayset: 'scale', p: [
+  'The emotional scale is a ladder of 22 feelings, from joy and appreciation at the top to fear, grief and powerlessness at the bottom. It is a way of telling where you are and which way is up. It is not a judgment.',
+  'Your emotion is guidance, not a verdict: it reads out the gap between you and what you want. The lower the feeling, the bigger that gap seems, but it is the same signal.',
+  'The rule is to climb one to three rungs at a time. Jumping from despair straight to joy does not work, because the mind pushes back on what it does not believe. So reach for the thought that feels a little better, then the next. Any upward step is success, and you cannot fall. You can only climb again.',
+  'Note the number where you stop. That is tomorrow\'s starting point, not today\'s failure.' ],
+  sections: [
+  { h: 'The map', p: SCALE.map((r) => `${r.n}. ${r.name}. ${SCALE_UP[r.n] ? 'To reach the rung above: ' + SCALE_UP[r.n] : 'The top of the scale. Appreciate the one who climbed.'}`) },
+  { h: 'How to use it', p: [
+    'Open Climbing the Scale in Training. Pick the rung closest to what you feel (type a word to narrow the 22), and it shows the step up with one way it can sound. If it does not land, press Still stuck for another angle. When it eases a little, climb to the next rung and repeat, and rest whenever you want to.' ] } ],
+  links: [{ href: '#scale', t: 'Climbing the Scale', one: 'Practice moving your feelings up, with a guide' }],
+  src: ['The 22-step emotional scale comes from Esther and Abraham Hicks (Ask and It Is Given). The prompts and examples here are written in the app\'s own words.'] };
 CAT_TEACH.energy.sections = [
   { h: CAT_TEACH.balance.t, p: CAT_TEACH.balance.p },
   { h: 'Three ways a healing happens', p: [
