@@ -79,3 +79,9 @@ h3 { font-size: 18px; color: var(--pd); margin: 14px 0 6px; } .bul.dis { opacity
 .holdbar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 5px; background: var(--peri); transition: width .25s linear; }
 .holdbar b { position: absolute; top: 14px; transform: translateX(-100%); font-size: 13px; font-weight: 600; color: var(--dim); }
 .holdbar b:nth-of-type(1), .holdbar b:nth-of-type(2) { transform: translateX(-50%); }
+
+.feelwrap { position: relative; padding: 10px 0 4px; }
+.feelwrap input { width: 100%; accent-color: var(--peri); margin: 0; }
+.feelcut { position: absolute; left: 50%; top: 4px; bottom: 0; width: 3px; margin-left: -1.5px; background: #9b2f6a; border-radius: 2px; pointer-events: none; }
+.feelends { display: flex; justify-content: space-between; }
+.feelbubble { margin-top: 10px; padding: 12px; border: 1px solid #9b2f6a; border-radius: 12px; background: var(--bg); }

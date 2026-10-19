@@ -145,7 +145,7 @@ export const EXERCISES = [
 
   // ---------- Observation ----------
   {
-    id: 'obs-room', cat: 'observe', title: 'New-Room Recall', mins: 0,
+    id: 'obs-room', cat: 'observe', noTraining: true, title: 'New-Room Recall', mins: 0,
     freq: 'Whenever you step into a different room or space — even at home, where things move and change',
     summary: 'Name what you recall in depth and accuracy, until you cannot think of any more. Give it 2–3 weeks before it fully clicks.',
     steps: [
@@ -156,7 +156,7 @@ export const EXERCISES = [
   },
 
   {
-    id: 'obs-stairs', cat: 'observe', title: 'Stair Count', mins: 1,
+    id: 'obs-stairs', cat: 'observe', noTraining: true, title: 'Stair Count', mins: 1,
     freq: 'Every flight of stairs',
     summary: 'Give it 2–3 weeks before it fully clicks.',
     steps: ['After going up or down stairs: recall how many steps there were.'],
@@ -174,19 +174,19 @@ export const EXERCISES = [
 
   // ---------- Concentration ----------
   {
-    id: 'conc-multiply', cat: 'concentrate', title: 'Mental Multiplication', mins: 5,
+    id: 'conc-multiply', cat: 'concentrate', noTraining: true, title: 'Mental Multiplication', mins: 5,
     freq: 'Once a day, different numbers each time',
     summary: 'Multiply two 2-digit numbers in your head until sure of the answer; then two 3-digit numbers.',
     steps: ['Multiply two 2-digit numbers in your head (e.g. 26 × 39) until sure of the answer.', 'Then two 3-digit numbers (e.g. 413 × 765).'],
   },
   {
-    id: 'conc-poem', cat: 'concentrate', title: 'Memorize Four Lines', mins: 5,
+    id: 'conc-poem', cat: 'concentrate', noTraining: true, title: 'Memorize Four Lines', mins: 5,
     freq: 'Once a day',
     summary: 'Memorize 4 lines of any poem.',
     steps: ['Memorize 4 lines of any poem. Recite them from memory.'],
   },
   {
-    id: 'conc-stranger', cat: 'concentrate', title: 'The Stranger\'s Face', mins: 2,
+    id: 'conc-stranger', cat: 'concentrate', noTraining: true, title: 'The Stranger\'s Face', mins: 2,
     freq: 'As opportunities arise — the advanced one, builds toward attunement',
     summary: 'Passing a stranger, hold their face in your mind\'s eye.',
     steps: ["Passing a stranger: look closely at their face a moment, look away, hold that face in your mind's eye for 1+ minute, study its expression.", 'Ask what they seem to be feeling. As taught, with practice you may sense the dominant feeling behind the face. Note it lightly and let it go; it is a sense, not a fact about them.'],
@@ -195,7 +195,7 @@ export const EXERCISES = [
   // ---------- Meditation ----------
   // Attention practices: they stay hidden until "I've learned this" is switched on in the Attention lesson (Info). Single-Object Hold and Single-Task Moment are Concentration practices and are always open.
   {
-    id: 'attn-hold', cat: 'concentrate', title: 'Single-Object Hold', mins: 3,
+    id: 'attn-hold', cat: 'concentrate', noTraining: true, title: 'Single-Object Hold', mins: 3,
     freq: 'Daily, a little longer as it gets easier',
     summary: 'Hold your attention on one small thing. Every return from a wander is one rep.',
     steps: [
@@ -205,7 +205,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-obstacle', cat: 'attention', gate: 'attn', title: 'Obstacle Path', mins: 3,
+    id: 'attn-obstacle', cat: 'attention', noTraining: true, gate: 'attn', title: 'Obstacle Path', mins: 3,
     freq: 'A few times a week',
     summary: 'Move through a cluttered space, or walk a trail or through woods, while keeping track of several things at once.',
     caution: 'Move slowly and keep your footing. Clear anything you could trip on, and take care on uneven ground.',
@@ -216,7 +216,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-zoom', cat: 'attention', gate: 'attn', title: 'Zoom Lens 1', mins: 3,
+    id: 'attn-zoom', cat: 'attention', noTraining: true, gate: 'attn', title: 'Zoom Lens 1', mins: 3,
     freq: 'Daily',
     summary: 'Lock onto one object, open out to the whole scene while still knowing it is there, then pull back in.',
     steps: [
@@ -229,7 +229,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-scene', cat: 'attention', gate: 'attn', title: 'Zoom Lens 2', mins: 3,
+    id: 'attn-scene', cat: 'attention', noTraining: true, gate: 'attn', title: 'Zoom Lens 2', mins: 3,
     freq: 'Daily, in any room or outdoors',
     summary: 'Take the big picture, zoom into one detail, then widen again while holding both.',
     steps: [
@@ -240,7 +240,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-switch', cat: 'attention', gate: 'attn', title: 'Narrow and Open Switch', mins: 4,
+    id: 'attn-switch', cat: 'attention', noTraining: true, gate: 'attn', title: 'Narrow and Open Switch', mins: 4,
     freq: 'Daily',
     summary: 'Alternate narrow focus on one thing with open awareness of whatever arises.',
     steps: [
@@ -275,7 +275,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-rotate', cat: 'attention', gate: 'attn', title: 'Mental Rotation', mins: 2,
+    id: 'attn-rotate', cat: 'attention', noTraining: true, gate: 'attn', title: 'Mental Rotation', mins: 2,
     freq: 'Daily or every few days',
     summary: 'Look at an object, close your eyes, and turn it in your mind.',
     steps: [
@@ -297,7 +297,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'attn-views', cat: 'attention', gate: 'attn', title: 'Two Viewpoints', mins: 6,
+    id: 'attn-views', cat: 'attention', noTraining: true, gate: 'attn', title: 'Two Viewpoints', mins: 6,
     freq: 'Once or twice a week',
     summary: 'Draw a scene from where you are, then work out and draw it from somewhere else.',
     steps: [
@@ -318,7 +318,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'conc-grid', cat: 'concentrate', title: 'Grid Hold', mins: 3,
+    id: 'conc-grid', cat: 'concentrate', noTraining: true, title: 'Grid Hold', mins: 3,
     freq: 'Daily or every few days',
     summary: 'Hold your attention on a grid of numbers without letting it drift.',
     steps: [
@@ -328,7 +328,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'conc-block', cat: 'concentrate', title: 'Focus Block', mins: 10,
+    id: 'conc-block', cat: 'concentrate', noTraining: true, title: 'Focus Block', mins: 10,
     freq: 'Daily, a little longer as it gets easier',
     summary: 'One task, nothing else, for a set block. Build from 10 toward 25 minutes.',
     steps: [
@@ -343,7 +343,7 @@ export const EXERCISES = [
     summary: 'Your baseline: sit and meditate in any way you like, even if only briefly.',
     steps: [
       'Find a quiet spot. Sit in a straight-back chair, back straight, head erect, eyes closed — or sit however is comfortable for you.',
-      { t: 'Meditate in whatever way you choose: breath, a mantra, stillness, or one of the practices. Pick your length, then start.', pick: [300, 600], secs: 300, max: 600 },
+      { t: 'Meditate in whatever way you choose: breath, a mantra, stillness, or one of the practices. Pick your length, then start.', pick: [300], secs: 300, max: 600, step: 60 },
       'Rise, deep breath, relax.',
     ],
   },
@@ -378,23 +378,11 @@ export const EXERCISES = [
       'Dismiss it, rise, deep breath, relax.',
     ],
   },
-  {
-    id: 'med-love', cat: 'meditate', title: 'Meditation of Love', mins: 15,
-    freq: 'Repeat for many days before results show',
-    summary: 'Send a pink cloud of good will to a person, group, or entity. Modest effort. Done daily for about fifteen minutes, the sender gains too: a closer rapport with the people they send to, a clearer view of their own mistakes and blind spots, and a sense of inner strength.',
-    caution: "Don't desire or foresee a specific result — no planning the outcome. Leave the manifestation to the intelligence of the soul force behind the energy.",
-    steps: [
-      'Create a feeling of love, warmth, and good will in your breast, near your heart. Visualize it as a glowing pink aura emanating from the heart, completely surrounding your body.',
-      'Visualize clearly the person, group, or entity you wish to help.',
-      'By an act of will, send a portion of your aura, as a pink cloud, to the object of your love. Feel love for them and see the cloud encapsule them in a pink aura of protection.',
-      'Immediately dismiss all thought of it and regard it as "mission accomplished."',
-    ],
-  },
 
   // ---------- Emotional control ----------
   {
     // The id stays 'emo-matches' (it began as the Matchbox Drill) so saved settings and tallies carry over.
-    id: 'emo-matches', cat: 'emotion', info: true, title: 'Patience: Put a Small Pile in Order', mins: 10,
+    id: 'emo-matches', cat: 'emotion', info: true, noTraining: true, title: 'Patience: Put a Small Pile in Order', mins: 10,
     freq: 'Once or more daily until mastered',
     summary: 'Put a jumble in order, slowly and calmly, one piece at a time. Patience and a steady mind under a fiddly task.',
     steps: [
@@ -411,7 +399,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'emo-order', cat: 'emotion', info: true, title: 'Patience: Put a Space in Order', mins: 15,
+    id: 'emo-order', cat: 'emotion', info: true, noTraining: true, title: 'Patience: Put a Space in Order', mins: 15,
     freq: 'Once or more daily until mastered',
     summary: 'Bigger jobs, done in pieces, for a calm mind and a clean, livable home.',
     steps: [
@@ -427,7 +415,7 @@ export const EXERCISES = [
     ],
   },
   {
-    id: 'emo-tv', cat: 'emotion', title: 'Choose What You Attend To', mins: 10,
+    id: 'emo-tv', cat: 'emotion', noTraining: true, title: 'Choose What You Attend To', mins: 10,
     freq: 'Once or more daily until mastered', summary: 'Train what you attend to.',
     steps: [
       'Sit with the TV on at normal volume and do not look at the picture at all.',
@@ -597,13 +585,13 @@ EXERCISES.push({
 // Practices drawn from Dolores Cannon's teachings, rewritten in this app's own words.
 EXERCISES.push(
   {
-    id: 'med-quiet', cat: 'meditate', title: 'Quiet Listening', mins: 10,
+    id: 'med-quiet', cat: 'meditate', title: 'Quiet Listening', mins: 5,
     freq: 'Daily if you can',
     summary: 'Be alone in quiet and go within. You are not trying to do anything, only to listen.',
     steps: [
       'Find somewhere quiet where you will not be interrupted. Silence the phone. Sit or lie comfortably and close your eyes.',
       'Let your attention turn inward. When thoughts come, do not argue with them or analyze them. Let them pass, and go back to listening.',
-      { t: 'Simply listen. Intuition, pictures, feelings, or a quiet knowing may come, or nothing at all. Both are fine. Pick your length, then start.', pick: [600, 900], secs: 600, max: 900 },
+      { t: 'Simply listen. Intuition, pictures, feelings, or a quiet knowing may come, or nothing at all. Both are fine. Pick your length, then start.', pick: [300], secs: 300, max: 600, step: 60 },
       'Come back slowly. Take a deep breath. If anything came up, you can note it in your log.',
     ],
   },
@@ -657,7 +645,7 @@ EXERCISES.push(
     ],
   },
   {
-    id: 'live-vibe', cat: 'emotion', title: 'Raise Your Vibration', mins: 3,
+    id: 'live-vibe', cat: 'emotion', noTraining: true, title: 'Raise Your Vibration', mins: 3,
     freq: 'Every day, a few times', summary: 'Vibration rises through what you think, feel, and do. Love and gratitude raise it. Fear lowers it.',
     steps: [
       'Think of three things you are grateful for. Feel each one, not only name it.',
@@ -673,13 +661,22 @@ EXERCISES.push(
   const [color, sound, cloud] = ['med-color', 'med-sound', 'med-cloud'].map((id) => EXERCISES.find((e) => e.id === id));
   [color, sound].forEach((e) => { e.hidden = true; });
   cloud.title = 'The Pink Cloud'; cloud.freq = 'Daily'; cloud.summary = 'Wrapped in a pink cloud, held steady.';
-  cloud.steps = [BODY, { t: cloud.steps[1].t + ' Pick your length.', pick: [180], secs: 180 }, 'Dismiss it, rise, deep breath, relax.'];
+  cloud.mins = 3; cloud.freq = 'Daily, separate sitting';
+  cloud.summary = 'Wrapped in a pink cloud of good will, held steady. When you are ready, send a portion of it to someone else.';
+  cloud.caution = "When you send the cloud to someone, don't desire or foresee a specific result. Leave the manifestation to the intelligence of the soul force behind the energy.";
+  cloud.steps = [
+    BODY,
+    { t: 'Create a feeling of love, warmth, and good will in your breast, near your heart. See yourself wrapped in a pink cloud extending 6–10 inches out from you in every direction (front, back, sides, above, below). Hold the full image. Pick your length, 1 to 5 minutes, then start.', pick: [180], secs: 180, max: 300, step: 60 },
+    'Optional: the Meditation of Love. Picture clearly a person, group, or entity you wish to help. By an act of will, send a portion of your pink cloud to them. Feel love for them and see the cloud wrap them in a pink aura of protection. Then immediately dismiss all thought of it and regard it as "mission accomplished." Done daily, the sender gains too: a closer rapport with the people they send to, a clearer view of their own blind spots, and a sense of inner strength.',
+    'Dismiss it, rise, deep breath, relax.',
+  ];
   EXERCISES.push({
     id: 'med-practice', cat: 'meditate', title: 'Color and Sound', mins: 0,
-    freq: 'Daily', summary: 'Blue, pink, white, then violin, horn, piano, in one sitting. A gentle buzz keeps track of time.',
+    freq: 'Daily', summary: 'Blue, pink, white, then violin, horn, piano, in one sitting. Your phone vibrates each minute so you can keep your eyes closed.',
     steps: [
       BODY,
-      { t: 'COLOR: picture one shade of blue, filling the whole room around you. Then switch to pink. Then to pure white (fresh-snow bright).\n\nSOUND: hear a violin playing something familiar. If other instruments swell in, filter back to just the violin. Then a horn or saxophone (one or the other). Then a piano playing something familiar, hardest of all: chords, not single notes.\n\nSpend about the same time on each. Your phone buzzes gently every 90 seconds so you do not lose track of time. Pick your length.', pick: [240], secs: 240, buzz: 90 },
+      { t: 'COLOR. Start the timer, then picture one shade of blue, filling the whole room around you. Your phone vibrates at one minute: switch to pink. It vibrates again at two minutes: switch to pure white (fresh-snow bright). A third vibration says the three minutes are up.', secs: 180, buzz: 60 },
+      { t: 'SOUND. Start the timer, then hear a violin playing something familiar. If other instruments swell in, filter back to just the violin. At the first vibration switch to a horn or saxophone (one or the other). At the second, a piano playing something familiar, the hardest of all: chords, not single notes. The third vibration says the three minutes are up.', secs: 180, buzz: 60 },
       'Rise, deep breath, relax.',
     ],
   });
@@ -725,12 +722,12 @@ EXERCISES.push(
       'From this point you are watching the world. Not through your eyes but from behind them.',
       'Now find the past. Notice it is only a thought appearing in this point. Find the future. That is also only a thought, appearing here.',
       'Say silently: "Only this moment is real. Only from here can anything be changed."',
-      { t: 'Rest as the point. When you feel the urge to leave and plan or replay, return to the center. Do not fight the thoughts, just refuse to follow them. You are not the thought, you are the place the thought appears. Pick your length.', pick: [300, 480, 600], secs: 480 },
+      { t: 'Rest as the point. When you feel the urge to leave and plan or replay, return to the center. Do not fight the thoughts, just refuse to follow them. You are not the thought, you are the place the thought appears. Pick your length.', pick: [300], secs: 300, max: 600, step: 60 },
       'Take one deep breath and open your eyes. Right away name five physical things you can see. Ground it.',
     ],
   },
   {
-    id: 'med-transform', cat: 'meditate', title: 'Breath of Transformation', mins: 8,
+    id: 'med-transform', cat: 'meditate', hidden: true, title: 'Breath of Transformation', mins: 8,
     freq: 'Daily or when you want a reset', summary: 'A slow 4-4-8 breath. The intention you hold during the pause is what turns it.',
     steps: [
       'Sit with a straight spine and eyes closed.',
@@ -850,10 +847,10 @@ export const REMIND_GROUPS = [
   { id: 'obs', cat: 'observe', label: 'Observation', pool: ['obs-room'], leave: ['obs-stairs'], both: ['obs-room'], ids: ['obs-room', 'obs-stairs'] },
   { id: 'conc', cat: 'concentrate', label: 'Concentration', pool: ['conc-multiply', 'conc-poem', 'attn-hold', 'conc-grid', 'conc-block', 'law-hold'], leave: ['conc-stranger'], ids: ['conc-multiply', 'conc-poem', 'conc-stranger', 'attn-hold', 'conc-grid', 'conc-block', 'law-hold'] },
   { id: 'attn', cat: 'attention', label: 'Attention', gate: 'attn', pool: ['attn-obstacle', 'attn-zoom', 'attn-scene', 'attn-switch', 'attn-rotate', 'attn-views'], leave: [], ids: ['attn-obstacle', 'attn-zoom', 'attn-scene', 'attn-switch', 'attn-rotate', 'attn-views'] },
-  { id: 'med', cat: 'meditate', label: 'Routine meditation', simple: true, pool: ['med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love', 'energy-direct', 'j-stair', 'j-library', 'j-guide'], leave: [], ids: ['med-sit', 'med-quiet', 'med-nowpoint', 'med-transform', 'med-love', 'energy-direct', 'j-stair', 'j-library', 'j-guide'] },
+  { id: 'med', cat: 'meditate', label: 'Routine meditation', simple: true, pool: ['med-sit', 'med-quiet', 'med-nowpoint', 'energy-direct', 'j-stair', 'j-library', 'j-guide'], leave: [], ids: ['med-sit', 'med-quiet', 'med-nowpoint', 'energy-direct', 'j-stair', 'j-library', 'j-guide'] },
   { id: 'medp', cat: 'meditate', label: 'Meditation practice', pool: ['med-practice', 'med-cloud'], leave: [], ids: ['med-practice', 'med-color', 'med-sound', 'med-cloud'] },
   { id: 'emo', cat: 'emotion', label: 'Emotional control', pool: ['emo-matches', 'emo-order', 'emo-tv', 'live-vibe', 'emo-whim', 'emo-rampage', 'emo-nice', 'emo-slow'], leave: [], ids: ['emo-matches', 'emo-order', 'emo-tv', 'live-vibe', 'emo-whim', 'emo-rampage', 'emo-nice', 'emo-slow'] },
-  { id: 'bed', cat: 'bedtime', label: 'Bedtime', pool: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats', 'med-sit', 'med-quiet', 'med-love'], leave: [], ids: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats'] },
+  { id: 'bed', cat: 'bedtime', label: 'Bedtime', pool: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats', 'med-sit', 'med-quiet', 'med-cloud'], leave: [], ids: ['obs-recall', 'bed-belief', 'bed-revision', 'bed-sats'] },
 ];
 export const CAT_LABEL = Object.fromEntries(REMIND_GROUPS.flatMap((g) => g.ids.map((id) => [id, g.label])));
 // goal = how many times you want to do it each day. n = reminders per day (they keep coming until the goal is met). timing: 'set' (times you pick) | 'even' (spread through the day) | 'random'.
@@ -865,7 +862,7 @@ export const REMIND_DEFAULTS = {
     obs: { on: true, ex: ['obs-room', 'obs-stairs'], goal: 1, n: 1, timing: 'random', times: [720], choose: true },
     conc: { on: true, ex: ['conc-multiply', 'conc-poem', 'conc-stranger'], goal: 1, n: 1, timing: 'even', times: [780], choose: true },
     attn: { on: false, ex: ['attn-zoom'], goal: 1, n: 1, timing: 'even', times: [600], choose: true },
-    med: { on: true, ex: ['med-sit', 'med-quiet', 'med-love', 'energy-direct', 'j-stair', 'j-library', 'j-guide'], goal: 1, n: 1, timing: 'even', times: [480], choose: true },
+    med: { on: true, ex: ['med-sit', 'med-quiet', 'energy-direct', 'j-stair', 'j-library', 'j-guide'], goal: 1, n: 1, timing: 'even', times: [480], choose: true },
     medp: { on: true, ex: ['med-practice', 'med-cloud'], goal: 1, n: 1, timing: 'even', times: [1020], choose: true },
     bed: { on: true, ex: ['obs-recall'], goal: 1, n: 1, timing: 'set', times: [1230], choose: true },
     emo: { on: true, ex: ['emo-matches', 'emo-tv'], goal: 1, n: 1, timing: 'random', times: [900], choose: true },
@@ -998,7 +995,7 @@ export const PING = {
   'conc-multiply': 'Multiply two 2-digit numbers in your head. Then two 3-digit ones.',
   'conc-poem': 'Memorize 4 lines of a poem and recite them.',
   'conc-stranger': 'Next stranger you pass: study the face, look away, hold it in your mind for a minute.',
-  'med-practice': 'Meditation practice: color, then sound, in one sitting. A gentle buzz keeps track of time.',
+  'med-practice': 'Meditation practice: color, then sound, three minutes each. Your phone vibrates each minute.',
   'med-color': 'Blue, then pink, then white, one minute each.',
   'med-sound': 'Violin, then horn or sax, then piano, one minute each.',
   'med-cloud': 'Wrapped in a pink cloud, held steady.',
@@ -1213,12 +1210,14 @@ export const CAT_TEACH = {
     'The 17-34-68 Hold, an optional reminder in the Concentration settings. Choose what to hold: a physical item, such as a cup, a candle flame or a leaf, or one pure thought. An item is the easier choice, because there is a tangible target to look at and come back to, and a thought has nothing to look at. For a thought, pick one you genuinely like thinking, such as a person, a place or a feeling of thanks, and hold it with no "but". Seventeen steady seconds is where change begins, thirty-four multiplies it, and sixty-eight is the target, where the vibration becomes self-sustaining. Appreciation works best. When your mind wanders or a contradicting thought shows up, do not follow it. Come back. The practice is the coming back, and if you did not hold it the whole time, that is only information. The reminder opens a timer that marks each stage.',
     'Concentration is also what lets you meditate. Meditation asks you to rest on one thing, such as the breath, a color, a sound or a feeling, and stay. Each time you slip and return, the hold grows longer and the mind settles instead of wandering. Without it, a sit is a string of drifts.',
     'If you already concentrate well at work, these still apply. The difference is that here it is a deliberate act of will, not something a pressing need forces out of you. The aim is to find the handle on your own attention, so that you can pick it up whenever you choose.',
-    'The Stranger\'s Face is a step beyond the others. As taught, after some practice you start to sense the dominant feeling behind the face you are holding, often fear, sometimes compassion, joy or anger. Treat that as something to notice, not as a fact about the person.' ] },
+    'The Stranger\'s Face is a reminder that fires when you leave home, so it lives in Settings and not in Training. When you pass a stranger, look closely at their face for a moment, look away, and hold that face in your mind\'s eye for a minute or more, studying its expression. It is a step beyond the others. As taught, after some practice you start to sense the dominant feeling behind the face you are holding, often fear, sometimes compassion, joy or anger. Treat that as something to notice, not as a fact about the person.' ] },
   meditate: { t: 'Meditation', one: 'Concentration turned inward', p: [
     'Meditation is concentration turned inward and kept up until the mind settles. The forms differ (breath, a color, a sound, stillness, a feeling like love) but the move is the same: rest your attention on one thing, notice when it leaves, and come back.',
     'Regular practice is linked in research to calmer stress responses and steadier attention, and it builds gradually. An empty mind is not the goal. It is what you get when the practice works: with attention resting on one thing, the chatter settles and quiet is what is left. That quiet is something you can use, for rest, for clearer thinking, and as the starting point for the deeper practices. A short sit every day does more than a long one now and then.',
     'Routine meditation is your daily sit. The meditation practices are the structured ones.' ],
-    sections: [{ h: 'Brainwaves and the earth\'s rhythm', p: [
+    sections: [{ h: 'Breath of Transformation', p: [
+      'A slow 4-4-8 breath. Sit with a straight spine and eyes closed. Breathe in through the nose, smooth and full, for 4, picturing yourself drawing in a finer, brighter kind of energy than air. Hold for 4 and feel your whole body lit from inside. Breathe out through the nose for 8, releasing tension, heaviness and yesterday. After five rounds, do three more, saying silently on each out-breath: "I change my frequency now." Then rest in the afterglow with no agenda.',
+      'The intention you hold during the pause is what turns it. Dolores Cannon also agreed that a breath like this is a valuable tool.' ] }, { h: 'Brainwaves and the earth\'s rhythm', p: [
       'A paper on qi and the body\'s electromagnetic fields reports that the earth and the sky around it resonate at about 7 to 10 Hz on average, close to the range of brainwave frequencies. At night it falls toward 1 to 7 Hz, matching the delta and theta stages of sleep. The authors propose that outside fields can influence brainwaves during brief free-running moments. These are the authors\' proposals, not settled science.',
       'The same paper cites Becker\'s account of a second, direct-current system alongside the nerves, whose oscillations are the brainwaves and which connects to the pineal gland and thalamus. That is one reason the pineal gets so much attention in the psychic-center meditations. The full summary is under Energy healing.' ] }],
     more: ['states', 'hemisync', 'fields'] },
@@ -1356,7 +1355,7 @@ export const CAT_TEACH = {
 };
 
 // Teaching blocks folded into one page: the four mental basics become one block, and Counterbalance lives inside Energy healing.
-CAT_TEACH.prep = { t: 'Mental preparation', one: 'Observe, hold, steer your attention, and steady your emotions', p: [],
+CAT_TEACH.prep = { t: 'Mental preparation', noPractice: true, one: 'Observe, hold, steer your attention, and steady your emotions', p: [],
   sections: [
     { h: 'Observation', p: CAT_TEACH.observe.p },
     { h: 'Concentration', p: CAT_TEACH.concentrate.p },
@@ -1397,6 +1396,9 @@ CAT_TEACH.scale = { t: 'The emotional scale', one: 'All 22 rungs, and how to cli
   'Note the number where you stop. That is tomorrow\'s starting point, not today\'s failure.' ],
   sections: [
   { h: 'The map', p: SCALE.map((r) => `${r.n}. ${r.name}. ${SCALE_UP[r.n] ? 'To reach the rung above: ' + SCALE_UP[r.n] : 'The top of the scale. Appreciate the one who climbed.'}`) },
+  { h: 'The red line and the feelings meter', p: [
+    'Near the top of Today there is a How are you feeling? meter, with 1 at one end and 22 at the other. Set it whenever you open the app. A red line sits between Overwhelm and Disappointment, on the meter and in the scale list. If you set the meter below the red line, a small bubble offers help and takes you straight to Climbing the Scale, starting from the rung you set.',
+    'The red line is also for advanced users, for this exercise: pinpoint the emotion you are having, identify the opposite emotion, identify a scenario where the outcome relates to that opposite emotion, and play that scenario over and over in your head until it feels real.' ] },
   { h: 'How to use it', p: [
     'Open Climbing the Scale in Training. Pick the rung closest to what you feel (type a word to narrow the 22), and it shows the step up with one way it can sound. If it does not land, press Still stuck for another angle. When it eases a little, climb to the next rung and repeat, and rest whenever you want to.' ] } ],
   links: [{ href: '#scale', t: 'Climbing the Scale', one: 'Practice moving your feelings up, with a guide' }],
