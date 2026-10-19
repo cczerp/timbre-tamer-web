@@ -87,3 +87,6 @@ h3 { font-size: 18px; color: var(--pd); margin: 14px 0 6px; } .bul.dis { opacity
 .feelbubble { margin-top: 10px; padding: 12px; border: 1px solid #9b2f6a; border-radius: 12px; background: var(--bg); }
 
 .inl { color: var(--accent); font-weight: 600; text-decoration: underline; }
+
+.foldbox.sub { margin-left: 10px; border-left: 2px solid var(--line); padding-left: 8px; }
+.foldbox.sub h4.fold { font-size: 15px; margin: 8px 0; display: flex; justify-content: space-between; cursor: pointer; }

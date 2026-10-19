@@ -448,7 +448,7 @@ function Info() {
   <h2>Altered states</h2>
   ${['states', 'hypnosis', 'hemisync'].map(lesson).join('')}
   <h2>Learn the practices</h2>
-  ${['meditate', 'door', 'mind', 'thoughts', 'rule', 'bodysense', 'energy', 'chakra', 'project', 'telepathy'].map(lesson).join('')}`;
+  ${['meditate', 'door', 'mind', 'thoughts', 'rule', 'energy', 'chakra', 'project', 'telepathy'].map(lesson).join('')}`;
 }
 let priceOf = {}; let unlockKey = '';
 const TEACH = ['energy-habits']; // reading pages kept as entries, shown in Info with no guided run
@@ -502,7 +502,7 @@ function Practice(meditationsOnly = false) {
 }
 
 
-const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule', 'bodysense'];
+const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule'];
 function Exercise(id) {
   const ex = exById[id]; if (!ex) return back() + '<p>Not found.</p>';
   if (TEACH.includes(id)) return `${back('#info')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>${ex.steps.map((t) => card(`<div class="sm" style="white-space:pre-line">${esc(typeof t === 'string' ? t : t.t)}</div>`)).join('')}`;
@@ -541,13 +541,38 @@ function Laws() {
   ${setCard('laws')}`;
 }
 const taught = () => '<div class="dim sm" style="margin-top:14px">Taught from the teachers and traditions named in <a href="#about">Credits</a>.</div>';
+const nfold = (k, title, inner, tag = 'h4') => `<div class="foldbox sub"><${tag} class="fold" data-act="topen:${k}"><span>${title}</span><span class="dim">${trOpen[k] ? '▴' : '▾'}</span></${tag}>${trOpen[k] ? inner : ''}</div>`;
+function exDetail(e, note) {
+  const guided = !e.noTraining && !e.info && !e.remindOnly;
+  return `<div class="dim sm" style="margin-bottom:6px">${esc(e.summary)}</div><div class="dim sm" style="margin-bottom:6px">${esc(e.freq)}</div>
+  ${e.caution ? `<div class="warn sm" style="margin-bottom:6px">${esc(e.caution)}</div>` : ''}
+  ${note ? `<div class="sm" style="margin-bottom:8px">${rich(note)}</div>` : ''}
+  ${e.steps.map((s, i) => `<div class="sm" style="white-space:pre-line;margin-bottom:6px"><b>${i + 1}.</b> ${esc(typeof s === 'string' ? s : s.t)}</div>`).join('')}
+  ${guided ? `<a class="btn" href="#guide/${e.id}">Start guided</a>` : '<a class="dim sm" href="#settings">Reminder settings ›</a>'}`;
+}
+function learnNested(c, i, x) { // the extra lessons and exercises filed under one section of a long lesson
+  let out = '';
+  const notes = (list, tag) => list.map((s, j) => nfold(`${c}-${i}${tag}${j}`, esc(s.h), s.p.map((y) => `<div class="sm" style="margin-bottom:6px;white-space:pre-line">${rich(y)}</div>`).join(''))).join('');
+  if (x.subs) out += (x.subsLabel ? `<div class="dim sm" style="margin:6px 0 4px"><b>${esc(x.subsLabel)}</b></div>` : '') + notes(x.subs, 's');
+  if (x.attn) { const on = !!(S.learned || {}).attn; out += card(check(on, '<b class="ttl">I have learned this. Turn on the reminders</b>', 'learnattn', on ? 'On. An Attention block with reminders is now in Settings.' : 'Switch this on to get reminders for the attention practices in Settings.'), 'accent'); }
+  const list = x.exIds ? x.exIds.map((id) => exById[id]).filter(Boolean) : x.exCat ? EXERCISES.filter((e) => e.cat === x.exCat && !e.hidden && !(x.exSkip || []).includes(e.id)) : [];
+  if (list.length || x.exFirst) out += `<div class="dim sm" style="margin:10px 0 4px"><b>The exercises</b></div>` + (x.exFirst ? notes(x.exFirst, 'f') : '') + list.map((e) => (locked(e.id) ? link(`#unlock/${e.id}`, `<b>🔒 ${esc(e.title)}</b>`) : nfold(`${c}-x-${e.id}`, esc(e.title), exDetail(e, (x.exNotes || {})[e.id])))).join('');
+  return out ? `<div style="margin-top:8px">${out}</div>` : '';
+}
+function learnSections(c, t) {
+  const secs = t.sections || [];
+  const body = (x) => x.p.map((y) => card(`<div class="sm">${rich(y)}</div>`)).join('');
+  if (!secs.some((x) => x.g)) return secs.map((x) => `<h3>${esc(x.h)}</h3>${body(x)}`).join(''); // short lessons stay open
+  const cats = [...new Set(secs.map((x) => x.g))]; // a long lesson is filed under categories, each section a dropdown
+  return cats.map((g) => `<h2>${esc(g)}</h2>` + secs.map((x, i) => [x, i]).filter(([x]) => x.g === g).map(([x, i]) => { const k = `${c}-${i}`; return `<div class="foldbox"><h3 class="fold" data-act="topen:${k}"><span>${esc(x.h)}</span><span class="dim">${trOpen[k] ? '▴' : '▾'}</span></h3>${trOpen[k] ? body(x) + learnNested(c, i, x) : ''}</div>`; }).join('')).join('');
+}
 const rich = (s) => esc(s).replace(/\{\{(\w+)\|([^}]+)\}\}/g, (m, id, txt) => `<a class="inl" href="#learn/${id}">${txt}</a>`); // {{lesson|words}} in a lesson paragraph becomes a link
 function Learn(c) {
   const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
   return `${back('#info')}<h1>${esc(t.t)}</h1><p class="dim">${esc(t.one)}</p>
   ${t.origin ? card(typeof t.origin === 'string' ? `<div class="sm"><b>${esc(t.origin.split('. ')[0])}.</b> ${esc(t.origin.slice(t.origin.indexOf('. ') + 2))}</div>` : '<div class="sm"><b>From a declassified document.</b> This comes from a 1983 US Army Intelligence and Security Command assessment of the Gateway Process, written by Lt. Col. Wayne McDonnell and released through the CIA reading room. It reports what the author and his sources describe. Read it and judge for yourself.</div>', 'accent') : ''}
   ${(t.p || []).map((x) => card(`<div class="sm">${rich(x)}</div>`)).join('')}
-  ${(t.sections || []).map((x) => `<h3>${esc(x.h)}</h3>` + x.p.map((y) => card(`<div class="sm">${rich(y)}</div>`)).join('')).join('')}
+  ${learnSections(c, t)}
   ${t.sayset ? setCard(t.sayset) : ''}
   ${t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : ''}
   ${t.src ? `<h3>Sources</h3>${t.src.map((x) => `<div class="dim sm" style="margin-bottom:6px">${esc(x)}</div>`).join('')}` : ''}
@@ -816,7 +841,7 @@ function paint() {
     case 'learn': h = locked('cat:' + a) ? Unlock('cat:' + a) : Learn(a); break;
     case 'mastered': h = Mastered(); break;
     case 'state': h = State(); break;
-    case 'attn': h = locked('info:attn') ? Unlock('info:attn') : Attn(); break;
+    case 'attn': location.hash = '#learn/prep'; return; // attention now lives in Mental preparation
     case 'laws': h = Info(); break; // Universal laws is switched off for now
     case 'wheel': h = Wheel(); break;
     case 'day': h = Day(a); break;

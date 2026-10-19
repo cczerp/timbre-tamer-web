@@ -1411,8 +1411,7 @@ CAT_TEACH.prep = { t: 'Mental preparation', noPractice: true, one: 'Observe, hol
       'Two modern sources describe something close to etheric energy. A paper on qi suggests that qi may correspond to the body\'s bioelectromagnetic energy: the heart\'s magnetic field has been measured up to about fifteen feet from the body, and in a small preliminary experiment three experienced qi practitioners projecting from their hands produced significant changes in the field picked up by nearby coils (p < 0.05), though with no consistent pattern across the three men. The authors call the study exploratory.',
       'The 1983 Army assessment of the Gateway Process approaches it from the other side. It treats the body and brain as systems of oscillating energy, and describes color breathing, the energy bar and the living body map as ways to direct that energy with the mind alone. These are comparisons, not proof that etheric energy is what any of them measure.' ] },
   ],
-  more: ['scale', 'fields', 'gwenergy'],
-  links: [{ href: '#attn', t: 'Attention: narrow and wide', one: 'The full lesson, then switch the practices on' }] };
+  more: ['scale', 'fields', 'gwenergy'] };
 
 // The whole emotional scale as a teaching: the map lives here, and the Climbing the Scale exercise in Training is where you practice it.
 CAT_TEACH.scale = { t: 'The emotional scale', one: 'All 22 rungs, and how to climb them', noPractice: true, sayset: 'scale', p: [
@@ -1591,5 +1590,34 @@ CAT_TEACH.bodysense = { t: 'Body Sense, Space and Observation', one: 'Drills for
       'Observation is the checking step that rescued you at the bike: dropping the rule and looking at what is actually happening.',
       '1. Separate seeing from interpreting. Describe what is in front of you using only facts ("the bolt head is rusted on one side"), not conclusions ("it is seized"). Most missed details are lost because the brain jumps to a label.\n2. One-object study. Spend five minutes on a single ordinary thing and keep finding new details. The discipline is continuing past the point where you feel done.\n3. Memory test (Kim\'s game). Look at a tray of items for 30 seconds, cover it, and list everything you can. Add items over time.\n4. What changed? Glance at a room, shelf or workbench, look away, then spot what is different after something is moved.\n5. Soft focus. Relax your gaze and take in the whole scene, including the edges. This catches movement and context that tunnel vision misses.\n6. Photograph or note before you touch. Before taking anything apart, record its starting state. It builds the habit of noticing orientation and order.\n7. Sketch to see. Drawing something forces you to notice proportions and details you would otherwise skip, even if the drawing is bad.\n8. Observe with other senses. Close your eyes and list every sound around you, or the layers of smell in a space.' ] },
   ], more: ['door', 'rule'], src: BODY_SRC };
+
+// Mental preparation is long, so it is filed under categories, each section a dropdown. Built here, once every lesson it draws on exists.
+{
+  const prep = CAT_TEACH.prep, find = (h) => prep.sections.find((x) => x.h === h), body = CAT_TEACH.bodysense.sections, bs = (h) => body.find((x) => x.h === h);
+  const optional = find('Optional reminders').p.slice(1);
+  const notes = {};
+  ['emo-whim', 'emo-rampage', 'emo-nice', 'emo-fast', 'emo-slow'].forEach((id, k) => { notes[id] = optional[k].replace(/^(Follow the Whim|Rampage of Appreciation|Wouldn't It Be Nice If|Wouldn\'t It Be Nice If|Frequency Fast)[.:]\s*/, ''); });
+  const parts = ATTN_LESSON.parts, part = (h) => parts.find((x) => x.h === h);
+  const sub = (h, p) => ({ h, p });
+  const BASIC = 'The three basics', EXTRA = 'Extras', ENERGY = 'Energy';
+  prep.sections = [
+    { h: 'Observation', g: BASIC, p: CAT_TEACH.observe.p, exCat: 'observe', subs: [sub('Powers of observation', bs('Powers of observation').p)] },
+    { h: 'Concentration', g: BASIC, p: CAT_TEACH.concentrate.p, exCat: 'concentrate' },
+    { h: 'Emotional control', g: BASIC, p: CAT_TEACH.emotion.p.slice(0, 3), exCat: 'emotion', exNotes: notes,
+      subs: ['Whose feeling is this?', 'Use the mind, not the will', 'The quiet ones: pride, self-righteousness, vanity'].map((h) => sub(h, find(h).p)) },
+    { h: 'Attention', g: EXTRA, p: [ATTN_LESSON.intro], subsLabel: 'About attention', exCat: 'attention', exSkip: ['attn-rotate', 'attn-views'],
+      subs: parts.slice(0, 4).map((x) => sub(x.h, [x.t])),
+      exFirst: ['Narrow (convergent) focus', 'Broad (wide) focus', 'Absorption', 'Narrow first'].map((h) => sub(h, [part(h).t])) },
+    { h: 'Spatial awareness', g: EXTRA, p: [part('Spatial awareness').t], exIds: ['attn-rotate', 'attn-views'],
+      subs: [sub('Spatial awareness drills', bs('Spatial awareness drills').p), sub('Optional: spatial hobbies', [part('Optional: spatial hobbies').t])] },
+    { h: 'Proprioception', g: EXTRA, p: ["Proprioception is the body's sense of itself: where each part is, how it is oriented, and how much force it is using. The model for finding the quiet place behind thought, {{door|The Door Behind Stillness}}, leans on it, and these drills sharpen it."],
+      subs: [sub('Proprioception skills', bs('Proprioception skills').p)] },
+    { ...find('Emotional and etheric energy'), g: ENERGY },
+  ];
+  delete prep.more;
+  delete CAT_TEACH.bodysense; // its drills now live in Mental preparation
+  CAT_TEACH.door.more = CAT_TEACH.door.more.filter((x) => x !== 'bodysense');
+  CAT_TEACH.rule.more = CAT_TEACH.rule.more.filter((x) => x !== 'bodysense');
+}
 
 export const TEACH_BLOCK = { centers: 'chakra', observe: 'prep', concentrate: 'prep', attention: 'prep', emotion: 'prep', balance: 'energy' };
