@@ -97,7 +97,9 @@ const catCount = (gid, day = dayKey()) => {
   return c.ex.filter((id) => tallyOf(id, day) > 0).length;
 };
 const catDone = (gid, day = dayKey()) => catCount(gid, day) >= S.rem.cat[gid].goal;
-const nudgePool = () => NUDGES.concat(...SAYING_SETS.filter((x) => (S.sets || []).includes(x.id)).map((x) => x.sayings)); // plain sayings plus any lesson sets the person switched on
+const sayId = (s) => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+const sayAll = () => NUDGES.concat(...SAYING_SETS.filter((x) => (S.sets || []).includes(x.id)).map((x) => x.sayings)); // plain sayings plus any lesson sets the person switched on
+const nudgePool = () => { const all = sayAll(), off = new Set(S.sayOff || []), kept = all.filter((x) => !off.has(sayId(x))); return kept.length ? kept : all; }; // sayings unticked on the Mindfulness sayings page are skipped
 const setCard = (id) => { const x = SAYING_SETS.find((y) => y.id === id), on = (S.sets || []).includes(id); return card(`${check(on, '<b>Add these sayings to my reminders</b>', 'sayset:' + id, on ? 'On. They now come up in your mindfulness reminders.' : `${x.sayings.length} short sayings from this lesson. Press once you have read it.`)}`); };
 const canLeave = () => native.isNative && !!S.rem.home;
 const hasAll = () => S.owned.includes(EVERYTHING_ID); // the everything purchase (packages are bought one at a time; no count unlocks the rest)
@@ -243,22 +245,6 @@ const back = (href = '#practice') => `<a class="back" href="${href}">‹ Back</a
 
 /* ---------------- screens ---------------- */
 
-/* ---------------- frequency fast ---------------- */
-const FAST_RULES = ['Fast from news, fear-based feeds, doom-scrolling, gossip, and complaint conversations. Spoken fear feeds the same thought-forms as watched fear.', 'When you feel the pull (the hand reaching for the phone, the mouth starting "did you hear about..."), pause and ask: "Is this mine? Do I choose to give my energy to this?"', 'Put the freed-up time into anything creative, even trivially. The fast is only complete when the energy has somewhere to go. An empty fast gets refilled by the same fear.'];
-const fastDay = () => (S.fast.start ? Math.floor((new Date(dayKey() + 'T00:00') - new Date(S.fast.start + 'T00:00')) / 86400000) + 1 : 0);
-const fastRunning = () => { const d = fastDay(); return d >= 1 && d <= S.fast.days; };
-const fastRulesBox = () => `<div class="rulesbox"><div class="rtitle">The rules</div><ol>${FAST_RULES.map((r) => `<li>${esc(r)}</li>`).join('')}</ol></div>`;
-function fastCard() {
-  const f = S.fast; const d = fastDay();
-  if (!f.start) return '';
-  if (d > f.days) return card(`<div class="cheer"><div class="pop">🌿</div><div class="title">Frequency Fast complete</div><div class="meta">${f.days} day${f.days === 1 ? '' : 's'}. Notice what filled the space.</div><button class="btn" style="margin-top:10px" data-act="fastend">Done</button></div>`, 'accent');
-  if (d < 1) return '';
-  const t = f.done[dayKey()] || {};
-  const row = (k, label) => `<div class="bul" data-act="fastck:${k}"><span class="bx ${t[k] ? 'on' : ''}">${t[k] ? '✓' : ''}</span><span>${label}</span></div>`;
-  return card(`<div class="title">Frequency Fast</div><div class="meta">Day ${d} of ${f.days}${t.a && t.b ? ' · today is complete ✓' : ''}</div>
-    ${row('a', 'Stayed off news, fear-feeds, doom-scrolling, gossip and complaining')}${row('b', 'Put the freed-up time into something creative')}
-    <div class="meta" style="margin-top:6px">When you feel the pull: "Is this mine? Do I choose to give my energy to this?"</div>`);
-}
 function morningCards() {
   const yk = dayKey(Date.now() - 86400000); let out = ''; const on = S.rem.cat.bed.on ? S.rem.cat.bed.ex : [];
   if (on.includes('bed-sats') && tallyOf('bed-sats', yk) && !S.loops[yk]) out += card(`<div class="title" style="font-size:20px">Last night's loop</div><div class="meta">Rate it: was it fantasy, story, or memory?</div><div class="chips">${['fantasy', 'story', 'memory'].map((x) => `<button class="chip" data-act="loop:${x}:${yk}">${x[0].toUpperCase() + x.slice(1)}</button>`).join('')}</div>`);
@@ -339,7 +325,7 @@ function Wheel() {
 }
 
 let openCat = null;
-const TAGS = { 'emo-whim': 'optional', 'emo-rampage': 'optional', 'emo-nice': 'optional', 'emo-slow': 'optional', 'law-hold': 'optional', 'obs-recall': 'Observation', 'med-sit': 'Meditation', 'med-quiet': 'Meditation' }; // purely a label
+const TAGS = { 'emo-whim': 'optional', 'emo-rampage': 'optional', 'emo-nice': 'optional', 'emo-slow': 'optional', 'emo-fast': 'optional', 'law-hold': 'optional', 'obs-recall': 'Observation', 'med-sit': 'Meditation', 'med-quiet': 'Meditation' }; // purely a label
 const tag = (id) => (TAGS[id] ? ` <span class="tag">${TAGS[id]}</span>` : '');
 const miniBtns = (id) => (exById[id].timer ? '<button class="btn ghost mini" data-act="hold">Timer</button>' : exById[id].remindOnly ? '' : `<a class="btn ghost mini" href="#ex/${id}">Rules</a>`) + `<button class="btn mini" data-act="done:${id}">✓ Done</button>`;
 const exRow = (id) => (exById[id].remindOnly
@@ -387,7 +373,7 @@ function Today() {
   ${native.isNative && !S.rem.home && on.some((g) => [...g.leave, ...(g.both || [])].some((id) => S.rem.cat[g.id].ex.includes(id))) ? card(`<b>Set your home</b><div class="dim sm" style="margin:4px 0 8px">Stair Count and Stranger's Face remind you as you leave the house. Stand at home and tap the button. When your phone asks about location, choose <b>While using the app</b>, then open your phone's Settings → Apps → Timbre Tamer → Permissions → Location and pick <b>Allow all the time</b>.</div><button class="btn" data-act="sethome">Set my home here</button><div id="msg" class="warn sm"></div>`, 'accent') : ''}
   ${S.tourSeen ? '' : card(`<b>New here?</b><div class="dim sm" style="margin:4px 0 8px">A one-minute tour of what is on each page.</div><div class="row"><a class="btn mini" href="#tour">Take the tour</a><button class="btn ghost mini" data-act="tourhide">Not now</button></div>`, 'accent')}
   ${cheer}
-  ${morningCards()}${fastCard()}
+  ${morningCards()}
   ${rows || recallCard ? `<h2>Today's goals</h2>${rows}${recallCard}` : on.length ? '' : '<h2>Today\'s goals</h2><div class="dim">No reminders on. Turn some on in Settings.</div>'}
   ${doneCard}
   <div class="row" style="margin-top:8px"><a class="btn ghost" href="#note">Quick note</a></div>
@@ -428,7 +414,7 @@ function Tour() {
   <p class="dim">What you will find on each page.</p>
   ${sec('Today', 'Your day at a glance, one bubble per goal. Tap <b>✓ Done</b> when you finish one (it goes into your Log with the time) or <b>Rules</b> to read it first. Finished goals disappear, and finishing them all earns a small celebration. A <b>How are you feeling?</b> meter from 1 to 22 sits near the top: set it when you open the app, and if it lands below the red line it offers help climbing. The big <b>Change your state</b> button offers a few ways out of a mood: the Funk Reset, the "I AM" meditation and more, and it plays your own songs.')}
   ${sec('Training', 'The library of practices, from beginner to advanced: mental training with your eyes open (the Climbing the Scale and Focus Wheel tools, and bedtime), then sitting practice, basic meditations, chakra meditations, and esoteric meditations. Open a mental training practice and press <b>Start guided</b> to be walked through one step at a time, with optional timers. The advanced practices are written out as steps for you to do on your own.')}
-  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, Change your state and Bedtime. <b>General knowledge</b> holds mental preparation, supporting habits (with the do\'s and don\'ts), life cycles, the sayings, the Frequency Fast and the two CIA documents. <b>Mental training practices</b> lists the observation, concentration, attention and emotional control practices, which run from reminders in Settings. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
+  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, Change your state and Bedtime. <b>General knowledge</b> holds mental preparation, supporting habits (with the do\'s and don\'ts), life cycles, the sayings and the CIA documents. <b>Mental training practices</b> lists the observation, concentration, attention and emotional control practices, which run from reminders in Settings. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
   ${sec('Settings', 'Where you set it up your way. Choose which exercises count as goals for each area, how many reminders you want and when, the leave-home reminders, optional reminders such as Follow the Whim and the 17-34-68 Hold, the music playlist, the mindfulness sayings, and your backup. A practice you have mastered can be moved to the <b>Mastered</b> archive to clear the screen. The small <b>Log</b> button in the top right corner opens your log.')}
   ${sec('Log', '<b>Entries</b> are your notes and recalls. <b>Days</b> is one button per day showing what you finished, what you did not, and your notes. <b>Progress</b> shows your streak and trends.')}
   ${sec('Private by design', 'Your notes, logs and goals stay on your phone. There is no account. The free Play Store version shows a few ads on the Training and Teachings lists (a one-time purchase removes them and unlocks the advanced teachings); your own entries are never sent to anyone.')}`;
@@ -453,8 +439,7 @@ function Info() {
   ${lesson('scale')}
   ${ids}
   ${link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`)}
-  ${link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">Why the short reminders, and what they are for</div>')}
-  ${link(to('info:fast', '#fast'), `<b>${lk('info:fast')}Frequency Fast</b><div class="dim sm">A short challenge: fast from fear-based input</div>`)}
+  ${link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">What the short reminders are for, and which ones you get</div>')}
   ${link(to('cat:assessment', '#learn/assessment'), `<b>${lk('cat:assessment')}The CIA assessment of the Gateway Experience (GWE)</b><div class="dim sm">A 1983 evaluation released by the CIA, and the model behind it</div>`)}
   ${lesson('rv')}
   <h2>Mental training practices</h2>
@@ -556,12 +541,13 @@ function Laws() {
   ${setCard('laws')}`;
 }
 const taught = () => '<div class="dim sm" style="margin-top:14px">Taught from the teachers and traditions named in <a href="#about">Credits</a>.</div>';
+const rich = (s) => esc(s).replace(/\{\{(\w+)\|([^}]+)\}\}/g, (m, id, txt) => `<a class="inl" href="#learn/${id}">${txt}</a>`); // {{lesson|words}} in a lesson paragraph becomes a link
 function Learn(c) {
   const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
   return `${back('#info')}<h1>${esc(t.t)}</h1><p class="dim">${esc(t.one)}</p>
   ${t.origin ? card(typeof t.origin === 'string' ? `<div class="sm"><b>${esc(t.origin.split('. ')[0])}.</b> ${esc(t.origin.slice(t.origin.indexOf('. ') + 2))}</div>` : '<div class="sm"><b>From a declassified document.</b> This comes from a 1983 US Army Intelligence and Security Command assessment of the Gateway Process, written by Lt. Col. Wayne McDonnell and released through the CIA reading room. It reports what the author and his sources describe. Read it and judge for yourself.</div>', 'accent') : ''}
-  ${(t.p || []).map((x) => card(`<div class="sm">${esc(x)}</div>`)).join('')}
-  ${(t.sections || []).map((x) => `<h3>${esc(x.h)}</h3>` + x.p.map((y) => card(`<div class="sm">${esc(y)}</div>`)).join('')).join('')}
+  ${(t.p || []).map((x) => card(`<div class="sm">${rich(x)}</div>`)).join('')}
+  ${(t.sections || []).map((x) => `<h3>${esc(x.h)}</h3>` + x.p.map((y) => card(`<div class="sm">${rich(y)}</div>`)).join('')).join('')}
   ${t.sayset ? setCard(t.sayset) : ''}
   ${t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : ''}
   ${t.src ? `<h3>Sources</h3>${t.src.map((x) => `<div class="dim sm" style="margin-bottom:6px">${esc(x)}</div>`).join('')}` : ''}
@@ -641,19 +627,17 @@ function RecallForm() {
 /* ----- settings ----- */
 let permState = native.isNative ? (localStorage.getItem('mindful-perm') === 'granted' ? 'granted' : 'default') : 'Notification' in window ? Notification.permission : 'unsupported'; // remembered so the card does not flash on every open
 
-function FastLesson() {
-  const f = S.fast; const d = fastDay(); const running = fastRunning();
-  return `${back('#info')}<h1>Frequency Fast</h1><p class="dim">A short challenge: fast from fear-based input and give the freed-up energy somewhere to go. It stays off until you switch it on here.</p>` + fastRulesBox() + card(`${check(f.on, '<b class="ttl">Turn on the Frequency Fast</b>', 'fon', running ? `Running: day ${d} of ${f.days}` : 'Off until you start it. When it runs, two daily goals appear on Today.')}
-    ${f.on ? `
-    <div class="dim sm" style="margin-top:10px">How long</div>
-    <div class="chips">${[1, 3, 5, 7].map((n) => `<button class="chip ${f.days === n ? 'on' : ''}" ${running ? 'disabled' : ''} data-act="fdays:${n}">${n} day${n === 1 ? '' : 's'}</button>`).join('')}</div>
-    <div class="dim sm">Each day has two goals, shown in a bubble on Today while it runs.</div>
-    ${running ? '<button class="btn ghost" data-act="fstop">Stop the fast</button>' : '<button class="btn" data-act="fstart">Start today</button>'}` : ''}`);
-}
 function Sayings() {
+  const off = new Set(S.sayOff || []);
+  const group = (title, list) => `<h3>${esc(title)}</h3>` + list.map((s) => `<div class="bul" data-act="sayck:${sayId(s)}"><span class="bx ${off.has(sayId(s)) ? '' : 'on'}">${off.has(sayId(s)) ? '' : '✓'}</span><span>${esc(s)}</span></div>`).join('');
+  const all = sayAll(), n = all.filter((x) => !off.has(sayId(x))).length;
   return `${back('#info')}<h1>Mindfulness sayings</h1>
   <p class="dim">Personal growth, one short thought at a time. The sayings mix simple basics for body and mind (breath, water, movement, kindness, slowing down), tools for your emotions, and deeper reflections drawn from mystics and teachers. Many bring you back to the present moment, a skill worth building: even 30 seconds of being present, a few times a day, steadies you and sharpens your focus.</p>
-  <p class="dim">Choose how many you get each day in Settings, under Daily goals.</p>`;
+  <p class="dim">Choose how many you get each day in Settings, under Daily goals. Tick the sayings you want in your reminders and untick the ones you do not.</p>
+  <div class="dim sm" style="margin:8px 0">${n} of ${all.length} on${n === 0 ? ' (with none ticked, all of them are used)' : ''}</div>
+  <div class="chips"><button class="chip" data-act="sayall:on">Select all</button><button class="chip" data-act="sayall:off">Clear all</button></div>
+  ${group('Everyday sayings', NUDGES)}${SAYING_SETS.filter((x) => (S.sets || []).includes(x.id)).map((x) => group(x.name, x.sayings)).join('')}
+  <div class="dim sm" style="margin-top:10px">Sayings that go with a lesson, such as the emotional scale, appear here once you add them from that lesson.</div>`;
 }
 function Settings() {
   const R = S.rem;
@@ -833,7 +817,6 @@ function paint() {
     case 'mastered': h = Mastered(); break;
     case 'state': h = State(); break;
     case 'attn': h = locked('info:attn') ? Unlock('info:attn') : Attn(); break;
-    case 'fast': h = locked('info:fast') ? Unlock('info:fast') : FastLesson(); break;
     case 'laws': h = Info(); break; // Universal laws is switched off for now
     case 'wheel': h = Wheel(); break;
     case 'day': h = Day(a); break;
@@ -842,7 +825,7 @@ function paint() {
   }
   if (!['note', 'recall'].includes(route)) form = {};
   $('#view').innerHTML = h;
-  const tab = ['today', 'practice', 'info', 'settings'].includes(route) ? route : route === 'cat' || route === 'state' ? 'today' : route === 'tour' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#info') || route === 'laws' || route === 'sayings' || route === 'fast' || route === 'cycles' || route === 'about' || route === 'learn' || route === 'attn' || (route === 'ex' && teachEx(a)) ? 'info' : route === 'ex' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#practice') || route === 'scale' || route === 'wheel' || route === 'guide' || route === 'meditate' ? 'practice' : 'settings'; // Log, notes and day pages are reached from Settings
+  const tab = ['today', 'practice', 'info', 'settings'].includes(route) ? route : route === 'cat' || route === 'state' ? 'today' : route === 'tour' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#info') || route === 'laws' || route === 'sayings' || route === 'cycles' || route === 'about' || route === 'learn' || route === 'attn' || (route === 'ex' && teachEx(a)) ? 'info' : route === 'ex' || (route === 'unlock' && homeOf(decodeURIComponent(a)) === '#practice') || route === 'scale' || route === 'wheel' || route === 'guide' || route === 'meditate' ? 'practice' : 'settings'; // Log, notes and day pages are reached from Settings
   document.querySelectorAll('#tabs a').forEach((el) => el.classList.toggle('on', el.dataset.tab === tab));
   const rs = $('#restore'); if (rs) rs.onchange = restore;
   if (adsOn() && ['practice', 'info'].includes(route)) { $('#view').insertAdjacentHTML('beforeend', '<div style="height:70px"></div>'); native.showBanner(ADMOB, 56); } else native.hideBanner(); // a banner only on the Training and Teachings lists, never during practice
@@ -912,6 +895,8 @@ document.addEventListener('click', async (e) => {
     case 'sopen': setOpen[a] = !setOpen[a]; repaintKeep(); break;
     case 'other': openCat = openCat === a ? null : a; repaintKeep(); break;
     case 'music': openMusic(); break;
+    case 'sayck': { const s = new Set(S.sayOff || []); s.has(a) ? s.delete(a) : s.add(a); S.sayOff = [...s]; save(); repaintKeep(); break; }
+    case 'sayall': S.sayOff = a === 'off' ? sayAll().map(sayId) : []; save(); repaintKeep(); break;
     case 'sayset': S.sets = S.sets || []; S.sets = S.sets.includes(a) ? S.sets.filter((x) => x !== a) : S.sets.concat(a); save(); repaintKeep(); break;
     case 'mindon': S.rem.mind.on = !S.rem.mind.on; save(); repaintKeep(); break;
     case 'recallon': S.rem.recall.on = !S.rem.recall.on; save(); repaintKeep(); break;
@@ -937,12 +922,6 @@ document.addEventListener('click', async (e) => {
     case 'ics': exportCalendar(); msg('Calendar file created — open it to add the reminders.'); break;
     case 'export': exportBackup(); break;
     case 'learnattn': S.learned = { ...(S.learned || {}), attn: !(S.learned || {}).attn }; save(); repaintKeep(); break;
-    case 'fon': S.fast.on = !S.fast.on; if (!S.fast.on) S.fast.start = ''; save(); repaintKeep(); break;
-    case 'fdays': S.fast.days = +a; save(); repaintKeep(); break;
-    case 'fstart': S.fast.start = dayKey(); S.fast.done = {}; save(); repaintKeep(); toast('Frequency Fast started'); break;
-    case 'fstop': S.fast.start = ''; save(); repaintKeep(); break;
-    case 'fastend': S.fast.start = ''; save(); repaintKeep(); break;
-    case 'fastck': { const k = dayKey(); const t = S.fast.done[k] || (S.fast.done[k] = {}); t[a] = !t[a]; save(); repaintKeep(); if (t.a && t.b) toast('Day complete ✓'); break; }
     case 'loop': S.loops[b] = a; save(); repaintKeep(); toast('Noted'); break;
     case 'loopr': S.loops[a + 'r'] = 1; save(); repaintKeep(); break;
     case 'loopb': S.loops[a + 'b'] = 1; save(); repaintKeep(); break;

@@ -85,3 +85,5 @@ h3 { font-size: 18px; color: var(--pd); margin: 14px 0 6px; } .bul.dis { opacity
 .feelcut { position: absolute; left: 50%; top: 4px; bottom: 0; width: 3px; margin-left: -1.5px; background: #9b2f6a; border-radius: 2px; pointer-events: none; }
 .feelends { display: flex; justify-content: space-between; }
 .feelbubble { margin-top: 10px; padding: 12px; border: 1px solid #9b2f6a; border-radius: 12px; background: var(--bg); }
+
+.inl { color: var(--accent); font-weight: 600; text-decoration: underline; }
