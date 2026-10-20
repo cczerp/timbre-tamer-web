@@ -436,7 +436,7 @@ function Info() {
   ${lesson('funk')}
   ${lesson('bedtime')}
   <h2>General knowledge</h2>
-  ${gk('g-prep', 'Mental preparation', inl('prep', 'thoughts'))}
+  ${gk('g-prep', 'Mental preparation', inl('prep'))}
   ${gk('g-extras', 'Extra mental features', inl('extras'))}
   ${gk('g-med', 'Meditation', lesson('meditate') + lesson('mind'))}
   ${gk('tools', 'Tools', lesson('scale') + link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`) + link('#wake', '<b>Wake-up tones</b><div class="dim sm">A timed tone in each ear that starts only after you are in Focus 12</div>') + link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">What the short reminders are for, and which ones you get</div>'))}
@@ -546,6 +546,8 @@ function learnNested(c, i, x) { // the extra lessons and exercises filed under o
   let out = '';
   const notes = (list, tag) => list.map((s, j) => nfold(`${c}-${i}${tag}${j}`, esc(s.h), s.p.map((y) => `<div class="sm" style="margin-bottom:6px;white-space:pre-line">${rich(y)}</div>`).join(''))).join('');
   if (x.subs) out += x.subs.map((s) => card(`<b>${esc(s.h)}</b>` + s.p.map((y) => `<div class="sm" style="margin-top:6px;white-space:pre-line">${rich(y)}</div>`).join(''))).join('');
+  if (x.folds) out += notes(x.folds, 'o');
+  if (x.exSolo) out += exDetail(exById[x.exSolo]); // the section is the exercise itself
   if (x.attn) { const on = !!(S.learned || {}).attn; out += card(check(on, '<b class="ttl">I have learned this. Turn on the reminders</b>', 'learnattn', on ? 'On. An Attention block with reminders is now in Settings.' : 'Switch this on to get reminders for the attention practices in Settings.'), 'accent'); }
   const list = x.exIds ? x.exIds.map((id) => exById[id]).filter(Boolean) : x.exCat ? EXERCISES.filter((e) => e.cat === x.exCat && !e.hidden && !(x.exSkip || []).includes(e.id)) : [];
   if (list.length || x.exFirst || x.drills) out += `<div class="dim sm" style="margin:10px 0 4px"><b>The exercises</b></div>` + (x.exFirst ? notes(x.exFirst, 'f') : '') + (x.drills ? notes(x.drills, 'd') : '') + list.map((e) => (locked(e.id) ? link(`#unlock/${e.id}`, `<b>🔒 ${esc(e.title)}</b>`) : nfold(`${c}-x-${e.id}`, esc(e.title), exDetail(e, (x.exNotes || {})[e.id])))).join('');
