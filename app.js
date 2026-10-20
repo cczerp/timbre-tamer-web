@@ -414,7 +414,7 @@ function Tour() {
   <p class="dim">What you will find on each page.</p>
   ${sec('Today', 'Your day at a glance, one bubble per goal. Tap <b>✓ Done</b> when you finish one (it goes into your Log with the time) or <b>Rules</b> to read it first. Finished goals disappear, and finishing them all earns a small celebration. A <b>How are you feeling?</b> meter from 1 to 22 sits near the top: set it when you open the app, and if it lands below the red line it offers help climbing. The big <b>Change your state</b> button offers a few ways out of a mood: the Funk Reset, the "I AM" meditation and more, and it plays your own songs.')}
   ${sec('Training', 'The library of practices, from beginner to advanced: mental training with your eyes open (the Climbing the Scale and Focus Wheel tools, and bedtime), then sitting practice, basic meditations, chakra meditations, and esoteric meditations. Open a mental training practice and press <b>Start guided</b> to be walked through one step at a time, with optional timers. The advanced practices are written out as steps for you to do on your own.')}
-  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, Change your state and Bedtime. <b>General knowledge</b> holds mental preparation, supporting habits (with the do\'s and don\'ts), life cycles, the sayings and the CIA documents. <b>Mental training practices</b> lists the observation, concentration, attention and emotional control practices, which run from reminders in Settings. <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
+  ${sec('Teachings', 'Reading, not doing. <b>Info</b> holds the tour, credits, Change your state and Bedtime. <b>General knowledge</b> holds mental preparation (with its exercises and the supporting habits), the extra mental features, meditation, brain and mind, and the sayings, then two dropdowns: <b>Tools</b> (the emotional scale and life cycles) and <b>Advanced</b> (etheric energy, the body\'s fields, the energy tools and the two CIA documents). <b>Learn the practices</b> holds the teaching behind each advanced practice.')}
   ${sec('Settings', 'Where you set it up your way. Choose which exercises count as goals for each area, how many reminders you want and when, the leave-home reminders, optional reminders such as Follow the Whim and the 17-34-68 Hold, the music playlist, the mindfulness sayings, and your backup. A practice you have mastered can be moved to the <b>Mastered</b> archive to clear the screen. The small <b>Log</b> button in the top right corner opens your log.')}
   ${sec('Log', '<b>Entries</b> are your notes and recalls. <b>Days</b> is one button per day showing what you finished, what you did not, and your notes. <b>Progress</b> shows your streak and trends.')}
   ${sec('Private by design', 'Your notes, logs and goals stay on your phone. There is no account. The free Play Store version shows a few ads on the Training and Teachings lists (a one-time purchase removes them and unlocks the advanced teachings); your own entries are never sent to anyone.')}`;
@@ -427,7 +427,8 @@ function Info() {
   const lk = (key) => (locked(key) ? '🔒 ' : '');
   const to = (key, route) => (locked(key) ? `#unlock/${key}` : route);
   const lesson = (c) => link(to('cat:' + c, `#learn/${c}`), `<b>${lk('cat:' + c)}${esc(CAT_TEACH[c].t)}</b><div class="dim sm">${esc(CAT_TEACH[c].one)}</div>`);
-  const ids = TEACH.map((id) => exById[id]).map((e) => link(to(e.id, `#ex/${e.id}`), `<b>${lk(e.id)}${esc(e.title)}</b><div class="dim sm">${esc(e.summary)}</div>`)).join('');
+  const gk = (key, label, inner) => `<div class="foldbox"><h3 class="fold" data-act="topen:${key}"><span>${label}</span><span class="dim">${trOpen[key] ? '▴' : '▾'}</span></h3>${trOpen[key] ? inner : ''}</div>`;
+  const inl = (c, sub) => [c, sub].filter(Boolean).map((x, i) => (locked('cat:' + x) ? lesson(x) : i ? nfold('g-' + x, esc(CAT_TEACH[x].t), learnBody(x, true)) : learnBody(x, true))).join(''); // a lesson shown open inside its dropdown, with a second lesson filed beneath it
   return `<h1>Teachings</h1>
   <h2>Info</h2>
   ${link('#tour', '<b>A quick tour</b><div class="dim sm">What is on each page</div>')}
@@ -435,20 +436,11 @@ function Info() {
   ${lesson('funk')}
   ${lesson('bedtime')}
   <h2>General knowledge</h2>
-  ${lesson('prep')}
-  ${lesson('scale')}
-  ${ids}
-  ${link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`)}
-  ${link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">What the short reminders are for, and which ones you get</div>')}
-  ${link(to('cat:assessment', '#learn/assessment'), `<b>${lk('cat:assessment')}The CIA assessment of the Gateway Experience (GWE)</b><div class="dim sm">A 1983 evaluation released by the CIA, and the model behind it</div>`)}
-  ${lesson('rv')}
-  <h2>Mental training practices</h2>
-  <div class="dim sm">These run from reminders in Settings. Open one to read how it works.</div>
-  ${practiceList()}
-  <h2>Altered states</h2>
-  ${['states', 'hypnosis', 'hemisync'].map(lesson).join('')}
-  <h2>Learn the practices</h2>
-  ${['meditate', 'door', 'mind', 'thoughts', 'rule', 'energy', 'chakra', 'project', 'telepathy'].map(lesson).join('')}`;
+  ${gk('g-prep', 'Mental preparation', inl('prep', 'thoughts'))}
+  ${gk('g-extras', 'Extra mental features', inl('extras'))}
+  ${gk('g-med', 'Meditation', lesson('meditate') + lesson('mind'))}
+  ${gk('tools', 'Tools', lesson('scale') + link(to('info:cycles', '#cycles'), `<b>${lk('info:cycles')}Life cycles</b><div class="dim sm">Favorable and unfavorable activities by period</div>`) + link('#wake', '<b>Wake-up tones</b><div class="dim sm">A timed tone in each ear that starts only after you are in Focus 12</div>') + link('#sayings', '<b>Mindfulness sayings</b><div class="dim sm">What the short reminders are for, and which ones you get</div>'))}
+  ${gk('adv', 'Advanced', ['process', 'door', 'etheric', 'fields', 'gwenergy'].map(lesson).join('') + link(to('cat:assessment', '#learn/assessment'), `<b>${lk('cat:assessment')}The CIA assessment of the Gateway Experience (GWE)</b><div class="dim sm">A 1983 evaluation released by the CIA, and the model behind it</div>`) + ['rv', 'project', 'telepathy', 'hypnosis', 'states', 'energy', 'chakra'].map(lesson).join(''))}`;
 }
 let priceOf = {}; let unlockKey = '';
 const TEACH = ['energy-habits']; // reading pages kept as entries, shown in Info with no guided run
@@ -502,7 +494,7 @@ function Practice(meditationsOnly = false) {
 }
 
 
-const LEARN = ['prep', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule'];
+const LEARN = ['prep', 'extras', 'etheric', 'funk', 'meditate', 'bedtime', 'energy', 'chakra', 'project', 'mind', 'thoughts', 'telepathy', 'rv', 'door', 'rule'];
 function Exercise(id) {
   const ex = exById[id]; if (!ex) return back() + '<p>Not found.</p>';
   if (TEACH.includes(id)) return `${back('#info')}<h1>${esc(ex.title)}</h1><div class="dim">${esc(ex.summary)}</div>${ex.steps.map((t) => card(`<div class="sm" style="white-space:pre-line">${esc(typeof t === 'string' ? t : t.t)}</div>`)).join('')}`;
@@ -524,9 +516,9 @@ function About() {
     <li><b>Dolores Cannon</b> — the quiet-listening, inner-journey, energy, and everyday-living practices, written here in our own words from teachings associated with her work</li>
     <li><b>Barbara Marciniak</b>, <b>Neville Goddard</b>, <b>Bashar</b>, and <b>Esther and Abraham Hicks</b> — the whim, now-point, belief-audit, fast, breath, bedtime-loop, emotional-scale and manifestation practices, and the sayings inspired by them, in our own words</li>
     <li><b>Randall L. Waechter and Lauren Sergio</b>, and the researchers they draw on (Burr, Baule and McFee, Schumann, Oschman, Becker) — the teaching on energy and the body's fields, from their paper in <i>Subtle Energies &amp; Energy Medicine</i></li>
-    <li><b>Lt. Col. Wayne M. McDonnell</b> and the <b>US Army Intelligence and Security Command</b>, whose 1983 Analysis and Assessment of Gateway Process (a declassified copy, released through the CIA reading room) is the source of the teachings on meditation, hypnosis and biofeedback, Hemi-Sync, kundalini and resonant sound, color and the energy bar, how a Gateway session runs and the model behind it, and out-of-body movement, and the people it draws on: <b>Itzhak Bentov</b>, <b>Robert Monroe</b> and the Monroe Institute (<b>Melissa Jager</b>, <b>Stuart Twemlow</b>), <b>Lee Sannella</b>, <b>Ronald Stone</b>, <b>Karl Pribram</b> and <b>David Bohm</b></li>
+    <li><b>Lt. Col. Wayne M. McDonnell</b> and the <b>US Army Intelligence and Security Command</b>, whose 1983 Analysis and Assessment of Gateway Process (a declassified copy, released through the CIA reading room) is the source of the teachings on meditation, hypnosis and biofeedback, kundalini and resonant sound, color and the energy bar, how a Gateway session runs and the model behind it, and out-of-body movement, and the people it draws on: <b>Itzhak Bentov</b>, <b>Robert Monroe</b> and the Monroe Institute (<b>Melissa Jager</b>, <b>Stuart Twemlow</b>), <b>Lee Sannella</b>, <b>Ronald Stone</b>, <b>Karl Pribram</b> and <b>David Bohm</b></li>
     <li><b>The American Institutes for Research</b>, <b>Jessica Utts</b> and <b>Raymond Hyman</b> — the 1995 evaluation of the remote viewing program (a declassified copy, released through the CIA reading room), the source of the lesson on what it found</li>
-    <li><b>Wisdom of the Mystic Masters</b> — the mental training, meditation, healing, projection, thought, emotion, telepathy, and cycles teachings</li>
+    <li><b>Wisdom of the Mystic Masters</b> — the mental training, meditation, energy transfer, projection, thought, emotion, telepathy, and cycles teachings</li>
     <li>The yogic, tantric, and Rosicrucian traditions all of the above draw on</li>
     <li>Every teacher, student, and practitioner who passed these on</li>
   </ul>
@@ -553,29 +545,35 @@ function exDetail(e, note) {
 function learnNested(c, i, x) { // the extra lessons and exercises filed under one section of a long lesson
   let out = '';
   const notes = (list, tag) => list.map((s, j) => nfold(`${c}-${i}${tag}${j}`, esc(s.h), s.p.map((y) => `<div class="sm" style="margin-bottom:6px;white-space:pre-line">${rich(y)}</div>`).join(''))).join('');
-  if (x.subs) out += (x.subsLabel ? `<div class="dim sm" style="margin:6px 0 4px"><b>${esc(x.subsLabel)}</b></div>` : '') + notes(x.subs, 's');
+  if (x.subs) out += x.subs.map((s) => card(`<b>${esc(s.h)}</b>` + s.p.map((y) => `<div class="sm" style="margin-top:6px;white-space:pre-line">${rich(y)}</div>`).join(''))).join('');
   if (x.attn) { const on = !!(S.learned || {}).attn; out += card(check(on, '<b class="ttl">I have learned this. Turn on the reminders</b>', 'learnattn', on ? 'On. An Attention block with reminders is now in Settings.' : 'Switch this on to get reminders for the attention practices in Settings.'), 'accent'); }
   const list = x.exIds ? x.exIds.map((id) => exById[id]).filter(Boolean) : x.exCat ? EXERCISES.filter((e) => e.cat === x.exCat && !e.hidden && !(x.exSkip || []).includes(e.id)) : [];
-  if (list.length || x.exFirst) out += `<div class="dim sm" style="margin:10px 0 4px"><b>The exercises</b></div>` + (x.exFirst ? notes(x.exFirst, 'f') : '') + list.map((e) => (locked(e.id) ? link(`#unlock/${e.id}`, `<b>🔒 ${esc(e.title)}</b>`) : nfold(`${c}-x-${e.id}`, esc(e.title), exDetail(e, (x.exNotes || {})[e.id])))).join('');
+  if (list.length || x.exFirst || x.drills) out += `<div class="dim sm" style="margin:10px 0 4px"><b>The exercises</b></div>` + (x.exFirst ? notes(x.exFirst, 'f') : '') + (x.drills ? notes(x.drills, 'd') : '') + list.map((e) => (locked(e.id) ? link(`#unlock/${e.id}`, `<b>🔒 ${esc(e.title)}</b>`) : nfold(`${c}-x-${e.id}`, esc(e.title), exDetail(e, (x.exNotes || {})[e.id])))).join('');
   return out ? `<div style="margin-top:8px">${out}</div>` : '';
 }
 function learnSections(c, t) {
   const secs = t.sections || [];
-  const body = (x) => x.p.map((y) => card(`<div class="sm">${rich(y)}</div>`)).join('');
+  const body = (x) => x.p.map((y) => card(`<div class="sm" style="white-space:pre-line">${rich(y)}</div>`)).join('');
   if (!secs.some((x) => x.g)) return secs.map((x) => `<h3>${esc(x.h)}</h3>${body(x)}`).join(''); // short lessons stay open
   const cats = [...new Set(secs.map((x) => x.g))]; // a long lesson is filed under categories, each section a dropdown
-  return cats.map((g) => `<h2>${esc(g)}</h2>` + secs.map((x, i) => [x, i]).filter(([x]) => x.g === g).map(([x, i]) => { const k = `${c}-${i}`; return `<div class="foldbox"><h3 class="fold" data-act="topen:${k}"><span>${esc(x.h)}</span><span class="dim">${trOpen[k] ? '▴' : '▾'}</span></h3>${trOpen[k] ? body(x) + learnNested(c, i, x) : ''}</div>`; }).join('')).join('');
+  return cats.map((g) => (cats.length > 1 ? `<h2>${esc(g)}</h2>` : '') + secs.map((x, i) => [x, i]).filter(([x]) => x.g === g).map(([x, i]) => { const k = `${c}-${i}`; return `<div class="foldbox"><h3 class="fold" data-act="topen:${k}"><span>${esc(x.h)}</span><span class="dim">${trOpen[k] ? '▴' : '▾'}</span></h3>${trOpen[k] ? body(x) + learnNested(c, i, x) : ''}</div>`; }).join('')).join('');
 }
 const rich = (s) => esc(s).replace(/\{\{(\w+)\|([^}]+)\}\}/g, (m, id, txt) => `<a class="inl" href="#learn/${id}">${txt}</a>`); // {{lesson|words}} in a lesson paragraph becomes a link
-function Learn(c) {
-  const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
-  return `${back('#info')}<h1>${esc(t.t)}</h1><p class="dim">${esc(t.one)}</p>
+function learnBody(c, inline) { // a lesson's own content, without the page chrome, so a dropdown can hold it
+  const t = CAT_TEACH[c];
+  return `${inline ? '' : `<p class="dim">${esc(t.one)}</p>`}
   ${t.origin ? card(typeof t.origin === 'string' ? `<div class="sm"><b>${esc(t.origin.split('. ')[0])}.</b> ${esc(t.origin.slice(t.origin.indexOf('. ') + 2))}</div>` : '<div class="sm"><b>From a declassified document.</b> This comes from a 1983 US Army Intelligence and Security Command assessment of the Gateway Process, written by Lt. Col. Wayne McDonnell and released through the CIA reading room. It reports what the author and his sources describe. Read it and judge for yourself.</div>', 'accent') : ''}
   ${(t.p || []).map((x) => card(`<div class="sm">${rich(x)}</div>`)).join('')}
   ${learnSections(c, t)}
+  ${t.subs || t.drills || t.exCat || t.exIds || t.attn ? learnNested(c, 'L', t) : ''}
   ${t.sayset ? setCard(t.sayset) : ''}
-  ${t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : ''}
-  ${t.src ? `<h3>Sources</h3>${t.src.map((x) => `<div class="dim sm" style="margin-bottom:6px">${esc(x)}</div>`).join('')}` : ''}
+  ${t.src ? `<h3>Sources</h3>${t.src.map((x) => `<div class="dim sm" style="margin-bottom:6px">${esc(x)}</div>`).join('')}` : ''}`;
+}
+function Learn(c) {
+  const t = CAT_TEACH[c]; if (!t) return `${back('#info')}<p>Not found.</p>`;
+  const more = t.more || t.links ? `<h3>Go deeper</h3>${(t.links || []).map((l) => link(l.href, `<b>${esc(l.t)}</b><div class="dim sm">${esc(l.one)}</div>`)).join('')}${(t.more || []).map((m) => link(locked('cat:' + m) ? `#unlock/cat:${m}` : `#learn/${m}`, `<b>${locked('cat:' + m) ? '🔒 ' : ''}${esc(CAT_TEACH[m].t)}</b><div class="dim sm">${esc(CAT_TEACH[m].one)}</div>`)).join('')}` : '';
+  const full = learnBody(c); const at = full.indexOf('<h3>Sources</h3>');
+  return `${back('#info')}<h1>${esc(t.t)}</h1>${at < 0 ? full + more : full.slice(0, at) + more + full.slice(at)}
   ${t.noPractice ? '' : '<a class="btn" href="#practice">Go to Practice</a>'}${taught()}`;
 }
 function Attn() {
@@ -601,6 +599,44 @@ function Cycles() {
   return `${back('#info')}<h1>Life cycles</h1><p class="dim">${esc(CYCLES.note)}</p>` + CYCLES.periods.map((p) => card(`<b>${esc(p.name)}</b><div class="dim sm">${esc(p.intro)}</div>
   ${p.good.length ? `<div class="good sm" style="margin-top:8px"><b>Good for</b></div>` + p.good.map((g) => `<div class="sm">• ${esc(g)}</div>`).join('') : ''}
   ${p.bad.length ? `<div class="bad sm" style="margin-top:8px"><b>Not good for</b></div>` + p.bad.map((g) => `<div class="sm">• ${esc(g)}</div>`).join('') : ''}`)).join('');
+}
+
+/* ----- wake-up tones: a steady tone in each ear, started after a delay so it only plays once you are in Focus 12 ----- */
+let W = null; // the running timer: { at, end, nodes, lock, tick }
+const wkSet = () => (S.wake = S.wake || { delay: 25, beat: 40, mins: 3 });
+function wkTone(startIn, secs, beat, ramp) {
+  ac = ac || new (window.AudioContext || window.webkitAudioContext)(); ac.resume?.();
+  const t0 = ac.currentTime + startIn, m = ac.createChannelMerger(2), g = ac.createGain(), oscs = [];
+  [200, 200 + beat].forEach((hz, ch) => { const o = ac.createOscillator(); o.frequency.value = hz; o.connect(m, 0, ch); o.start(t0); o.stop(t0 + secs + 1); oscs.push(o); });
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.12, t0 + ramp); g.gain.setValueAtTime(0.12, t0 + secs - ramp); g.gain.linearRampToValueAtTime(0, t0 + secs);
+  m.connect(g); g.connect(ac.destination);
+  return { oscs, g };
+}
+function wkStop() {
+  if (W) { clearInterval(W.tick); W.nodes?.oscs.forEach((o) => { try { o.stop(); } catch (e) {} }); W.nodes?.g.disconnect(); W.lock?.release?.().catch(() => {}); }
+  W = null;
+}
+function wkTick() {
+  if (!W) return;
+  const left = Math.ceil((W.at - Date.now()) / 1000), play = Math.ceil((W.end - Date.now()) / 1000), el = $('#wkt');
+  if (play <= 0) { wkStop(); if (location.hash === '#wake') repaintKeep(); return; }
+  if (el) el.textContent = left > 0 ? `Tones begin in ${pad(left)}` : `Playing. ${pad(play)} left`;
+}
+async function wkStart() {
+  const c = wkSet(); wkStop();
+  const at = Date.now() + c.delay * 60000, secs = c.mins * 60;
+  W = { at, end: at + secs * 1000, nodes: wkTone(c.delay * 60, secs, c.beat, 15) };
+  try { W.lock = await navigator.wakeLock?.request('screen'); } catch (e) {}
+  W.tick = setInterval(wkTick, 1000); repaintKeep();
+}
+function Wake() {
+  const c = wkSet();
+  const st = (k, label, v, unit) => `<div class="row" style="margin:8px 0"><span>${label}</span><span class="stepper"><button data-act="wk:${k}:-1">−</button><span>${v} ${unit}</span><button data-act="wk:${k}:1">+</button></span></div>`;
+  return `${back('#info')}<h1>Wake-up tones</h1>
+  <p class="dim">For the step after Focus 12 in <a class="inl" href="#learn/process">The whole path</a>. Start the timer, settle into your practice, and nothing sounds until the delay is over. Then two steady tones, one in each ear, fade in. The brain hears the gap between them as a beat. The default is 40 beats a second, in the gamma range.</p>
+  ${card('<div class="sm"><b>Before you use it.</b> Headphones only: each ear needs its own tone, and speakers do nothing. Test first and set the volume so it is barely there. Keep this app open and the screen on, turned all the way down. Take the headphones off or tap Stop to end it at any time. Skip it if you have epilepsy or any seizure history, or if it makes you uneasy. This is an experiment from the reading in the lesson, not a proven method.</div>', 'warn')}
+  ${W ? card(`<div class="title" id="wkt" style="font-size:22px"></div>`, 'accent') + '<button class="btn ghost" data-act="wk:stop">Stop</button>'
+    : card(st('delay', 'Start after', c.delay, 'min') + st('beat', 'Beat', c.beat, 'per sec') + st('mins', 'Plays for', c.mins, 'min')) + '<button class="btn ghost" data-act="wk:test">Test the tones for 5 seconds</button><button class="btn" data-act="wk:start">Start the timer</button>'}`;
 }
 
 /* ----- log ----- */
@@ -833,6 +869,7 @@ function paint() {
     case 'log': h = Log(); break;
     case 'note': h = NoteForm(a); break;
     case 'recall': h = RecallForm(); break;
+    case 'wake': h = Wake(); break;
     case 'cycles': h = locked('info:cycles') ? Unlock('info:cycles') : Cycles(); break;
     case 'about': h = About(); break;
     case 'cat': h = Choose(a); break;
@@ -841,7 +878,7 @@ function paint() {
     case 'learn': h = locked('cat:' + a) ? Unlock('cat:' + a) : Learn(a); break;
     case 'mastered': h = Mastered(); break;
     case 'state': h = State(); break;
-    case 'attn': location.hash = '#learn/prep'; return; // attention now lives in Mental preparation
+    case 'attn': location.hash = '#learn/extras'; return;
     case 'laws': h = Info(); break; // Universal laws is switched off for now
     case 'wheel': h = Wheel(); break;
     case 'day': h = Day(a); break;
@@ -902,6 +939,7 @@ document.addEventListener('click', async (e) => {
     case 'del': if (confirm('Delete entry?')) { const k = a === 'r' ? 'recalls' : 'sessions'; const gone = S[k].find((x) => x.id === b); if (gone && gone.quick) { const t = S.tally?.[dayKey(gone.ts)]; if (t && t[gone.ex] > 0) { t[gone.ex]--; if (!t[gone.ex]) delete t[gone.ex]; } } S[k] = S[k].filter((x) => x.id !== b); save(); repaintKeep(); } break;
     case 'pickex': form.ex = form.ex === a ? null : a; repaintKeep(); break;
     case 'rate': if (a === 'gfocus') G.focus = +b; else form[a] = +b; repaintKeep(); break;
+    case 'wk': { const c = wkSet(), d = +b, cl = (v, lo, hi) => Math.max(lo, Math.min(hi, v)); if (a === 'delay') c.delay = cl(c.delay + d * 5, 5, 90); else if (a === 'beat') c.beat = cl(c.beat + d * 5, 30, 80); else if (a === 'mins') c.mins = cl(c.mins + d, 1, 10); else if (a === 'test') { wkTone(0, 5, c.beat, 0.5); break; } else if (a === 'start') { wkStart(); break; } else if (a === 'stop') wkStop(); save(); repaintKeep(); break; }
     case 'inc': case 'dec': { const d = act === 'inc' ? 1 : -1; stepTo(a, b, d, c3); break; }
     case 'savenote': S.sessions.unshift({ id: uid(), ts: Date.now(), ex: form.ex, focus: form.focus || null, note: form.note.trim() }); save(); location.hash = '#log'; break;
     case 'saverecall': bump('obs-recall'); S.recalls.unshift({ id: uid(), ts: Date.now(), details: form.details, accuracy: form.accuracy || null, note: form.note.trim() }); save(); location.hash = '#log'; break;
