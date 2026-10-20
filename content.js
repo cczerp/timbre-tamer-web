@@ -1662,4 +1662,19 @@ CAT_TEACH.process = { t: 'The whole path', noPractice: true, one: 'From a quiet 
 CAT_TEACH.door.more = ['process', 'extras'];
 CAT_TEACH.process.links = [{ href: '#wake', t: 'Wake-up tones', one: 'A timed tone in each ear that starts only after you are in Focus 12' }];
 
+// The five psychic-center exercises run as one sitting, with a buzz after each stage; the singles stay as the source text.
+{
+  const ids = ['c-heart', 'c-pituitary', 'c-pineal', 'c-throat', 'c-attune'], five = ids.map((id) => EXERCISES.find((e) => e.id === id));
+  const steps = [{ t: 'Choose how long each stage lasts. A buzz marks the end of every stage, then the next one begins. As taught, these are built up in order over weeks, so stop after any stage you are not ready to go past.', gapPick: true }];
+  five.forEach((e) => {
+    const body = e.steps.filter((s) => !(s && s.secs));
+    body.forEach((s, i) => { const o = typeof s === 'string' ? { t: s } : { ...s }; if (!i) o.t = `${e.title}\n${o.t}`; steps.push(o); });
+    steps.push({ t: 'Stay with it quietly until the buzz.', gap: true });
+  });
+  five.forEach((e) => { e.hidden = true; });
+  const series = { id: 'c-series', cat: 'centers', title: 'Psychic Centers 1–5', mins: 30, freq: 'Once or twice a week at first, building up in order',
+    summary: 'Heart, pituitary, pineal, throat, then the combined attunement in one sitting, with a buzz after each stage.', steps };
+  EXERCISES.splice(EXERCISES.indexOf(five[0]), 0, series); exById['c-series'] = series;
+}
+
 export const TEACH_BLOCK = { centers: 'chakra', observe: 'prep', concentrate: 'prep', attention: 'extras', emotion: 'prep', balance: 'energy' };

@@ -715,7 +715,7 @@ function Settings() {
     if (done[g.id]) return;
     const c = R.cat[g.id];
     const nightly = '';
-    if (g.simple) { block[g.id] = card(`${head(c.on, `<b>${lab(g)}</b>`, 'Each reminder opens a list of meditations to choose from.', `con:${g.id}`, g.id)}${setOpen[g.id] ? `<div class="dim sm" style="margin-top:6px">Reminders per day</div>${stepper(`cn:${g.id}`, c.n)}${masterBtn(g.id)}` : ''}`); return; }
+    if (g.simple) { block[g.id] = card(`${head(c.on, `<b class="ttl">${lab(g)}</b>`, 'Each reminder opens a list of meditations to choose from.', `con:${g.id}`, g.id)}${setOpen[g.id] ? `<div class="dim sm" style="margin-top:6px">Reminders per day</div>${stepper(`cn:${g.id}`, c.n)}${masterBtn(g.id)}` : ''}`); return; }
     const bullets = [...g.pool, ...g.leave].filter((x) => !off(x)).map((x) => `<div class="bul ${c.random ? 'dis' : ''}" data-act="cex:${g.id}:${x}"><span class="bx ${c.ex.includes(x) ? 'on' : ''}">${c.ex.includes(x) ? '✓' : ''}</span><span>${esc(exById[x].title)}${tag(x)}${g.leave.includes(x) ? ' <span class="dim">(when you leave home)</span>' : (g.both || []).includes(x) ? ' <span class="dim">(also when you leave home)</span>' : ''}</span></div>`).join('');
     block[g.id] = card(`${head(c.on, `<b class="ttl">${lab(g)}</b>`, SKILL[g.id] || (c.on ? `Goal: ${c.goal} a day · ${c.n} reminder${c.n === 1 ? '' : 's'} a day` : 'Off'), `con:${g.id}`, g.id)}
       ${setOpen[g.id] ? `${SKILL[g.id] ? `<div class="dim sm" style="margin-top:6px">${c.on ? `Goal: ${c.goal} a day · ${c.n} reminder${c.n === 1 ? '' : 's'} a day` : 'Off'}</div>` : ''}`+ `<div class="dim sm" style="margin-top:6px">Tick the exercises. Each ticked one is a daily goal. Or pick the random option below.</div>${bullets}
@@ -739,7 +739,7 @@ function Settings() {
     ${native.isNative ? `<button class="btn ghost" data-act="sethome">${R.home ? 'Update' : 'Set'} home to my current location</button>
     ${R.home ? `<div class="dim sm">Distance to count as "left"</div>${stepper('homer', R.home.r, (v) => v + ' m')}` : ''}
     <div class="dim sm" style="margin-top:6px">Needs location set to "Allow all the time".</div>` : ''}`) : '';
-  const sayingsCard = card(`${head(R.mind.on, '<b>Mindfulness sayings</b>', 'To help you become present more often', 'mindon', 'mind')}${setOpen.mind ? `<div class="dim sm" style="margin-top:6px">${R.mind.on ? 'Per day' : 'Off'} · <a href="#sayings" style="color:var(--accent)">Read why</a></div>${R.mind.on ? stepper('mindn', R.mind.n) : ''}` : ''}`);
+  const sayingsCard = card(`${head(R.mind.on, '<b class="ttl">Mindfulness sayings</b>', 'To help you become present more often', 'mindon', 'mind')}${setOpen.mind ? `<div class="dim sm" style="margin-top:6px">${R.mind.on ? 'Per day' : 'Off'} · <a href="#sayings" style="color:var(--accent)">Read why</a></div>${R.mind.on ? stepper('mindn', R.mind.n) : ''}` : ''}`);
   return `<div class="hd" style="flex-wrap:nowrap"><h1>Settings</h1><a class="sqbtn" href="#log" aria-label="Log">Log</a></div>
   <h2>Notifications</h2>
   ${permState === 'granted' ? '<div class="good sm">Notifications are on.</div>' : `<button class="btn" data-act="perm">Allow notifications</button>${permState === 'denied' ? '<div class="warn sm">Blocked — enable notifications for this app in your phone settings.</div>' : ''}`}
@@ -783,7 +783,7 @@ function stopGuide() { if (G) { clearInterval(G.timer); clearInterval(G.xi); G.l
 
 function startGuide(id) {
   stopGuide();
-  G = { ex: exById[id], i: 0, run: false, stepDone: false, done: false, focus: 0, note: '' };
+  G = { ex: exById[id], i: 0, gap: 300, run: false, stepDone: false, done: false, focus: 0, note: '' };
   initStep(); wake();
 }
 function initStep() {
@@ -793,7 +793,7 @@ function initStep() {
   G.pickSecs = null; if (st.pick) G.left = st.secs;
   if (st.breath) Object.assign(G, { rep: 1, ph: 0, left: st.breath.phases[0][1] });
 }
-const stepOf = () => { const r = G.ex.steps[G.i]; return typeof r === 'string' ? { t: r } : r; };
+const stepOf = () => { const r = G.ex.steps[G.i], s = typeof r === 'string' ? { t: r } : r; return s.gap ? { ...s, secs: G.gap } : s; }; // a gap step lasts as long as the person chose
 
 function tick() {
   const st = stepOf();
@@ -838,9 +838,10 @@ function Guide() {
   if (st.open) widget = `<div class="big" id="tm">${pad(G.elapsed)}</div><div class="center dim sm">Take as long as you need</div><button class="btn ghost" data-act="trun">${G.run ? 'Pause clock' : G.elapsed ? 'Resume clock' : 'Start clock'}</button>`;
   else if (st.secs) widget = `${st.pick && !G.run && !G.stepDone && G.left === (G.pickSecs || st.secs) ? `<div class="center dim sm">Timer length</div><div class="center">${stepper('padj', G.pickSecs || st.secs, (v) => pad(v))}</div>` : ''}<div class="big" id="tm">${pad(G.left)}</div>${G.stepDone ? '<div class="center good">Done</div>' : `<button class="btn ghost" data-act="trun">${label} timer</button>`}${vibNote()}`;
   else if (st.breath) widget = `<div class="center" style="font-size:22px" id="ph">${G.stepDone ? 'Complete' : st.breath.phases[G.ph][0]}</div><div class="big" id="tm">${G.stepDone ? '✓' : G.left}</div><div class="center dim" id="rp">Round ${Math.min(G.rep, st.breath.reps)} of ${st.breath.reps}</div>${G.stepDone ? '' : `<button class="btn ghost" data-act="trun">${label}</button>`}`;
-  if (!st.open && !st.secs && !st.breath && !st.music) widget = G.xt
+  if (!st.open && !st.secs && !st.breath && !st.music && !st.gapPick) widget = G.xt
     ? `<div class="center dim sm">Timer</div><div class="big" id="xtm">${pad(G.xt.left)}</div><button class="btn ghost" data-act="xstop">${G.xt.left > 0 ? 'Stop timer' : 'Clear'}</button>`
     : `<div class="center dim sm" style="margin-top:10px">Need a timer for this step?</div><div class="chips" style="justify-content:center">${[1, 5, 10].map((m) => `<button class="chip" data-act="xt:${m * 60}">⏱ ${m} min</button>`).join('')}</div>`;
+  if (st.gapPick) widget = `<div class="center dim sm">Time for each stage</div><div class="center">${stepper('gap', G.gap, (v) => pad(v))}</div>`;
   if (st.music) widget = `<button class="btn ghost" data-act="music">${S.rem.playlist ? '♪ Play my songs' : '♪ Add a playlist in Settings'}</button>`;
   return `<div class="dim sm">${esc(ex.title)} · step ${G.i + 1} of ${ex.steps.length}</div>
     ${ex.caution && G.i === 0 ? card(`<div class="warn sm">${esc(ex.caution)}</div>`, 'warnb') : ''}
@@ -1039,6 +1040,7 @@ function stepTo(name, id, d, idx) {
     if (name === 'mindn') R.mind.n = clamp(R.mind.n + d, 1, 12);
     if (name === 'dayS') R.day.s = clamp(R.day.s + d, 0, R.day.e - 1);
     if (name === 'dayE') R.day.e = clamp(R.day.e + d, R.day.s + 1, 23);
+    if (name === 'gap') { G.gap = Math.max(60, Math.min(900, G.gap + d * 60)); repaintKeep(); return; }
     if (name === 'padj') { const st = stepOf(); G.pickSecs = Math.max(60, Math.min(st.max || st.secs + 300, (G.pickSecs || st.secs) + d * (st.step || 30))); G.left = G.pickSecs; repaintKeep(); return; }
     if (name === 'leaven') R.leave.n = clamp(R.leave.n + d, 1, 6);
     if (name === 'leaveS') R.leave.s = clamp(R.leave.s + d, 0, R.leave.e - 1);
